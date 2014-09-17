@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="CramTool.Views.StatisticPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:cramTool="clr-namespace:CramTool"
+             xmlns:models="clr-namespace:CramTool.Models"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Content="Path:" />
+        <Label Grid.Row="0" Grid.Column="1"
+                       Content="{Binding Source={x:Static models:CramToolModel.Instance}, Path=DictPath}" />
+        <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Content="Words Count:" />
+        <Label Grid.Row="1" Grid.Column="1"
+                       Content="{Binding Source={x:Static models:CramToolModel.Instance}, Path=WordList.Stats.WordCount}" />
+        <Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" Content="Studied Words Count:" />
+        <Label Grid.Row="2" Grid.Column="1"
+                       Content="{Binding Source={x:Static models:CramToolModel.Instance}, Path=WordList.Stats.StudiedWordCount}" />
+        <Label Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Content="Learned Words Count:" />
+        <Label Grid.Row="3" Grid.Column="1"
+                       Content="{Binding Source={x:Static models:CramToolModel.Instance}, Path=WordList.Stats.LearnedWordCount}" />
+        <StackPanel Grid.Row="4" Grid.ColumnSpan="2" Orientation="Horizontal">
+            <Button Style="{StaticResource ActiveButton}" Margin="3" Command="{x:Static cramTool:Commands.ResetHistory}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="{StaticResource WordStateUnknownImage}"/>
+                    <TextBlock>Reset History</TextBlock>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -1,0 +1,106 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:cramTool="clr-namespace:CramTool">
+
+    <BitmapImage x:Key="WarningIcon" UriSource="/Images/Fugue/32/exclamation.png" DecodePixelHeight="32" />
+
+    <BitmapImage x:Key="WordStateUnknownImage" UriSource="/Images/Fugue/16/minus-small.png" DecodePixelHeight="16" />
+    <BitmapImage x:Key="WordStateStudiedImage" UriSource="/Images/Fugue/16/question-white.png" DecodePixelHeight="16" />
+    <BitmapImage x:Key="WordStateLearnedImage" UriSource="/Images/Fugue/16/tick-circle.png" DecodePixelHeight="16" />
+
+    <BitmapImage x:Key="WordEventAddedImage" UriSource="/Images/Fugue/16/plus-circle.png" DecodePixelHeight="16" />
+    <BitmapImage x:Key="WordEventRememberedImage" UriSource="/Images/Fugue/16/tick.png" DecodePixelHeight="16" />
+    <BitmapImage x:Key="WordEventForgottenImage" UriSource="/Images/Fugue/16/cross.png" DecodePixelHeight="16" />
+
+    <BitmapImage x:Key="EditWord" UriSource="/Images/Fugue/16/card--pencil.png" DecodePixelHeight="16" />
+    <BitmapImage x:Key="SaveWord" UriSource="/Images/Fugue/16/card--arrow.png" DecodePixelHeight="16" />
+    <BitmapImage x:Key="CancelEditWord" UriSource="/Images/Fugue/16/card--minus.png" DecodePixelHeight="16" />
+
+    <BitmapImage x:Key="NewIcon" UriSource="/Images/Fugue/16/document.png" DecodePixelHeight="16" />
+    <BitmapImage x:Key="OpenIcon" UriSource="/Images/Fugue/16/folder-open-document-text.png" DecodePixelHeight="16" />
+    <BitmapImage x:Key="SaveIcon" UriSource="/Images/Fugue/16/disk.png" DecodePixelHeight="16" />
+    <BitmapImage x:Key="SaveAsIcon" UriSource="/Images/Fugue/16/disk-rename.png" DecodePixelHeight="16" />
+    <BitmapImage x:Key="FileIcon" UriSource="/Images/Fugue/16/document-text.png" DecodePixelHeight="16" />
+    <BitmapImage x:Key="DeleteIcon" UriSource="/Images/Fugue/16/cross.png" DecodePixelHeight="16" />
+    <BitmapImage x:Key="HelpAboutIcon" UriSource="/Images/Fugue/16/information.png" DecodePixelHeight="16" />
+
+    <BitmapImage x:Key="FindIcon" UriSource="/Images/Fugue/16/magnifier--plus.png" DecodePixelHeight="16" />
+    <BitmapImage x:Key="FindReversedIcon" UriSource="/Images/Fugue/16/magnifier-history.png" DecodePixelHeight="16" />
+    <BitmapImage x:Key="QuizIcon" UriSource="/Images/Fugue/16/document-task.png" DecodePixelHeight="16" />
+    <BitmapImage x:Key="StatisticsIcon" UriSource="/Images/Fugue/16/chart.png" DecodePixelHeight="16" />
+
+    <BitmapImage x:Key="QuizStartIcon" UriSource="/Images/Fugue/16/arrow-transition.png" DecodePixelHeight="16" />
+    <BitmapImage x:Key="QuizStopIcon" UriSource="/Images/Fugue/16/prohibition.png" DecodePixelHeight="16" />
+    <BitmapImage x:Key="QuizShowWordIcon" UriSource="/Images/Fugue/16/eye.png" DecodePixelHeight="16" />
+    <BitmapImage x:Key="QuizNextWordIcon" UriSource="/Images/Fugue/16/arrow-skip-270.png" DecodePixelHeight="16" />
+
+    <Style x:Key="ActiveImage" TargetType="Image">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsEnabled}" Value="False">
+                <Setter Property="Opacity" Value="0.5" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="ActiveButton" TargetType="Button">
+        <Style.Setters>
+            <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Converter={x:Static cramTool:CommandToolTipConverter.Instance}}"/>
+        </Style.Setters>
+        <Style.Resources>
+            <Style TargetType="Image" BasedOn="{StaticResource ActiveImage}">
+                <Setter Property="Margin" Value="0 0 3 0"/>
+            </Style>
+        </Style.Resources>
+    </Style>
+
+    <Style x:Key="ToolBarButton" TargetType="Button">
+        <Style.Setters>
+            <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Converter={x:Static cramTool:CommandToolTipConverter.Instance}}"/>
+        </Style.Setters>
+        <Style.Resources>
+            <Style TargetType="Image" BasedOn="{StaticResource ActiveImage}"/>
+        </Style.Resources>
+    </Style>
+
+    <Style x:Key="WordStateImage" TargetType="Image" BasedOn="{StaticResource ActiveImage}">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding}" Value="Unknown">
+                <Setter Property="Source" Value="{StaticResource WordStateUnknownImage}" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding}" Value="Studied">
+                <Setter Property="Source" Value="{StaticResource WordStateStudiedImage}" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding}" Value="Learned">
+                <Setter Property="Source" Value="{StaticResource WordStateLearnedImage}" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="WordEventImage" TargetType="Image" BasedOn="{StaticResource ActiveImage}">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding}" Value="Added">
+                <Setter Property="Source" Value="{StaticResource WordEventAddedImage}" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding}" Value="Remembered">
+                <Setter Property="Source" Value="{StaticResource WordEventRememberedImage}" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding}" Value="Forgotten">
+                <Setter Property="Source" Value="{StaticResource WordEventForgottenImage}" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="GridSplitter" x:Key="HorizontalSplitter">
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Background" Value="LightSteelBlue"/>
+        <Setter Property="Height" Value="5"/>
+    </Style>
+
+    <Style TargetType="GridSplitter" x:Key="VerticalSplitter">
+        <Setter Property="VerticalAlignment" Value="Stretch"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="Background" Value="LightSteelBlue"/>
+        <Setter Property="Width" Value="5"/>
+    </Style>
+
+</ResourceDictionary>

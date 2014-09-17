@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://CramTool.WordList-1.0.0" xmlns="http://CramTool.WordList-1.0.0">
+  <xs:element name="WordList" nillable="true" type="WordList" />
+  <xs:complexType name="WordList">
+    <xs:sequence>
+      <xs:element minOccurs="1" maxOccurs="1" name="Words" type="ArrayOfWord" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfWord">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Word" nillable="false" type="Word" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Word">
+    <xs:sequence>
+      <xs:element minOccurs="1" maxOccurs="1" name="Name" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="Description" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="Events" type="ArrayOfWordEvent" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfWordEvent">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="WordEvent" nillable="false" type="WordEvent" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="WordEvent">
+    <xs:sequence>
+      <xs:element minOccurs="1" maxOccurs="1" name="EventDate" type="xs:dateTime" />
+      <xs:element minOccurs="1" maxOccurs="1" name="EventType" type="WordEventType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="WordEventType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Added" />
+      <xs:enumeration value="Remembered" />
+      <xs:enumeration value="Forgotten" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

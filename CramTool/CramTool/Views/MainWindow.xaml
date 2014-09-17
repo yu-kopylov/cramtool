@@ -1,0 +1,81 @@
+﻿<Window x:Class="CramTool.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:models="clr-namespace:CramTool.Models"
+        xmlns:cramTool="clr-namespace:CramTool" xmlns:views="clr-namespace:CramTool.Views"
+        Title="{Binding Source={x:Static models:CramToolModel.Instance}, Path=MainWindowTitle}"
+        Height="800" Width="1024"
+        Icon="/Images/logo.png"
+        Closing="OnClosing">
+    <Window.CommandBindings>
+        <CommandBinding Command="cramTool:Commands.CreateNewDictionary" CanExecute="CanCreateNewDictionary" Executed="CreateNewDictionary"/>
+        <CommandBinding Command="cramTool:Commands.OpenDictionary" CanExecute="CanOpenDictionary" Executed="OpenDictionary"/>
+        <CommandBinding Command="cramTool:Commands.SaveDictionary" CanExecute="CanSaveDictionary" Executed="SaveDictionary"/>
+        <CommandBinding Command="cramTool:Commands.SaveDictionaryAs" CanExecute="CanSaveDictionaryAs" Executed="SaveDictionaryAs"/>
+        <CommandBinding Command="cramTool:Commands.ResetHistory" CanExecute="CanResetHistory" Executed="ResetHistory"/>
+        <CommandBinding Command="cramTool:Commands.HelpAbout" Executed="HelpAbout"/>
+    </Window.CommandBindings>
+    <Window.Resources>
+        <Style TargetType="MenuItem">
+            <Style.Resources>
+                <Style TargetType="Image" BasedOn="{StaticResource ActiveImage}"/>
+            </Style.Resources>
+        </Style>
+    </Window.Resources>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_File">
+                <MenuItem Command="cramTool:Commands.CreateNewDictionary">
+                    <MenuItem.Icon>
+                        <Image Source="{StaticResource NewIcon}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Command="cramTool:Commands.OpenDictionary">
+                    <MenuItem.Icon>
+                        <Image Source="{StaticResource OpenIcon}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Command="cramTool:Commands.SaveDictionary">
+                    <MenuItem.Icon>
+                        <Image Source="{StaticResource SaveIcon}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Command="cramTool:Commands.SaveDictionaryAs">
+                    <MenuItem.Icon>
+                        <Image Source="{StaticResource SaveAsIcon}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="_Dictionary">
+                <MenuItem Command="cramTool:Commands.ResetHistory">
+                    <MenuItem.Icon>
+                        <Image Source="{StaticResource WordStateUnknownImage}"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="_Help">
+                <MenuItem Command="cramTool:Commands.HelpAbout" Header="_About">
+                    <MenuItem.Icon>
+                        <Image Source="{StaticResource HelpAboutIcon}"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+        </Menu>
+        <ToolBarTray DockPanel.Dock="Top">
+            <ToolBar>
+                <Button Command="cramTool:Commands.CreateNewDictionary" Style="{StaticResource ToolBarButton}" Focusable="False">
+                    <Image Source="{StaticResource NewIcon}" />
+                </Button>
+                <Button Command="cramTool:Commands.OpenDictionary" Style="{StaticResource ToolBarButton}" Focusable="False">
+                    <Image Source="{StaticResource OpenIcon}" />
+                </Button>
+                <Button Command="cramTool:Commands.SaveDictionary" Style="{StaticResource ToolBarButton}" Focusable="False">
+                    <Image Source="{StaticResource SaveIcon}"/>
+                </Button>
+            </ToolBar>
+        </ToolBarTray>
+        <Grid>
+            <views:WelcomePanel Visibility="{Binding Source={x:Static models:CramToolModel.Instance}, Path=WordList, Converter={x:Static cramTool:VisibleIfNull.Instance}, ConverterParameter=True}"/>
+            <views:MainTabSet Visibility="{Binding Source={x:Static models:CramToolModel.Instance}, Path=WordList, Converter={x:Static cramTool:VisibleIfNull.Instance}, ConverterParameter=False}"/>
+        </Grid>
+    </DockPanel>
+</Window>

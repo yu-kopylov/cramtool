@@ -1,0 +1,40 @@
+﻿<Window x:Class="CramTool.Views.ExceptionWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:cramTool="clr-namespace:CramTool"
+        Title="CramTool: Error Occured" Height="400" Width="500"
+        ShowInTaskbar="False"
+        x:Name="This"
+        DataContext="{Binding ElementName=This}"
+        WindowStartupLocation="CenterOwner"
+        WindowStyle="ToolWindow"
+        FocusManager.FocusedElement="{Binding ElementName=UxCloseButton}">
+    <Window.InputBindings>
+        <KeyBinding Key="Escape" Command="cramTool:Commands.CloseWindow"/>
+    </Window.InputBindings>
+    <Window.Resources>
+        <BitmapImage x:Key="ErrorIcon" UriSource="/Images/Fugue/32/cross-circle.png" DecodePixelHeight="32" />
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Image Grid.Row="0" Grid.Column="0" Source="{StaticResource ErrorIcon}" Margin="5" />
+        <TextBlock Grid.Row="0" Grid.Column="1" TextWrapping="Wrap" Text="{Binding Path=Message}" VerticalAlignment="Center" />
+        <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Content="StackTrace:" />
+        <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" BorderBrush="DarkGray" BorderThickness="1">
+            <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                <TextBox IsReadOnly="True" Text="{Binding Path=StackTrace}"/>
+            </ScrollViewer>
+        </Border>
+        <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" FlowDirection="RightToLeft">
+            <Button x:Name="UxCloseButton" Command="cramTool:Commands.CloseWindow" Content="Close" Width="65" Margin="5"/>
+        </StackPanel>
+    </Grid>
+</Window>

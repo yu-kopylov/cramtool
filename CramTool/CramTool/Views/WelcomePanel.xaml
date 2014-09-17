@@ -1,0 +1,69 @@
+﻿<UserControl x:Class="CramTool.Views.WelcomePanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:cramTool="clr-namespace:CramTool"
+             xmlns:models="clr-namespace:CramTool.Models"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.CommandBindings>
+        <CommandBinding Command="cramTool:Commands.OpenRecentFile" Executed="OpenRecentFile"/>
+        <CommandBinding Command="cramTool:Commands.DeleteRecentFile" Executed="DeleteRecentFile"/>
+    </UserControl.CommandBindings>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Button Grid.Row="0" Margin="5" Padding="5" Command="cramTool:Commands.CreateNewDictionary">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="{StaticResource NewIcon}" />
+                    <Label>Create</Label>
+                </StackPanel>
+            </Button>
+            <Button Grid.Row="1" Margin="5" Padding="5" Command="cramTool:Commands.OpenDictionary">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="{StaticResource OpenIcon}" />
+                    <Label>Open</Label>
+                </StackPanel>
+            </Button>
+            <Label Grid.Row="2" Content="Recent Files:" />
+            <ItemsControl Grid.Row="3"
+                          ItemsSource="{Binding Source={x:Static models:CramToolModel.Instance}, Path=Settings.RecentFiles}"
+                          Focusable="False">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button Margin="5" Padding="5" HorizontalContentAlignment="Stretch" Command="cramTool:Commands.OpenRecentFile" CommandParameter="{Binding}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Grid.Column="0" Source="{StaticResource FileIcon}" />
+                                <Label Grid.Column="1" Content="{Binding}" />
+                                <Button Grid.Column="2" Command="cramTool:Commands.DeleteRecentFile" CommandParameter="{Binding}" Focusable="False"
+                                        Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" ToolTip="Remove from the list of recent files.">
+                                    <Image Source="{StaticResource WordEventForgottenImage}"/>
+                                </Button>
+                            </Grid>
+                        </Button>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Grid>
+    </Grid>
+</UserControl>

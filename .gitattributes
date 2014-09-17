@@ -5,7 +5,14 @@
 *.csproj text eol=crlf
 *.sln text eol=crlf
 
+*.txt text eol=crlf
+
 *.xsd text eol=crlf
 
-packages/**/*.* -text !eol
-packages/**/*.* -text !eol
+*.ico -text !eol
+*.png -text !eol
+
+*.svg text eol=crlf
+
+CramTool/packages/**/*.* -text !eol
+CramTool/packages/**/*.* -text !eol

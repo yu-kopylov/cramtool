@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128">
+	<circle cx="64" cy="64" r="62" fill="#266A2E" />
+	<circle cx="64" cy="64" r="54" fill="#BBFF9E" />
+	<circle cx="64" cy="64" r="42" fill="#000000" />
+	<circle cx="64" cy="64" r="30" fill="#BBFF9E" />
+	<!--C Slice-->
+	<path d="M 64 64 l 42 22 l 0 -44 z" fill="#BBFF9E" stroke-width="0"/>
+	<!--Letter T-->
+	<path d="M 64 64 m 0 2 m -5 -20 l 10 0 l 0 40 l -10 0 z" fill="#000000" stroke-width="0"/>
+	<path d="M 64 64 m 0 2 m -17 -20 l 34 0 l 0 10 l -34 0 z" fill="#000000" stroke-width="0"/>
+    <!--dots-->
+    <path d="M 64 64 m -32 0 m 0 3.5 l -7 0 l 0 -7 l 7 0 z" fill="#BBFF9E" stroke-width="0"/>
+	<path d="M 64 64 m 0 32 m 3.5 0 l -7 0 l 0 7 l 7 0 z" fill="#BBFF9E" stroke-width="0"/>
+	<path d="M 64 64 m 0 -32 m 3.5 0 l -7 0 l 0 -7 l 7 0 z" fill="#BBFF9E" stroke-width="0"/>
+	<!--Sqrt(32^2/2)=22.63-->
+	<!--Sqrt(7^2/2)=4.95-->
+	<!--Sqrt(7^2/2)/2=2.47-->
+	<path d="M 64 64 m -22.63 -22.63 m -2.47 2.47 l -4.95 -4.95 l 4.95 -4.95 l 4.95 4.95 z" fill="#BBFF9E" stroke-width="0"/>
+	<path d="M 64 64 m -22.63 22.63 m 2.47 2.47 l -4.95 4.95 l -4.95 -4.95 l 4.95 -4.95 z" fill="#BBFF9E" stroke-width="0"/>
+	<path d="M 64 64 m 22.63 -22.63 m -2.47 -2.47 l 4.95 -4.95 l 4.95 4.95 l -4.95 4.95 z" fill="#BBFF9E" stroke-width="0"/>
+	<path d="M 64 64 m 22.63 22.63 m 2.47 -2.47 l 4.95 4.95 l -4.95 4.95 l -4.95 -4.95 z" fill="#BBFF9E" stroke-width="0"/>
+	<!--diagonal grid-->
+	<!--<path d="M 0 1 L 1 0 L 128 127 L 127 128 z" fill="#FFFF00" stroke-width="0"/>
+	<path d="M 0 127 L 1 128 L 128 1 L 127 0 z" fill="#FFFF00" stroke-width="0"/>-->
+</svg>
