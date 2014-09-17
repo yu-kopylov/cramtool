@@ -1,0 +1,6 @@
+obj
+bin
+
+*.csproj.user
+*.DotSettings.user
+*.suo
