@@ -28,6 +28,15 @@
         <TabItem>
             <TabItem.Header>
                 <StackPanel Orientation="Horizontal">
+                    <Image Source="{StaticResource TagsIcon}" />
+                    <Label Content="Tags" VerticalAlignment="Center" />
+                </StackPanel>
+            </TabItem.Header>
+            <views:TagsPanel WordList="{Binding Source={x:Static models:CramToolModel.Instance}, Path=WordList}" />
+        </TabItem>
+        <TabItem>
+            <TabItem.Header>
+                <StackPanel Orientation="Horizontal">
                     <Image Source="{StaticResource QuizIcon}" />
                     <Label Content="Quiz" VerticalAlignment="Center" />
                 </StackPanel>

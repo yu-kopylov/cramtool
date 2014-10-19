@@ -71,6 +71,7 @@ namespace CramTool.Views
                 FormatText(run, token.Type);
             }
 
+            //todo: handle different number of new lines in the end of the artcle
             if (!string.IsNullOrEmpty(word.Tags))
             {
                 Paragraph tagsParagraph = new Paragraph();

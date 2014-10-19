@@ -25,6 +25,7 @@
 
     <BitmapImage x:Key="FindIcon" UriSource="/Images/Fugue/16/magnifier--plus.png" DecodePixelHeight="16" />
     <BitmapImage x:Key="FindReversedIcon" UriSource="/Images/Fugue/16/magnifier-history.png" DecodePixelHeight="16" />
+    <BitmapImage x:Key="TagsIcon" UriSource="/Images/Fugue/16/tag-label-gray.png" DecodePixelHeight="16" />
     <BitmapImage x:Key="QuizIcon" UriSource="/Images/Fugue/16/document-task.png" DecodePixelHeight="16" />
     <BitmapImage x:Key="StatisticsIcon" UriSource="/Images/Fugue/16/chart.png" DecodePixelHeight="16" />
 

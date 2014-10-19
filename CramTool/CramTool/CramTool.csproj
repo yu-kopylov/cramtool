@@ -109,6 +109,9 @@
     <Compile Include="Views\StatisticPanel.xaml.cs">
       <DependentUpon>StatisticPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\TagsPanel.xaml.cs">
+      <DependentUpon>TagsPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\UnsavedChangesWindow.xaml.cs">
       <DependentUpon>UnsavedChangesWindow.xaml</DependentUpon>
     </Compile>
@@ -179,6 +182,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\StatisticPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TagsPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -273,6 +280,7 @@
     <Resource Include="Images\Fugue\16\prohibition.png" />
     <Resource Include="Images\Fugue\16\eye.png" />
     <Resource Include="Images\Fugue\16\arrow-skip-270.png" />
+    <Resource Include="Images\Fugue\16\tag-label-gray.png" />
     <Content Include="Images\logo.svg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

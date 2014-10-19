@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="CramTool.Views.InvLookupPanel"
+﻿<UserControl x:Class="CramTool.Views.TagsPanel"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -34,10 +34,10 @@
                       SelectionMode="Single"
                       CanUserReorderColumns="False"
                       CanUserResizeColumns="False"
-                      ItemsSource="{Binding ElementName=This, Path=MatchingTranslations}"
-                      SelectedItem="{Binding ElementName=This, Path=CurrentTranslation, Mode=TwoWay}">
+                      ItemsSource="{Binding ElementName=This, Path=MatchingTags}"
+                      SelectedItem="{Binding ElementName=This, Path=CurrentTag, Mode=TwoWay}">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*" CanUserSort="False"/>
+                    <DataGridTextColumn Header="Tag" Binding="{Binding}" Width="*" CanUserSort="False"/>
                 </DataGrid.Columns>
             </DataGrid>
             <GridSplitter Grid.Column="1" Style="{StaticResource VerticalSplitter}"/>
