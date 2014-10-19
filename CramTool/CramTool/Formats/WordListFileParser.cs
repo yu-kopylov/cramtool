@@ -4,7 +4,6 @@ using System.IO.Compression;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
-using CramTool.Models;
 
 namespace CramTool.Formats
 {
@@ -25,7 +24,7 @@ namespace CramTool.Formats
             {
                 throw new ParserException("Unknown file format.", e);
             }
-            return WordListConverter.ConvertToObject(wordsXml);
+            return WordListXmlConverter.ConvertToObject(wordsXml);
         }
 
         public Models.WordList ParseZip(Stream inputStream)
@@ -50,7 +49,7 @@ namespace CramTool.Formats
 
         public void GenerateXml(Models.WordList wordList, Stream outputStream)
         {
-            WordList.WordList wordsXml = WordListConverter.ConvertToXml(wordList);
+            WordList.WordList wordsXml = WordListXmlConverter.ConvertToXml(wordList);
 
             XmlWriterSettings xmlWriterSettings = new XmlWriterSettings();
             xmlWriterSettings.Encoding = new UTF8Encoding(false);

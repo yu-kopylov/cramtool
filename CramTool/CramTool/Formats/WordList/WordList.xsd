@@ -15,6 +15,7 @@
     <xs:sequence>
       <xs:element minOccurs="1" maxOccurs="1" name="Name" type="xs:string" />
       <xs:element minOccurs="1" maxOccurs="1" name="Description" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="Tags" type="xs:string" />
       <xs:element minOccurs="1" maxOccurs="1" name="Events" type="ArrayOfWordEvent" />
     </xs:sequence>
   </xs:complexType>
@@ -33,7 +34,7 @@
     <xs:restriction base="xs:string">
       <xs:enumeration value="Added" />
       <xs:enumeration value="Remembered" />
-      <xs:enumeration value="Forgotten" />
+      <xs:enumeration value="Forgot" />
     </xs:restriction>
   </xs:simpleType>
 </xs:schema>

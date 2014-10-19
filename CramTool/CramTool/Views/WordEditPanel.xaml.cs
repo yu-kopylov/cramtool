@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using CramTool.Models;
 
@@ -10,7 +9,7 @@ namespace CramTool.Views
     /// </summary>
     public partial class WordEditPanel : UserControl
     {
-        public static readonly DependencyProperty Word2Property = DependencyProperty.Register("Word", typeof(Word), typeof(WordEditPanel), new PropertyMetadata(default(Word)));
+        public static readonly DependencyProperty WordProperty = DependencyProperty.Register("Word", typeof(Word), typeof(WordEditPanel), new PropertyMetadata(default(Word)));
 
         public WordEditPanel()
         {
@@ -19,8 +18,8 @@ namespace CramTool.Views
 
         public Word Word
         {
-            get { return (Word)GetValue(Word2Property); }
-            set { SetValue(Word2Property, value); }
+            get { return (Word)GetValue(WordProperty); }
+            set { SetValue(WordProperty, value); }
         }
     }
 }

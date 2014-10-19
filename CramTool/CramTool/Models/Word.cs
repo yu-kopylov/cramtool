@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace CramTool.Models
     {
         private string name;
         private string description;
+        private string tags;
         private readonly ObservableCollection<WordEvent> events = new ObservableCollection<WordEvent>();
 
         public string Name
@@ -28,6 +30,16 @@ namespace CramTool.Models
             set
             {
                 description = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Tags
+        {
+            get { return tags; }
+            set
+            {
+                tags = value;
                 OnPropertyChanged();
             }
         }

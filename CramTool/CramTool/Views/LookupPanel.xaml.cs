@@ -102,6 +102,7 @@ namespace CramTool.Views
             EditableWord = new Word();
             EditableWord.Name = (SearchText ?? "").Trim();
             EditableWord.Description = "";
+            EditableWord.Tags = "";
         }
 
         private void CanEditWord(object sender, CanExecuteRoutedEventArgs e)
@@ -114,6 +115,7 @@ namespace CramTool.Views
             EditableWord = new Word();
             EditableWord.Name = CurrentWordForm.WordInfo.Word.Name;
             EditableWord.Description = CurrentWordForm.WordInfo.Word.Description;
+            EditableWord.Tags = CurrentWordForm.WordInfo.Word.Tags;
         }
 
         private void CanCancelEditWord(object sender, CanExecuteRoutedEventArgs e)
@@ -136,6 +138,7 @@ namespace CramTool.Views
             string oldName = CurrentWordForm == null ? null : CurrentWordForm.WordInfo.Word.Name;
             string newName = (EditableWord.Name ?? "").Trim();
             string description = EditableWord.Description;
+            string tags = EditableWord.Tags;
 
             if (oldName != newName && WordList.Contains(newName))
             {
@@ -148,7 +151,7 @@ namespace CramTool.Views
             }
             else
             {
-                WordList.Update(oldName, newName, description);
+                WordList.Update(oldName, newName, description, tags);
             }
 
             EditableWord = null;

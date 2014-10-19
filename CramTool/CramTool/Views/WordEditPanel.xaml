@@ -16,6 +16,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Label Grid.Row="0" Grid.Column="0" Content="Word:"/>
         <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Path=Word.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
@@ -23,5 +24,7 @@
         <ScrollViewer Grid.Row="2" Grid.ColumnSpan="2" HorizontalScrollBarVisibility="Auto">
             <TextBox Text="{Binding Path=Word.Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True"/>
         </ScrollViewer>
+        <Label Grid.Row="3" Grid.Column="0" Content="Tags:"/>
+        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Path=Word.Tags, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
     </Grid>
 </UserControl>

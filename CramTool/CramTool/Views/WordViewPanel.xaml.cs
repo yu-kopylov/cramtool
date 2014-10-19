@@ -71,6 +71,20 @@ namespace CramTool.Views
                 FormatText(run, token.Type);
             }
 
+            if (!string.IsNullOrEmpty(word.Tags))
+            {
+                Paragraph tagsParagraph = new Paragraph();
+                document.Blocks.Add(tagsParagraph);
+                tagsParagraph.Margin = new Thickness(0, 5, 0, 0);
+
+                Run run = new Run("Tags: ");
+                tagsParagraph.Inlines.Add(run);
+                run.FontWeight = FontWeights.Bold;
+
+                run = new Run(word.Tags);
+                tagsParagraph.Inlines.Add(run);
+            }
+
             return document;
         }
 

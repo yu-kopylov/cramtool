@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="TestCramToolSettings.cs" />
+    <Compile Include="TestTagParser.cs" />
     <Compile Include="TestWordParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

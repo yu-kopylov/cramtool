@@ -84,7 +84,7 @@ namespace CramTool.Models
             return word;
         }
 
-        public void Update(string oldName, string newName, string description)
+        public void Update(string oldName, string newName, string description, string tags)
         {
             Contract.Assert(wordsByName.ContainsKey(oldName));
             Contract.Assert(newName == oldName || !wordsByName.ContainsKey(newName));
@@ -94,6 +94,7 @@ namespace CramTool.Models
             WordInfo wordInfo = wordsByName[oldName];
             wordInfo.Word.Name = newName;
             wordInfo.Word.Description = description;
+            wordInfo.Word.Tags = TagParser.ReformatTags(tags);
             wordInfo.Update();
 
             if (newName != oldName)
