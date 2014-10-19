@@ -147,7 +147,7 @@ namespace CramTool.Views
 
             if (oldName == null)
             {
-                WordList.Add(newName, description);
+                WordList.Add(newName, description, tags);
             }
             else
             {

@@ -2,9 +2,6 @@
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Xml;
-using System.Xml.Serialization;
 using CramTool.Formats;
 
 namespace CramTool.Models
