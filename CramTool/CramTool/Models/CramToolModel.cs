@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
+using CramTool.Formats;
 
 namespace CramTool.Models
 {
@@ -102,18 +103,38 @@ namespace CramTool.Models
 
         public void OpenDictionary(string filename)
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(Formats.WordList.WordList));
-            Formats.WordList.WordList wordsXml;
-            using (FileStream stream = File.Open(filename, FileMode.Open, FileAccess.Read, FileShare.Read))
+            bool oldFormat = false;
+            try
             {
-                wordsXml = (Formats.WordList.WordList)serializer.Deserialize(stream);
+                using (FileStream stream = File.Open(filename, FileMode.Open, FileAccess.Read, FileShare.Read))
+                {
+                    WordListFileParser parser = new WordListFileParser();
+                    WordList = parser.ParseXml(stream);
+                    oldFormat = true;
+                }
             }
-            WordList = WordListConverter.ConvertToObject(wordsXml);
-            DictPath = filename;
+            catch (ParserException)
+            {
+                //ignore an attempt to read file in old format if it fails
+            }
 
-            Settings.Load();
-            Settings.AddRecentFile(filename);
-            Settings.Save();
+            if (!oldFormat)
+            {
+                using (FileStream stream = File.Open(filename, FileMode.Open, FileAccess.Read, FileShare.Read))
+                {
+                    WordListFileParser parser = new WordListFileParser();
+                    WordList = parser.ParseZip(stream);
+                }
+            }
+
+            DictPath = oldFormat ? null : filename;
+
+            if (!oldFormat)
+            {
+                Settings.Load();
+                Settings.AddRecentFile(filename);
+                Settings.Save();
+            }
         }
 
         public void SaveDictionary(string filename)
@@ -127,18 +148,10 @@ namespace CramTool.Models
                 }
                 File.Copy(filename, filename + ".bak");
             }
-            Formats.WordList.WordList wordsXml = WordListConverter.ConvertToXml(WordList);
-            XmlSerializer serializer = new XmlSerializer(typeof(Formats.WordList.WordList));
             using (FileStream stream = File.Open(filename, FileMode.Create, FileAccess.Write, FileShare.None))
             {
-                XmlWriterSettings xmlWriterSettings = new XmlWriterSettings();
-                xmlWriterSettings.Encoding = new UTF8Encoding(false);
-                xmlWriterSettings.Indent = true;
-                using (XmlWriter writer = XmlWriter.Create(stream, xmlWriterSettings))
-                {
-                    serializer.Serialize(writer, wordsXml);
-                    writer.Flush();
-                }
+                WordListFileParser parser = new WordListFileParser();
+                parser.GenerateZip(WordList, stream);
             }
             DictPath = filename;
             WordList.ResetModified();

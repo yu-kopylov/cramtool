@@ -44,8 +44,8 @@ namespace CramTool.Views
             }
 
             OpenFileDialog dlg = new OpenFileDialog();
-            dlg.DefaultExt = ".dictx";
-            dlg.Filter = "Cram Tool Dictionaries (.dictx)|*.dictx";
+            dlg.DefaultExt = ".dictz";
+            dlg.Filter = "All Supported Files|*.dictz;*.dictx|Cram Tool Compressed Dictionaries (.dictz)|*.dictz|Cram Tool Dictionaries (.dictx)|*.dictx";
             dlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
             if (dlg.ShowDialog(this) == true)
@@ -87,8 +87,8 @@ namespace CramTool.Views
         private bool SaveDictionaryAs()
         {
             SaveFileDialog dlg = new SaveFileDialog();
-            dlg.DefaultExt = ".dictx";
-            dlg.Filter = "Cram Tool Dictionaries (.dictx)|*.dictx";
+            dlg.DefaultExt = ".dictz";
+            dlg.Filter = "Cram Tool Compressed Dictionaries (.dictz)|*.dictz";
             dlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
             if (dlg.ShowDialog(this) == true)
