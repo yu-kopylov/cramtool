@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
-using System.Runtime.Serialization;
 
 namespace CramTool.Models
 {
-    [DataContract]
     public class WordEvent
     {
         public DateTime EventDate { get; private set; }
