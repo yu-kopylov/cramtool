@@ -15,7 +15,10 @@ namespace CramTool.Models
         private bool isAdded;
         private DateTime? dateAdded;
         private DateTime? lastEventDate;
+        private DateTime? rememberedSince;
+        private TimeSpan? rememberedFor;
         private bool isLearned;
+        private bool isVerified;
 
         private WordState state = WordState.Unknown;
 
@@ -72,12 +75,42 @@ namespace CramTool.Models
             }
         }
 
+        public DateTime? RememberedSince
+        {
+            get { return rememberedSince; }
+            set
+            {
+                rememberedSince = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public TimeSpan? RememberedFor
+        {
+            get { return rememberedFor; }
+            set
+            {
+                rememberedFor = value;
+                OnPropertyChanged();
+            }
+        }
+
         public bool IsLearned
         {
             get { return isLearned; }
-            private set
+            set
             {
                 isLearned = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsVerified
+        {
+            get { return isVerified; }
+            set
+            {
+                isVerified = value;
                 OnPropertyChanged();
             }
         }
@@ -125,9 +158,13 @@ namespace CramTool.Models
         public void Update()
         {
             IsAdded = word.Events.Count > 0;
-            DateAdded = EvalDateAdded(word);
-            IsLearned = EvalIsLearned(word);
-            LastEventDate = EvalLastEventDate(word);
+            DateAdded = word.Events.Count > 0 ? word.Events.First().EventDate : (DateTime?) null;
+            LastEventDate = word.Events.Count > 0 ? word.Events.Last().EventDate : (DateTime?) null;
+
+            UpdatePeriods();
+            
+            IsLearned = RememberedFor != null && RememberedFor > TimeSpan.FromHours(12);
+            IsVerified = RememberedFor != null && RememberedFor > TimeSpan.FromDays(7);
 
             State = EvalState(this);
 
@@ -141,6 +178,11 @@ namespace CramTool.Models
                 return WordState.Unknown;
             }
 
+            if (wordInfo.IsVerified)
+            {
+                return WordState.Verified;
+            }
+
             if (wordInfo.IsLearned)
             {
                 return WordState.Learned;
@@ -149,44 +191,30 @@ namespace CramTool.Models
             return WordState.Studied;
         }
 
-        private static DateTime? EvalDateAdded(Word word)
+        private void UpdatePeriods()
         {
-            return word.Events.Where(e => e.EventType == WordEventType.Added).Min(e => (DateTime?)e.EventDate);
-        }
-
-        private static DateTime? EvalLastEventDate(Word word)
-        {
-            return word.Events.Max(e => (DateTime?)e.EventDate);
-        }
-
-        private static bool EvalIsLearned(Word word)
-        {
-            List<WordEvent> learningEvents = word.Events.Where(e => e.IsLearningEvent).OrderByDescending(e => e.EventDate).ToList();
-            if (learningEvents.Count == 0)
+            rememberedSince = null;
+            rememberedFor = null;
+            //todo: review word.Events ordering
+            foreach (WordEvent wordEvent in word.Events.OrderBy(e => e.EventDate))
             {
-                return false;
-            }
-
-            if (learningEvents[0].EventType != WordEventType.Remembered)
-            {
-                return false;
-            }
-
-            DateTime learningStart = learningEvents[0].EventDate.AddHours(-12);
-
-            foreach (var learningEvent in learningEvents)
-            {
-                if (learningEvent.EventType != WordEventType.Remembered)
+                if (wordEvent.EventType == WordEventType.Remembered)
                 {
-                    return false;
+                    if (rememberedSince == null)
+                    {
+                        rememberedSince = wordEvent.EventDate;
+                    }
+                    rememberedFor = wordEvent.EventDate - rememberedSince;
                 }
-                if (learningEvent.EventDate <= learningStart)
+                if (wordEvent.EventType == WordEventType.Forgotten)
                 {
-                    return true;
+                    rememberedSince = null;
+                    rememberedFor = null;
                 }
             }
 
-            return false;
+            OnPropertyChanged("RememberedSince");
+            OnPropertyChanged("RememberedFor");
         }
 
         //todo: move to parser

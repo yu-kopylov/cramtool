@@ -17,20 +17,19 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Content="Path:" />
-        <Label Grid.Row="0" Grid.Column="1"
-                       Content="{Binding Source={x:Static models:CramToolModel.Instance}, Path=DictPath}" />
+        <Label Grid.Row="0" Grid.Column="1" Content="{Binding Source={x:Static models:CramToolModel.Instance}, Path=DictPath}" />
         <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Content="Words Count:" />
-        <Label Grid.Row="1" Grid.Column="1"
-                       Content="{Binding Source={x:Static models:CramToolModel.Instance}, Path=WordList.Stats.WordCount}" />
+        <Label Grid.Row="1" Grid.Column="1" Content="{Binding Source={x:Static models:CramToolModel.Instance}, Path=WordList.Stats.WordCount}" />
         <Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" Content="Studied Words Count:" />
-        <Label Grid.Row="2" Grid.Column="1"
-                       Content="{Binding Source={x:Static models:CramToolModel.Instance}, Path=WordList.Stats.StudiedWordCount}" />
+        <Label Grid.Row="2" Grid.Column="1" Content="{Binding Source={x:Static models:CramToolModel.Instance}, Path=WordList.Stats.StudiedWordCount}" />
         <Label Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Content="Learned Words Count:" />
-        <Label Grid.Row="3" Grid.Column="1"
-                       Content="{Binding Source={x:Static models:CramToolModel.Instance}, Path=WordList.Stats.LearnedWordCount}" />
-        <StackPanel Grid.Row="4" Grid.ColumnSpan="2" Orientation="Horizontal">
+        <Label Grid.Row="3" Grid.Column="1" Content="{Binding Source={x:Static models:CramToolModel.Instance}, Path=WordList.Stats.LearnedWordCount}" />
+        <Label Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right" Content="Verified Words Count:" />
+        <Label Grid.Row="4" Grid.Column="1" Content="{Binding Source={x:Static models:CramToolModel.Instance}, Path=WordList.Stats.VerifiedWordCount}" />
+        <StackPanel Grid.Row="5" Grid.ColumnSpan="2" Orientation="Horizontal">
             <Button Style="{StaticResource ActiveButton}" Margin="3" Command="{x:Static cramTool:Commands.ResetHistory}">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="{StaticResource WordStateUnknownImage}"/>

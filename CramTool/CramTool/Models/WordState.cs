@@ -4,6 +4,7 @@
     {
         Unknown,
         Studied,
-        Learned
+        Learned,
+        Verified
     }
 }
