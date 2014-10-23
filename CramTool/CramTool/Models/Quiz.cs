@@ -15,6 +15,7 @@ namespace CramTool.Models
         private QuizWord currentWord;
 
         private readonly QuizUnlearnedSettings unlearnedSettings = new QuizUnlearnedSettings();
+        private readonly QuizUnverifiedSettings unverifiedSettings = new QuizUnverifiedSettings();
         private readonly QuizUnrepeatedSettings unrepeatedSettings = new QuizUnrepeatedSettings();
 
         public WordList WordList
@@ -61,6 +62,11 @@ namespace CramTool.Models
         public QuizUnlearnedSettings UnlearnedSettings
         {
             get { return unlearnedSettings; }
+        }
+
+        public QuizUnverifiedSettings UnverifiedSettings
+        {
+            get { return unverifiedSettings; }
         }
 
         public QuizUnrepeatedSettings UnrepeatedSettings
@@ -166,6 +172,16 @@ namespace CramTool.Models
         {
             List<WordInfo> wordsToLearn = wordList.GetAllWords().Where(w => w.IsAdded && !w.IsLearned).ToList();
             return wordsToLearn.OrderBy(w => w.DateAdded ?? DateTime.MaxValue).ThenBy(w => w.Word.Name).ToList();
+        }
+    }
+
+    public class QuizUnverifiedSettings : IQuizSettings
+    {
+        public List<WordInfo> GetWords(WordList wordList)
+        {
+            DateTime cutOffDate = DateTime.UtcNow - WordInfo.TimeToVerify;
+            List<WordInfo> wordsToLearn = wordList.GetAllWords().Where(w => w.IsLearned && !w.IsVerified && w.RememberedSince <= cutOffDate).ToList();
+            return wordsToLearn.OrderBy(w => w.Word.Name).ToList();
         }
     }
 

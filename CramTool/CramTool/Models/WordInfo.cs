@@ -9,6 +9,9 @@ namespace CramTool.Models
 {
     public class WordInfo : INotifyPropertyChanged
     {
+        private static readonly TimeSpan TimeToLearn = TimeSpan.FromHours(12);
+        public static readonly TimeSpan TimeToVerify = TimeSpan.FromHours(24*7 + 12);
+
         private WordList wordList;
         private Word word;
 
@@ -158,13 +161,13 @@ namespace CramTool.Models
         public void Update()
         {
             IsAdded = word.Events.Count > 0;
-            DateAdded = word.Events.Count > 0 ? word.Events.First().EventDate : (DateTime?) null;
-            LastEventDate = word.Events.Count > 0 ? word.Events.Last().EventDate : (DateTime?) null;
+            DateAdded = word.Events.Min(e => (DateTime?)e.EventDate);
+            LastEventDate = word.Events.Max(e => (DateTime?)e.EventDate);
 
             UpdatePeriods();
             
-            IsLearned = RememberedFor != null && RememberedFor > TimeSpan.FromHours(12);
-            IsVerified = RememberedFor != null && RememberedFor > TimeSpan.FromDays(7);
+            IsLearned = RememberedFor >= TimeToLearn;
+            IsVerified = RememberedFor >= TimeToVerify;
 
             State = EvalState(this);
 
