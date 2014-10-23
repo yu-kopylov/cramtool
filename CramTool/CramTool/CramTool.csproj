@@ -256,7 +256,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Fugue\16\cross.png" />
-    <Resource Include="Images\Fugue\16\plus-circle.png" />
     <Resource Include="Images\Fugue\16\tick.png" />
     <Resource Include="Images\Fugue\32\cross-circle.png" />
     <Resource Include="Images\Fugue\16\disk-rename.png" />
@@ -269,7 +268,6 @@
     <Resource Include="Images\Fugue\16\magnifier-history.png" />
     <Resource Include="Images\Fugue\32\exclamation.png" />
     <Resource Include="Images\Fugue\16\document-text.png" />
-    <Resource Include="Images\Fugue\16\minus-small.png" />
     <Resource Include="Images\Fugue\16\card--arrow.png" />
     <Resource Include="Images\Fugue\16\card--minus.png" />
     <Resource Include="Images\Fugue\16\card--pencil.png" />
@@ -278,6 +276,9 @@
     <Resource Include="Images\Fugue\16\eye.png" />
     <Resource Include="Images\Fugue\16\arrow-skip-270.png" />
     <Resource Include="Images\Fugue\16\tag-label-gray.png" />
+    <Resource Include="Images\Fugue\16\plus-white.png" />
+    <Resource Include="Images\Fugue\16\modified\tick-white-olive.png" />
+    <Resource Include="Images\Fugue\16\modified\cross-white-red.png" />
     <Content Include="Images\logo.svg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

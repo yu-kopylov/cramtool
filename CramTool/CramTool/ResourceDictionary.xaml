@@ -3,12 +3,12 @@
 
     <BitmapImage x:Key="WarningIcon" UriSource="/Images/Fugue/32/exclamation.png" DecodePixelHeight="32" />
 
-    <BitmapImage x:Key="WordStateUnknownImage" UriSource="/Images/Fugue/16/minus-small.png" DecodePixelHeight="16" />
+    <BitmapImage x:Key="WordStateUnknownImage" UriSource="/Images/Fugue/16/modified/cross-white-red.png" DecodePixelHeight="16" />
     <BitmapImage x:Key="WordStateStudiedImage" UriSource="/Images/Fugue/16/question-white.png" DecodePixelHeight="16" />
-    <BitmapImage x:Key="WordStateLearnedImage" UriSource="/Images/Fugue/16/tick-circle.png" DecodePixelHeight="16" />
-    <BitmapImage x:Key="WordStateVerifiedImage" UriSource="/Images/Fugue/16/tick.png" DecodePixelHeight="16" />
+    <BitmapImage x:Key="WordStateLearnedImage" UriSource="/Images/Fugue/16/modified/tick-white-olive.png" DecodePixelHeight="16" />
+    <BitmapImage x:Key="WordStateVerifiedImage" UriSource="/Images/Fugue/16/tick-circle.png" DecodePixelHeight="16" />
 
-    <BitmapImage x:Key="WordEventAddedImage" UriSource="/Images/Fugue/16/plus-circle.png" DecodePixelHeight="16" />
+    <BitmapImage x:Key="WordEventAddedImage" UriSource="/Images/Fugue/16/plus-white.png" DecodePixelHeight="16" />
     <BitmapImage x:Key="WordEventRememberedImage" UriSource="/Images/Fugue/16/tick.png" DecodePixelHeight="16" />
     <BitmapImage x:Key="WordEventForgottenImage" UriSource="/Images/Fugue/16/cross.png" DecodePixelHeight="16" />
 
