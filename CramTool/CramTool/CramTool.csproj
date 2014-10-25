@@ -56,6 +56,7 @@
     </ApplicationDefinition>
     <Compile Include="Formats\Settings\Settings.cs" />
     <Compile Include="Formats\WordList\WordList.cs" />
+    <Compile Include="Models\WordEventInfo.cs" />
     <Compile Include="Models\WordIndex.cs" />
     <Compile Include="Models\CramToolSettings.cs" />
     <Compile Include="Models\Quiz.cs" />

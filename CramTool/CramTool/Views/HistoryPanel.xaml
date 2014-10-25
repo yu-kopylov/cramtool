@@ -61,17 +61,17 @@
                   CanUserReorderColumns="False"
                   CanUserResizeColumns="False"
                   SelectionMode="Single"
-                  ItemsSource="{Binding ElementName=This, Path=WordInfo.Word.Events}">
+                  ItemsSource="{Binding ElementName=This, Path=WordInfo.Events}">
             <DataGrid.Columns>
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Image DataContext="{Binding EventType}" ToolTip="{Binding}" Style="{StaticResource WordEventImage}" />
+                            <Image DataContext="{Binding WordEvent.EventType}" ToolTip="{Binding}" Style="{StaticResource WordEventImage}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn Header="Date" Binding="{Binding LocalDate, StringFormat='dd.MM.yyyy HH:mm:ss'}" Width="120" CanUserSort="False" />
-                <DataGridTextColumn Header="Event" Binding="{Binding EventType}" Width="2*" CanUserSort="False" />
+                <DataGridTextColumn Header="Date" Binding="{Binding WordEvent.LocalDate, StringFormat='dd.MM.yyyy HH:mm:ss'}" Width="120" CanUserSort="False" />
+                <DataGridTextColumn Header="Event" Binding="{Binding WordEvent.EventType}" Width="2*" CanUserSort="False" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

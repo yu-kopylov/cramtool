@@ -25,6 +25,7 @@ namespace CramTool.Models
 
         private WordState state = WordState.Unknown;
 
+        private readonly ObservableCollection<WordEventInfo> events = new ObservableCollection<WordEventInfo>();
         private readonly ObservableCollection<WordForm> forms = new ObservableCollection<WordForm>();
         private readonly ObservableCollection<WordTranslation> translations = new ObservableCollection<WordTranslation>();
 
@@ -128,6 +129,11 @@ namespace CramTool.Models
             }
         }
 
+        public ObservableCollection<WordEventInfo> Events
+        {
+            get { return events; }
+        }
+
         public ObservableCollection<WordForm> Forms
         {
             get { return forms; }
@@ -161,10 +167,11 @@ namespace CramTool.Models
         public void Update()
         {
             IsAdded = word.Events.Count > 0;
-            DateAdded = word.Events.Min(e => (DateTime?)e.EventDate);
-            LastEventDate = word.Events.Max(e => (DateTime?)e.EventDate);
+            DateAdded = word.Events.Count > 0 ? word.Events.First().EventDate : (DateTime?) null;
+            LastEventDate = word.Events.Count > 0 ? word.Events.Last().EventDate : (DateTime?) null;
 
             UpdatePeriods();
+            UpdateEvents();
             
             IsLearned = RememberedFor >= TimeToLearn;
             IsVerified = RememberedFor >= TimeToVerify;
@@ -194,12 +201,22 @@ namespace CramTool.Models
             return WordState.Studied;
         }
 
+        private void UpdateEvents()
+        {
+            List<WordEventInfo> wordEventInfos = word.Events.Select(e => new WordEventInfo(e)).ToList();
+            wordEventInfos.Reverse();
+            Events.Clear();
+            foreach (WordEventInfo wordEventInfo in wordEventInfos)
+            {
+                Events.Add(wordEventInfo);
+            }
+        }
+
         private void UpdatePeriods()
         {
             rememberedSince = null;
             rememberedFor = null;
-            //todo: review word.Events ordering
-            foreach (WordEvent wordEvent in word.Events.OrderBy(e => e.EventDate))
+            foreach (WordEvent wordEvent in word.Events)
             {
                 if (wordEvent.EventType == WordEventType.Remembered)
                 {

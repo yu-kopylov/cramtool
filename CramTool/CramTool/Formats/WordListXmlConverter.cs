@@ -72,12 +72,67 @@ namespace CramTool.Formats
             word.Description = wordXml.Description;
             word.Tags = wordXml.Tags;
 
-            foreach (WordEvent wordEventXml in wordXml.Events)
+            List<Models.WordEvent> events = ConvertToObject(wordXml.Events);
+
+            foreach (Models.WordEvent wordEvent in events)
             {
-                word.Events.Add(ConvertToObject(wordEventXml));
+                word.Events.Add(wordEvent);
             }
 
             return word;
+        }
+
+        private static List<Models.WordEvent> ConvertToObject(WordEvent[] wordEventsXml)
+        {
+            List<Models.WordEvent> events = new List<Models.WordEvent>();
+
+            foreach (WordEvent wordEventXml in wordEventsXml)
+            {
+                events.Add(ConvertToObject(wordEventXml));
+            }
+
+            NormalizeEventsOrder(events);
+
+            return events;
+        }
+
+        private static void NormalizeEventsOrder(List<Models.WordEvent> events)
+        {
+            if (events.Count == 0)
+            {
+                return;
+            }
+            
+            events.Sort(CompareEventDates);
+
+            Models.WordEvent firstEvent = events[0];
+
+            if (firstEvent.EventType != Models.WordEventType.Added)
+            {
+                firstEvent = new Models.WordEvent(firstEvent.EventDate, Models.WordEventType.Added);
+                events.Insert(0, firstEvent);
+            }
+
+            Models.WordEvent secondEvent = events.Count > 1 ? events[1] : null;
+
+            if (secondEvent != null && secondEvent.EventDate < firstEvent.EventDate)
+            {
+                firstEvent = new Models.WordEvent(secondEvent.EventDate, firstEvent.EventType);
+                events[0] = firstEvent;
+            }
+        }
+
+        private static int CompareEventDates(Models.WordEvent e1, Models.WordEvent e2)
+        {
+            if (e1.EventType == Models.WordEventType.Added && e2.EventType != Models.WordEventType.Added)
+            {
+                return -1;
+            }
+            if (e1.EventType != Models.WordEventType.Added && e2.EventType == Models.WordEventType.Added)
+            {
+                return 1;
+            }
+            return e1.EventDate.CompareTo(e2.EventDate);
         }
 
         private static Models.WordEvent ConvertToObject(WordEvent wordEventXml)

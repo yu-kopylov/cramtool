@@ -89,7 +89,7 @@ namespace CramTool.Models
             word.Name = name;
             word.Description = description;
             word.Tags = TagParser.FormatTags(tagList);
-            word.Events.Add(new WordEvent(DateTime.UtcNow, WordEventType.Added));
+            word.Mark(WordEventType.Added);
 
             WordInfo wordInfo = WordInfo.Create(this, word);
             wordsByName.Add(name, wordInfo);

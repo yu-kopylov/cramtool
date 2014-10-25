@@ -15,8 +15,8 @@ namespace Test.CramTool
 
             try
             {
-                const string filename1 = @"C:\dict.dictx";
-                const string filename2 = @"C:\dict2.dictx";
+                const string filename1 = @"C:\dict.dictz";
+                const string filename2 = @"C:\dict2.dictz";
 
                 CramToolSettings settings1 = new CramToolSettings();
                 for (int i = CramToolSettings.MaxRecentFiles * 2; i >= 0; i--)

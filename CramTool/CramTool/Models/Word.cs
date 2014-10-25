@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
@@ -12,7 +13,7 @@ namespace CramTool.Models
         private string name;
         private string description;
         private string tags;
-        private readonly ObservableCollection<WordEvent> events = new ObservableCollection<WordEvent>();
+        private readonly List<WordEvent> events = new List<WordEvent>();
 
         public string Name
         {
@@ -44,7 +45,11 @@ namespace CramTool.Models
             }
         }
 
-        public ObservableCollection<WordEvent> Events
+        /// <summary>
+        /// Events in ascending EventDate order.
+        /// Event with type 'Added' should always be the first event.
+        /// </summary>
+        public List<WordEvent> Events
         {
             get { return events; }
         }
@@ -59,15 +64,33 @@ namespace CramTool.Models
 
         public void Mark(WordEventType eventType)
         {
-            var lastEvent = Events.OrderByDescending(e => e.EventDate).FirstOrDefault(e => e.IsLearningEvent);
-            DateTime utcNow = DateTime.UtcNow;
-            if (lastEvent != null && lastEvent.EventDate >= utcNow.AddMinutes(-5))
+            Contract.Assert(eventType != WordEventType.Added || Events.Count == 0);
+            Contract.Assert(eventType == WordEventType.Added || Events.Count > 0);
+            
+            WordEvent wordEvent = new WordEvent(DateTime.UtcNow, eventType);
+
+            var lastEvent = Events.LastOrDefault();
+            while (lastEvent != null && EventsOverllap(lastEvent, wordEvent))
             {
-                Events.Remove(lastEvent);
+                Events.RemoveAt(Events.Count - 1);
+                lastEvent = Events.LastOrDefault();
             }
 
-            WordEvent wordEvent = new WordEvent(utcNow, eventType);
-            Events.Insert(0, wordEvent);
+            if (eventType != WordEventType.Added && Events.Count == 0)
+            {
+                Events.Add(new WordEvent(wordEvent.EventDate, WordEventType.Added));
+            }
+
+            Events.Add(wordEvent);
+        }
+
+        private bool EventsOverllap(WordEvent oldEvent, WordEvent newEvent)
+        {
+            if (oldEvent.EventType == WordEventType.Added)
+            {
+                return newEvent.EventDate < oldEvent.EventDate;
+            }
+            return newEvent.EventDate.AddMinutes(-5) < oldEvent.EventDate;
         }
 
         public void ResetHistory()
