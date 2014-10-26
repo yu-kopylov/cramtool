@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 using CramTool.Models;
+using CramTool.Models.Quizzes;
 
 namespace CramTool.Views
 {

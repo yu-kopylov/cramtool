@@ -56,10 +56,14 @@
     </ApplicationDefinition>
     <Compile Include="Formats\Settings\Settings.cs" />
     <Compile Include="Formats\WordList\WordList.cs" />
+    <Compile Include="Models\Quizzes\GeneralQuizSettings.cs" />
+    <Compile Include="Models\Quizzes\IQuizSettings.cs" />
+    <Compile Include="Models\Quizzes\QuizStage.cs" />
+    <Compile Include="Models\Quizzes\QuizWord.cs" />
     <Compile Include="Models\WordEventInfo.cs" />
     <Compile Include="Models\WordIndex.cs" />
     <Compile Include="Models\CramToolSettings.cs" />
-    <Compile Include="Models\Quiz.cs" />
+    <Compile Include="Models\Quizzes\Quiz.cs" />
     <Compile Include="Models\TagParser.cs" />
     <Compile Include="Models\WordForm.cs" />
     <Compile Include="Models\WordInfo.cs" />

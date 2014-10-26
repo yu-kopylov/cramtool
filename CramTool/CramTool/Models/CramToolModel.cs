@@ -1,8 +1,8 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
 using CramTool.Formats;
+using CramTool.Models.Quizzes;
 
 namespace CramTool.Models
 {
@@ -21,7 +21,6 @@ namespace CramTool.Models
         private CramToolModel()
         {
             settings.Load();
-            quiz.UnrepeatedSettings.UnrepeatedSince = DateTime.Today;
         }
 
         public static CramToolModel Instance

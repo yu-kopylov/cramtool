@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using CramTool.Models;
+using CramTool.Models.Quizzes;
 
 namespace CramTool.Views
 {

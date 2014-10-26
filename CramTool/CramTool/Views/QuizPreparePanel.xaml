@@ -12,7 +12,7 @@
             <Setter Property="Padding" Value="10"/>
             <Setter Property="BorderBrush" Value="SlateGray"/>
             <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Height" Value="100"/>
+            <Setter Property="Height" Value="110"/>
         </Style>
         <Style x:Key="QuizDescription" TargetType="TextBlock">
             <Setter Property="TextWrapping" Value="Wrap"/>
@@ -24,8 +24,6 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -33,7 +31,7 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource QuizTypeBorder}" DataContext="{Binding ElementName=This, Path=Quiz.UnlearnedSettings}">
+        <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource QuizTypeBorder}" DataContext="{Binding ElementName=This, Path=Quiz.GeneralSettings}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -44,58 +42,16 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <Image Grid.Row="0" Grid.Column="0" Source="{StaticResource WordStateStudiedImage}" Margin="0 0 5 0" VerticalAlignment="Top" Height="16"/>
-                <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource QuizDescription}">
-                    Quiz words that are studied but are not learned yet.
-                </TextBlock>
-                <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Right" Width="80" Style="{StaticResource ActiveButton}" Command="cramTool:Commands.StartQuiz" CommandParameter="{Binding}">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="{StaticResource QuizStartIcon}"/>
-                        <TextBlock>Start Quiz</TextBlock>
-                    </StackPanel>
-                </Button>
-            </Grid>
-        </Border>        
-        <Border Grid.Row="2" Grid.Column="1" Style="{StaticResource QuizTypeBorder}" DataContext="{Binding ElementName=This, Path=Quiz.UnverifiedSettings}">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Image Grid.Row="0" Grid.Column="0" Source="{StaticResource WordStateLearnedImage}" Margin="0 0 5 0" VerticalAlignment="Top" Height="16"/>
-                <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource QuizDescription}">
-                    Quiz words that were learned at least a week ago and can be verified.
-                </TextBlock>
-                <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Right" Width="80" Style="{StaticResource ActiveButton}" Command="cramTool:Commands.StartQuiz" CommandParameter="{Binding}">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="{StaticResource QuizStartIcon}"/>
-                        <TextBlock>Start Quiz</TextBlock>
-                    </StackPanel>
-                </Button>
-            </Grid>
-        </Border>
-        <Border Grid.Row="3" Grid.Column="1" Style="{StaticResource QuizTypeBorder}" DataContext="{Binding ElementName=This, Path=Quiz.UnrepeatedSettings}">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Image Grid.Row="0" Grid.Column="0" Source="{StaticResource WordStateLearnedImage}" Margin="0 0 5 0" VerticalAlignment="Top" Height="16"/>
                 <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical">
-                    <TextBlock Style="{StaticResource QuizDescription}">
-                        Quiz words that were learned but were not repeated since a given date.
+                    <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource QuizDescription}">
+                        General Quiz
                     </TextBlock>
-                    <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
-                        <TextBlock VerticalAlignment="Center" Margin="0 0 5 0">Unrepeated since:</TextBlock>
-                        <DatePicker VerticalAlignment="Center" SelectedDate="{Binding Path=UnrepeatedSince}"/>
-                    </StackPanel>
+                    <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource QuizDescription}">
+                        - Words that you are learning
+                    </TextBlock>
+                    <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource QuizDescription}">
+                        - Words that you learned and should verify
+                    </TextBlock>
                 </StackPanel>
                 <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Right" Width="80" Style="{StaticResource ActiveButton}" Command="cramTool:Commands.StartQuiz" CommandParameter="{Binding}">
                     <StackPanel Orientation="Horizontal">
