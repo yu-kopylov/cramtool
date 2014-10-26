@@ -30,13 +30,13 @@ namespace CramTool.Models
 
         public void Load()
         {
-            Settings settings;
+            SettingsXml settings;
             try
             {
-                XmlSerializer ser = new XmlSerializer(typeof(Settings));
+                XmlSerializer ser = new XmlSerializer(typeof(SettingsXml));
                 using (Stream stream = File.OpenRead(SettingsFilename))
                 {
-                    settings = (Settings)ser.Deserialize(stream);
+                    settings = (SettingsXml)ser.Deserialize(stream);
                 }
             }
             catch (Exception)
@@ -52,13 +52,13 @@ namespace CramTool.Models
 
         public void Save()
         {
-            Settings settings = new Settings();
+            SettingsXml settings = new SettingsXml();
             settings.RecentFiles = RecentFiles.ToArray();
             try
             {
                 Directory.CreateDirectory(CramToolSettingsFolder);
 
-                XmlSerializer ser = new XmlSerializer(typeof(Settings));
+                XmlSerializer ser = new XmlSerializer(typeof(SettingsXml));
                 using (Stream stream = File.Create(SettingsFilename))
                 {
                     ser.Serialize(stream, settings);
