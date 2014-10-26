@@ -2,6 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:cramTool="clr-namespace:CramTool">
 
     <BitmapImage x:Key="WarningIcon" UriSource="/Images/Fugue/32/exclamation.png" DecodePixelHeight="32" />
+    
+    <BitmapImage x:Key="ClearTextBoxIcon" UriSource="/Images/Fugue/16/modified/cross-small-blue.png" DecodePixelHeight="16" />
 
     <BitmapImage x:Key="WordStateUnknownImage" UriSource="/Images/Fugue/16/modified/cross-white-red.png" DecodePixelHeight="16" />
     <BitmapImage x:Key="WordStateStudiedImage" UriSource="/Images/Fugue/16/question-white.png" DecodePixelHeight="16" />

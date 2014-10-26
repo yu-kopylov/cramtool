@@ -25,7 +25,7 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Row="0" Grid.Column="0" Text="Word:" VerticalAlignment="Center" Margin="3"/>
-            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding ElementName=This, Path=SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="3"/>
+            <views:SearchTextBox Grid.Row="0" Grid.Column="1" Text="{Binding ElementName=This, Path=SearchText}" Margin="3"/>
             <Button Grid.Row="0" Grid.Column="2" Width="80" Margin="3" Command="cramTool:Commands.AddWord" Style="{StaticResource ActiveButton}">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="{StaticResource WordEventAddedImage}" />

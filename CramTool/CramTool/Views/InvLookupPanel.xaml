@@ -17,7 +17,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Row="0" Grid.Column="0" Text="Word:" VerticalAlignment="Center" Margin="3"/>
-            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding ElementName=This, Path=SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="3"/>
+            <views:SearchTextBox Grid.Row="0" Grid.Column="1" Text="{Binding ElementName=This, Path=SearchText}" Margin="3 3 0 3"/>
         </Grid>
         <Grid Grid.Row="1" Grid.Column="0">
             <Grid.ColumnDefinitions>

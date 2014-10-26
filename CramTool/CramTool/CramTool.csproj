@@ -101,6 +101,9 @@
     <Compile Include="Views\QuizStartedPanel.xaml.cs">
       <DependentUpon>QuizStartedPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\SearchTextBox.xaml.cs">
+      <DependentUpon>SearchTextBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\StatisticPanel.xaml.cs">
       <DependentUpon>StatisticPanel.xaml</DependentUpon>
     </Compile>
@@ -174,6 +177,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\QuizStartedPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SearchTextBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -280,6 +287,7 @@
     <Resource Include="Images\Fugue\16\plus-white.png" />
     <Resource Include="Images\Fugue\16\modified\tick-white-olive.png" />
     <Resource Include="Images\Fugue\16\modified\cross-white-red.png" />
+    <Resource Include="Images\Fugue\16\modified\cross-small-blue.png" />
     <Content Include="Images\logo.svg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
