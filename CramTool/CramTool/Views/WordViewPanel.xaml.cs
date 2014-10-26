@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -12,7 +13,7 @@ namespace CramTool.Views
     /// </summary>
     public partial class WordViewPanel : UserControl
     {
-        public static readonly DependencyProperty WordProperty = DependencyProperty.Register("Word", typeof(Word), typeof(WordViewPanel), new PropertyMetadata(default(Word), WordChanged));
+        public static readonly DependencyProperty WordProperty = DependencyProperty.Register("Word", typeof(Word), typeof(WordViewPanel), new PropertyMetadata(default(Word), OnWordChanged));
 
         public WordViewPanel()
         {
@@ -25,10 +26,18 @@ namespace CramTool.Views
             set { SetValue(WordProperty, value); }
         }
 
-        private static void WordChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        private static void OnWordChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
         {
             WordViewPanel panel = (WordViewPanel) obj;
+
+            WeakEventHelper.UpdateListener<Word, PropertyChangedEventArgs>(args, "PropertyChanged", panel.OnWordPropertyChanged);
+
             panel.UpdateText();
+        }
+
+        private void OnWordPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            UpdateText();
         }
 
         public void UpdateText()

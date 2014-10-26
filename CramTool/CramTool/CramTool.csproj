@@ -120,6 +120,7 @@
     <Compile Include="Views\WordViewPanel.xaml.cs">
       <DependentUpon>WordViewPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WeakEventHelper.cs" />
     <Page Include="ResourceDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
