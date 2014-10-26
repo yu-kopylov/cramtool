@@ -16,16 +16,16 @@ namespace CramTool.Views
     public partial class InvLookupPanel : UserControl
     {
         public static readonly DependencyProperty WordListProperty =
-            DependencyProperty.Register("WordList", typeof(WordList), typeof(InvLookupPanel), new PropertyMetadata(default(WordList), (obj, args) => ((InvLookupPanel)obj).OnWordListChanged()));
+            DependencyProperty.Register("WordList", typeof(WordList), typeof(InvLookupPanel), new PropertyMetadata(default(WordList), OnWordListChanged));
 
         public static readonly DependencyProperty SearchTextProperty =
-            DependencyProperty.Register("SearchText", typeof(string), typeof(InvLookupPanel), new PropertyMetadata(default(string), (obj, args) => ((InvLookupPanel)obj).MarkSearchPending()));
+            DependencyProperty.Register("SearchText", typeof(string), typeof(InvLookupPanel), new PropertyMetadata(default(string), (obj, args) => ((InvLookupPanel)obj).MarkSearchPending(true)));
 
         public static readonly DependencyProperty MatchingTranslationsProperty =
-            DependencyProperty.Register("MatchingTranslations", typeof(ObservableCollection<WordTranslation>), typeof(InvLookupPanel), new PropertyMetadata(default(ObservableCollection<WordTranslation>)));
+            DependencyProperty.Register("MatchingTranslations", typeof(ObservableCollection<string>), typeof(InvLookupPanel), new PropertyMetadata(default(ObservableCollection<string>)));
 
         public static readonly DependencyProperty CurrentTranslationProperty =
-            DependencyProperty.Register("CurrentTranslation", typeof(WordTranslation), typeof(InvLookupPanel), new PropertyMetadata(default(WordTranslation), (obj, args) => ((InvLookupPanel)obj).OnCurrentTranslationChanged()));
+            DependencyProperty.Register("CurrentTranslation", typeof(string), typeof(InvLookupPanel), new PropertyMetadata(default(string), (obj, args) => ((InvLookupPanel)obj).OnCurrentTranslationChanged()));
 
         public static readonly DependencyProperty MatchingWordsProperty =
             DependencyProperty.Register("MatchingWords", typeof(ObservableCollection<WordInfo>), typeof(InvLookupPanel), new PropertyMetadata(default(ObservableCollection<WordInfo>)));
@@ -35,6 +35,7 @@ namespace CramTool.Views
 
         private readonly DispatcherTimer timer;
         private bool searchPending = true;
+        private bool filterChanged = true;
 
         public InvLookupPanel()
         {
@@ -57,15 +58,15 @@ namespace CramTool.Views
             set { SetValue(SearchTextProperty, value); }
         }
 
-        public ObservableCollection<WordTranslation> MatchingTranslations
+        public ObservableCollection<string> MatchingTranslations
         {
-            get { return (ObservableCollection<WordTranslation>)GetValue(MatchingTranslationsProperty); }
+            get { return (ObservableCollection<string>)GetValue(MatchingTranslationsProperty); }
             set { SetValue(MatchingTranslationsProperty, value); }
         }
 
-        public WordTranslation CurrentTranslation
+        public string CurrentTranslation
         {
-            get { return (WordTranslation)GetValue(CurrentTranslationProperty); }
+            get { return (string)GetValue(CurrentTranslationProperty); }
             set { SetValue(CurrentTranslationProperty, value); }
         }
 
@@ -81,34 +82,54 @@ namespace CramTool.Views
             set { SetValue(CurrentWordProperty, value); }
         }
 
-        private void OnWordListChanged()
+        private static void OnWordListChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
         {
-            CurrentTranslation = null;
-            CurrentWord = null;
-            MarkSearchPending();
+            InvLookupPanel panel = (InvLookupPanel)obj;
+
+            panel.CurrentTranslation = null;
+            panel.CurrentWord = null;
+
+            WeakEventHelper.UpdateListener<WordList, EventArgs>(args, "ContentsChanged", panel.OnWordListContentsChanged);
+
+            panel.MarkSearchPending(false);
+        }
+
+        private void OnWordListContentsChanged(object sender, EventArgs e)
+        {
+            MarkSearchPending(false);
         }
 
         private void OnCurrentTranslationChanged()
         {
             CurrentWord = null;
 
-            if (CurrentTranslation == null)
+            UpdateMatchingWords();
+        }
+
+        private void UpdateMatchingWords()
+        {
+            if (WordList == null || CurrentTranslation == null)
             {
                 MatchingWords = new ObservableCollection<WordInfo>();
             }
             else
             {
-                MatchingWords = new ObservableCollection<WordInfo>(CurrentTranslation.Words);
+                MatchingWords = new ObservableCollection<WordInfo>(WordList.GetWordsWithTranslation(CurrentTranslation));
             }
         }
 
-        private void MarkSearchPending()
+        private void MarkSearchPending(bool markFilterChanged)
         {
+            if (markFilterChanged)
+            {
+                filterChanged = true;
+            }
             searchPending = true;
         }
 
         private void Search(object sender, EventArgs eventArgs)
         {
+            //todo: consider adding "clear" button for search string
             if (!searchPending)
             {
                 return;
@@ -119,40 +140,29 @@ namespace CramTool.Views
                 return;
             }
 
-            searchPending = false;
+            bool matchFilter = filterChanged;
 
+            searchPending = false;
+            filterChanged = false;
+
+            Search(matchFilter);
+        }
+
+        private void Search(bool matchFilter)
+        {
             string searchText = (SearchText ?? "").Trim();
 
-            IEnumerable<WordTranslation> translations = WordList.GetAllTranslations();
-            IEnumerable<WordTranslation> filteredTranslations = translations.Where(w => w.Name.StartsWith(searchText, true, CultureInfo.InvariantCulture)).OrderBy(w => w.Name);
-            SortedDictionary<string, WordTranslation> groupedTranslations = new SortedDictionary<string, WordTranslation>();
-            foreach (WordTranslation translation in filteredTranslations)
+            IEnumerable<string> translations = WordList.GetAllTranslations();
+            IEnumerable<string> filteredTranslations = translations.Where(tr => tr.StartsWith(searchText, true, CultureInfo.InvariantCulture)).ToList();
+
+            MatchingTranslations = new ObservableCollection<string>(filteredTranslations);
+
+            if (matchFilter)
             {
-                WordTranslation existingTranslation;
-                if (!groupedTranslations.TryGetValue(translation.Name, out existingTranslation))
-                {
-                    //review why copy is used
-                    groupedTranslations.Add(translation.Name, translation.Copy());
-                }
-                else
-                {
-                    //todo: make sure words are sorted within translation.Words
-                    existingTranslation.Words.AddRange(translation.Words);
-                }
+                CurrentTranslation = filteredTranslations.Contains(searchText) ? searchText : null;
             }
 
-            MatchingTranslations = new ObservableCollection<WordTranslation>(groupedTranslations.Values);
-
-            WordTranslation matchingTranslation;
-
-            if (groupedTranslations.TryGetValue(searchText, out matchingTranslation))
-            {
-                CurrentTranslation = matchingTranslation;
-            }
-            else
-            {
-                CurrentTranslation = null;
-            }
+            UpdateMatchingWords();
         }
     }
 }

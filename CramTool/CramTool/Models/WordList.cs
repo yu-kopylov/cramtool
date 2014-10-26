@@ -11,6 +11,7 @@ namespace CramTool.Models
     {
         private readonly Dictionary<string, WordInfo> wordsByName = new Dictionary<string, WordInfo>();
         private readonly WordIndex tagIndex = new WordIndex();
+        private readonly WordIndex translationIndex = new WordIndex();
 
         private bool modified;
         private WordsListStats stats;
@@ -45,9 +46,14 @@ namespace CramTool.Models
             return wordsByName.Values.SelectMany(w => w.Forms);
         }
 
-        public IEnumerable<WordTranslation> GetAllTranslations()
+        public IEnumerable<string> GetAllTranslations()
         {
-            return wordsByName.Values.SelectMany(w => w.Translations);
+            return translationIndex.GetAttributes();
+        }
+
+        public IEnumerable<WordInfo> GetWordsWithTranslation(string translation)
+        {
+            return translationIndex.GetWordNames(translation).Select(wordName => wordsByName[wordName]);
         }
 
         public IEnumerable<string> GetAllTags()
@@ -93,21 +99,17 @@ namespace CramTool.Models
             Contract.Assert(!wordsByName.ContainsKey(name));
             Modified = true;
 
-            List<string> tagList = TagParser.ParseTags(tags);
-
             Word word = new Word();
             word.Name = name;
             word.Description = description;
-            word.Tags = TagParser.FormatTags(tagList);
+            word.Tags = TagParser.ReformatTags(tags);
             word.Mark(WordEventType.Added);
 
             WordInfo wordInfo = WordInfo.Create(this, word);
             wordsByName.Add(name, wordInfo);
 
-            foreach (string tag in tagList)
-            {
-                tagIndex.Add(name, tag);
-            }
+            tagIndex.Add(name, wordInfo.Tags);
+            translationIndex.Add(name, wordInfo.Translations);
 
             UpdateStats();
 
@@ -125,12 +127,12 @@ namespace CramTool.Models
 
             WordInfo wordInfo = wordsByName[oldName];
 
-            List<string> oldTagList = TagParser.ParseTags(wordInfo.Word.Tags);
-            List<string> newTagList = TagParser.ParseTags(tags);
+            List<string> oldTags = new List<string>(wordInfo.Tags);
+            List<string> oldTranslations = new List<string>(wordInfo.Translations);
 
             wordInfo.Word.Name = newName;
             wordInfo.Word.Description = description;
-            wordInfo.Word.Tags = TagParser.FormatTags(newTagList);
+            wordInfo.Word.Tags = TagParser.ReformatTags(tags);
             wordInfo.Update();
 
             if (newName != oldName)
@@ -139,7 +141,8 @@ namespace CramTool.Models
                 wordsByName.Add(newName, wordInfo);
             }
 
-            tagIndex.Update(oldName, oldTagList, newName, newTagList);
+            tagIndex.Update(oldName, oldTags, newName, wordInfo.Tags);
+            translationIndex.Update(oldName, oldTranslations, newName, wordInfo.Translations);
 
             UpdateStats();
 
@@ -196,12 +199,11 @@ namespace CramTool.Models
             Contract.Assert(wordsByName.Count == 0);
             foreach (Word word in words)
             {
-                wordsByName.Add(word.Name, WordInfo.Create(this, word));
-                List<string> tagList = TagParser.ParseTags(word.Tags);
-                foreach (string tag in tagList)
-                {
-                    tagIndex.Add(word.Name, tag);
-                }
+                WordInfo wordInfo = WordInfo.Create(this, word);
+                wordsByName.Add(word.Name, wordInfo);
+
+                tagIndex.Add(word.Name, wordInfo.Tags);
+                translationIndex.Add(word.Name, wordInfo.Translations);
             }
             Modified = false;
 

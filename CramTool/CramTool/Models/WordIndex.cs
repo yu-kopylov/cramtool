@@ -22,6 +22,14 @@ namespace CramTool.Models
             }
         }
 
+        public void Add(string wordName, IEnumerable<string> attributes)
+        {
+            foreach (string attribute in attributes)
+            {
+                Add(wordName, attribute);
+            }
+        }
+
         public void Remove(string wordName, string attribute)
         {
             SortedSet<string> wordNames;
@@ -49,7 +57,7 @@ namespace CramTool.Models
             return attributesIndex[attribute].ToList();
         }
 
-        public void Update(string oldWordName, List<string> oldAttributes, string newWordName, List<string> newAttributes)
+        public void Update(string oldWordName, IEnumerable<string> oldAttributes, string newWordName, IEnumerable<string> newAttributes)
         {
             List<Tuple<string, string>> oldPairs = GetWordAttributePairs(oldWordName, oldAttributes);
             List<Tuple<string, string>> newPairs = GetWordAttributePairs(newWordName, newAttributes);
@@ -67,7 +75,7 @@ namespace CramTool.Models
             }
         }
 
-        private static List<Tuple<string, string>> GetWordAttributePairs(string wordName, List<string> attributes)
+        private static List<Tuple<string, string>> GetWordAttributePairs(string wordName, IEnumerable<string> attributes)
         {
             return attributes.Select(attribute => Tuple.Create(wordName, attribute)).ToList();
         }

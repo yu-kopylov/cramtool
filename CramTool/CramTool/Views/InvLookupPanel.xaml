@@ -37,7 +37,7 @@
                       ItemsSource="{Binding ElementName=This, Path=MatchingTranslations}"
                       SelectedItem="{Binding ElementName=This, Path=CurrentTranslation, Mode=TwoWay}">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*" CanUserSort="False"/>
+                    <DataGridTextColumn Header="Name" Binding="{Binding}" Width="*" CanUserSort="False"/>
                 </DataGrid.Columns>
             </DataGrid>
             <GridSplitter Grid.Column="1" Style="{StaticResource VerticalSplitter}"/>

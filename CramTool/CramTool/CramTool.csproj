@@ -70,7 +70,6 @@
     <Compile Include="Formats\WordListXmlConverter.cs" />
     <Compile Include="Models\WordsListStats.cs" />
     <Compile Include="Models\WordState.cs" />
-    <Compile Include="Models\WordTranslation.cs" />
     <Compile Include="ValueConverters.cs" />
     <Compile Include="Views\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>

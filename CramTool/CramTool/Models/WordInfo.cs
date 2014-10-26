@@ -27,7 +27,8 @@ namespace CramTool.Models
 
         private readonly ObservableCollection<WordEventInfo> events = new ObservableCollection<WordEventInfo>();
         private readonly ObservableCollection<WordForm> forms = new ObservableCollection<WordForm>();
-        private readonly ObservableCollection<WordTranslation> translations = new ObservableCollection<WordTranslation>();
+        private readonly ObservableCollection<string> translations = new ObservableCollection<string>();
+        private readonly ObservableCollection<string> tags = new ObservableCollection<string>();
 
         public WordList WordList
         {
@@ -139,9 +140,14 @@ namespace CramTool.Models
             get { return forms; }
         }
 
-        public ObservableCollection<WordTranslation> Translations
+        public ObservableCollection<string> Translations
         {
             get { return translations; }
+        }
+
+        public ObservableCollection<string> Tags
+        {
+            get { return tags; }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -179,6 +185,12 @@ namespace CramTool.Models
             State = EvalState(this);
 
             ParseWord(this);
+            
+            tags.Clear();
+            foreach (string tag in TagParser.ParseTags(word.Tags))
+            {
+                tags.Add(tag);
+            }
         }
 
         private static WordState EvalState(WordInfo wordInfo)
@@ -267,7 +279,7 @@ namespace CramTool.Models
             info.Translations.Clear();
             foreach (string translation in translations)
             {
-                info.Translations.Add(new WordTranslation(translation, info));
+                info.Translations.Add(translation);
             }
         }
 
