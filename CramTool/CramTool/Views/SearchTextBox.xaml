@@ -6,6 +6,31 @@
              x:Name="This"
              mc:Ignorable="d"
              d:DesignWidth="300">
+    <UserControl.Resources>
+        
+        <LinearGradientBrush x:Key="TextBoxActiveBorderBrush" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#FF4581B1" />
+            <GradientStop Color="#FFB7D9ED" Offset="1"/>
+        </LinearGradientBrush>
+        
+        <LinearGradientBrush x:Key="TextBoxInactiveBorderBrush" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#FFAFB1B7" />
+            <GradientStop Color="#FFE3E9EF" Offset="1"/>
+        </LinearGradientBrush>
+
+        <SolidColorBrush x:Key="ButtonDefaultBackground" Color="White"/>
+
+        <LinearGradientBrush x:Key="ButtonHighlightBackground" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#FFB7D9ED" />
+            <GradientStop Color="#FFE3E9EF" Offset="1"/>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="ButtonPressedBackground" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#FF4581B1" />
+            <GradientStop Color="#FFB7D9ED" Offset="1"/>
+        </LinearGradientBrush>
+
+    </UserControl.Resources>
     <Border>
         <Border.Style>
             <Style TargetType="Border">
@@ -13,24 +38,10 @@
                 <Setter Property="Padding" Value="1"/>
                 <Style.Triggers>
                     <DataTrigger Binding="{Binding ElementName=UxTextBox, Path=IsFocused}" Value="True">
-                        <Setter Property="BorderBrush">
-                            <Setter.Value>
-                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                    <GradientStop Color="#FF4581B1" />
-                                    <GradientStop Color="#FFB7D9ED" Offset="1"/>
-                                </LinearGradientBrush>
-                            </Setter.Value>
-                        </Setter>
+                        <Setter Property="BorderBrush" Value="{StaticResource TextBoxActiveBorderBrush}"/>
                     </DataTrigger>
                     <DataTrigger Binding="{Binding ElementName=UxTextBox, Path=IsFocused}" Value="False">
-                        <Setter Property="BorderBrush">
-                            <Setter.Value>
-                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                    <GradientStop Color="#FFAFB1B7" />
-                                    <GradientStop Color="#FFE3E9EF" Offset="1"/>
-                                </LinearGradientBrush>
-                            </Setter.Value>
-                        </Setter>
+                        <Setter Property="BorderBrush" Value="{StaticResource TextBoxInactiveBorderBrush}"/>
                     </DataTrigger>
                 </Style.Triggers>
             </Style>
@@ -53,37 +64,23 @@
                                     <Style.Triggers>
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
-                                                <Condition Binding="{Binding ElementName=UxButton, Path=IsMouseOver}" Value="True"/>
-                                                <Condition Binding="{Binding ElementName=UxButton, Path=IsPressed}" Value="False"/>
-                                            </MultiDataTrigger.Conditions>
-                                            <Setter Property="Background">
-                                                <Setter.Value>
-                                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                                        <GradientStop Color="#FFB7D9ED" />
-                                                        <GradientStop Color="#FFE3E9EF" Offset="1"/>
-                                                    </LinearGradientBrush>
-                                                </Setter.Value>
-                                            </Setter>
-                                        </MultiDataTrigger>
-                                        <MultiDataTrigger>
-                                            <MultiDataTrigger.Conditions>
                                                 <Condition Binding="{Binding ElementName=UxButton, Path=IsMouseOver}" Value="False"/>
                                                 <Condition Binding="{Binding ElementName=UxButton, Path=IsPressed}" Value="False"/>
                                             </MultiDataTrigger.Conditions>
-                                            <Setter Property="Background" Value="White"/>
+                                            <Setter Property="Background" Value="{StaticResource ButtonDefaultBackground}"/>
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding ElementName=UxButton, Path=IsMouseOver}" Value="True"/>
+                                                <Condition Binding="{Binding ElementName=UxButton, Path=IsPressed}" Value="False"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="{StaticResource ButtonHighlightBackground}"/>
                                         </MultiDataTrigger>
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
                                                 <Condition Binding="{Binding ElementName=UxButton, Path=IsPressed}" Value="True"/>
                                             </MultiDataTrigger.Conditions>
-                                            <Setter Property="Background">
-                                                <Setter.Value>
-                                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                                        <GradientStop Color="#FF4581B1" />
-                                                        <GradientStop Color="#FFB7D9ED" Offset="1"/>
-                                                    </LinearGradientBrush>
-                                                </Setter.Value>
-                                            </Setter>
+                                            <Setter Property="Background" Value="{StaticResource ButtonPressedBackground}"/>
                                         </MultiDataTrigger>
                                     </Style.Triggers>
                                 </Style>
