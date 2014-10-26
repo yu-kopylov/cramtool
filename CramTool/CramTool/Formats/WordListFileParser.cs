@@ -11,14 +11,14 @@ namespace CramTool.Formats
     {
         private const string ZipWordListEntryName = "words.xml";
 
-        private static readonly XmlSerializer serializer = new XmlSerializer(typeof(WordList.WordList));
+        private static readonly XmlSerializer serializer = new XmlSerializer(typeof (WordList.WordListXml));
 
         public Models.WordList ParseXml(Stream inputStream)
         {
-            WordList.WordList wordsXml;
+            WordList.WordListXml wordsXml;
             try
             {
-                wordsXml = (WordList.WordList) serializer.Deserialize(inputStream);
+                wordsXml = (WordList.WordListXml) serializer.Deserialize(inputStream);
             }
             catch (InvalidOperationException e)
             {
@@ -49,7 +49,7 @@ namespace CramTool.Formats
 
         public void GenerateXml(Models.WordList wordList, Stream outputStream)
         {
-            WordList.WordList wordsXml = WordListXmlConverter.ConvertToXml(wordList);
+            WordList.WordListXml wordsXml = WordListXmlConverter.ConvertToXml(wordList);
 
             XmlWriterSettings xmlWriterSettings = new XmlWriterSettings();
             xmlWriterSettings.Encoding = new UTF8Encoding(false);

@@ -21,14 +21,14 @@ namespace CramTool.Formats.WordList {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://CramTool.WordList-1.0.0")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://CramTool.WordList-1.0.0", IsNullable=true)]
-    public partial class WordList {
+    [System.Xml.Serialization.XmlRootAttribute("WordList", Namespace="http://CramTool.WordList-1.0.0", IsNullable=true)]
+    public partial class WordListXml {
         
-        private Word[] wordsField;
+        private WordXml[] wordsField;
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlArrayItemAttribute(IsNullable=false)]
-        public Word[] Words {
+        [System.Xml.Serialization.XmlArrayItemAttribute("Word", IsNullable=false)]
+        public WordXml[] Words {
             get {
                 return this.wordsField;
             }
@@ -44,7 +44,7 @@ namespace CramTool.Formats.WordList {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://CramTool.WordList-1.0.0")]
-    public partial class Word {
+    public partial class WordXml {
         
         private string nameField;
         
@@ -52,7 +52,7 @@ namespace CramTool.Formats.WordList {
         
         private string tagsField;
         
-        private WordEvent[] eventsField;
+        private WordEventXml[] eventsField;
         
         /// <remarks/>
         public string Name {
@@ -85,8 +85,8 @@ namespace CramTool.Formats.WordList {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlArrayItemAttribute(IsNullable=false)]
-        public WordEvent[] Events {
+        [System.Xml.Serialization.XmlArrayItemAttribute("WordEvent", IsNullable=false)]
+        public WordEventXml[] Events {
             get {
                 return this.eventsField;
             }
@@ -102,11 +102,11 @@ namespace CramTool.Formats.WordList {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://CramTool.WordList-1.0.0")]
-    public partial class WordEvent {
+    public partial class WordEventXml {
         
         private System.DateTime eventDateField;
         
-        private WordEventType eventTypeField;
+        private WordEventTypeXml eventTypeField;
         
         /// <remarks/>
         public System.DateTime EventDate {
@@ -119,7 +119,7 @@ namespace CramTool.Formats.WordList {
         }
         
         /// <remarks/>
-        public WordEventType EventType {
+        public WordEventTypeXml EventType {
             get {
                 return this.eventTypeField;
             }
@@ -133,7 +133,7 @@ namespace CramTool.Formats.WordList {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.17929")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://CramTool.WordList-1.0.0")]
-    public enum WordEventType {
+    public enum WordEventTypeXml {
         
         /// <remarks/>
         Added,

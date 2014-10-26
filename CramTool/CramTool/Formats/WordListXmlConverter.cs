@@ -2,19 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using CramTool.Formats.WordList;
+using CramTool.Models;
 
 namespace CramTool.Formats
 {
     public static class WordListXmlConverter
     {
-        public static WordList.WordList ConvertToXml(Models.WordList wordList)
+        public static WordListXml ConvertToXml(Models.WordList wordList)
         {
-            var wordListXml = new WordList.WordList();
-            List<Models.Word> words = wordList.GetAllWords().Select(w => w.Word).ToList();
-            wordListXml.Words = new Word[words.Count];
+            var wordListXml = new WordListXml();
+            List<Word> words = wordList.GetAllWords().Select(w => w.Word).ToList();
+            wordListXml.Words = new WordXml[words.Count];
 
             int idx = 0;
-            foreach (Models.Word word in words)
+            foreach (Word word in words)
             {
                 wordListXml.Words[idx++] = ConvertToXml(word);
             }
@@ -22,16 +23,16 @@ namespace CramTool.Formats
             return wordListXml;
         }
 
-        private static Word ConvertToXml(Models.Word word)
+        private static WordXml ConvertToXml(Word word)
         {
-            var wordXml = new Word();
+            var wordXml = new WordXml();
 
             wordXml.Name = word.Name;
             wordXml.Description = word.Description;
             wordXml.Tags = string.IsNullOrEmpty(word.Tags) ? null : word.Tags;
-            wordXml.Events = new WordEvent[word.Events.Count];
+            wordXml.Events = new WordEventXml[word.Events.Count];
             int idx = 0;
-            foreach (Models.WordEvent wordEvent in word.Events)
+            foreach (WordEvent wordEvent in word.Events)
             {
                 wordXml.Events[idx++] = ConvertToXml(wordEvent);
             }
@@ -39,9 +40,9 @@ namespace CramTool.Formats
             return wordXml;
         }
 
-        private static WordEvent ConvertToXml(Models.WordEvent wordEvent)
+        private static WordEventXml ConvertToXml(WordEvent wordEvent)
         {
-            var wordEventXml = new WordEvent();
+            var wordEventXml = new WordEventXml();
 
             wordEventXml.EventDate = wordEvent.EventDate;
             wordEventXml.EventType = ConvertToXml(wordEvent.EventType);
@@ -49,11 +50,11 @@ namespace CramTool.Formats
             return wordEventXml;
         }
 
-        public static Models.WordList ConvertToObject(WordList.WordList wordListXml)
+        public static Models.WordList ConvertToObject(WordListXml wordListXml)
         {
-            var words = new List<Models.Word>();
+            var words = new List<Word>();
 
-            foreach (Word wordXml in wordListXml.Words)
+            foreach (WordXml wordXml in wordListXml.Words)
             {
                 words.Add(ConvertToObject(wordXml));
             }
@@ -64,17 +65,17 @@ namespace CramTool.Formats
             return wordList;
         }
 
-        private static Models.Word ConvertToObject(Word wordXml)
+        private static Word ConvertToObject(WordXml wordXml)
         {
-            var word = new Models.Word();
+            var word = new Word();
 
             word.Name = wordXml.Name;
             word.Description = wordXml.Description;
             word.Tags = wordXml.Tags;
 
-            List<Models.WordEvent> events = ConvertToObject(wordXml.Events);
+            List<WordEvent> events = ConvertToObject(wordXml.Events);
 
-            foreach (Models.WordEvent wordEvent in events)
+            foreach (WordEvent wordEvent in events)
             {
                 word.Events.Add(wordEvent);
             }
@@ -82,11 +83,11 @@ namespace CramTool.Formats
             return word;
         }
 
-        private static List<Models.WordEvent> ConvertToObject(WordEvent[] wordEventsXml)
+        private static List<WordEvent> ConvertToObject(WordEventXml[] wordEventsXml)
         {
-            List<Models.WordEvent> events = new List<Models.WordEvent>();
+            List<WordEvent> events = new List<WordEvent>();
 
-            foreach (WordEvent wordEventXml in wordEventsXml)
+            foreach (WordEventXml wordEventXml in wordEventsXml)
             {
                 events.Add(ConvertToObject(wordEventXml));
             }
@@ -96,82 +97,82 @@ namespace CramTool.Formats
             return events;
         }
 
-        private static void NormalizeEventsOrder(List<Models.WordEvent> events)
+        private static void NormalizeEventsOrder(List<WordEvent> events)
         {
             if (events.Count == 0)
             {
                 return;
             }
-            
+
             events.Sort(CompareEventDates);
 
-            Models.WordEvent firstEvent = events[0];
+            WordEvent firstEvent = events[0];
 
-            if (firstEvent.EventType != Models.WordEventType.Added)
+            if (firstEvent.EventType != WordEventType.Added)
             {
-                firstEvent = new Models.WordEvent(firstEvent.EventDate, Models.WordEventType.Added);
+                firstEvent = new WordEvent(firstEvent.EventDate, WordEventType.Added);
                 events.Insert(0, firstEvent);
             }
 
-            Models.WordEvent secondEvent = events.Count > 1 ? events[1] : null;
+            WordEvent secondEvent = events.Count > 1 ? events[1] : null;
 
             if (secondEvent != null && secondEvent.EventDate < firstEvent.EventDate)
             {
-                firstEvent = new Models.WordEvent(secondEvent.EventDate, firstEvent.EventType);
+                firstEvent = new WordEvent(secondEvent.EventDate, firstEvent.EventType);
                 events[0] = firstEvent;
             }
         }
 
-        private static int CompareEventDates(Models.WordEvent e1, Models.WordEvent e2)
+        private static int CompareEventDates(WordEvent e1, WordEvent e2)
         {
-            if (e1.EventType == Models.WordEventType.Added && e2.EventType != Models.WordEventType.Added)
+            if (e1.EventType == WordEventType.Added && e2.EventType != WordEventType.Added)
             {
                 return -1;
             }
-            if (e1.EventType != Models.WordEventType.Added && e2.EventType == Models.WordEventType.Added)
+            if (e1.EventType != WordEventType.Added && e2.EventType == WordEventType.Added)
             {
                 return 1;
             }
             return e1.EventDate.CompareTo(e2.EventDate);
         }
 
-        private static Models.WordEvent ConvertToObject(WordEvent wordEventXml)
+        private static WordEvent ConvertToObject(WordEventXml wordEventXml)
         {
             DateTime eventDate = wordEventXml.EventDate;
-            Models.WordEventType eventType = ConvertToObject(wordEventXml.EventType);
-            return new Models.WordEvent(eventDate, eventType);
+            WordEventType eventType = ConvertToObject(wordEventXml.EventType);
+            return new WordEvent(eventDate, eventType);
         }
 
-        private static WordEventType ConvertToXml(Models.WordEventType eventType)
+        private static WordEventTypeXml ConvertToXml(WordEventType eventType)
         {
-            if (eventType == Models.WordEventType.Added)
+            if (eventType == WordEventType.Added)
             {
-                return WordEventType.Added;
+                return WordEventTypeXml.Added;
             }
-            if (eventType == Models.WordEventType.Remembered)
+            if (eventType == WordEventType.Remembered)
             {
-                return WordEventType.Remembered;
+                return WordEventTypeXml.Remembered;
             }
-            if (eventType == Models.WordEventType.Forgotten)
+            if (eventType == WordEventType.Forgotten)
             {
-                return WordEventType.Forgot;
+                return WordEventTypeXml.Forgot;
             }
             throw new Exception(string.Format("Unrecognized eventType: {0}", eventType));
         }
 
-        private static Models.WordEventType ConvertToObject(WordEventType eventType)
+        private static WordEventType ConvertToObject(WordEventTypeXml eventType)
         {
-            if (eventType == WordEventType.Added)
+            if (eventType == WordEventTypeXml.Added)
             {
-                return Models.WordEventType.Added;
+                return WordEventType.Added;
             }
-            if (eventType == WordEventType.Remembered)
+            if (eventType == WordEventTypeXml.Remembered)
             {
-                return Models.WordEventType.Remembered;
+                return WordEventType.Remembered;
             }
-            if (eventType == WordEventType.Forgot)
+            if (eventType == WordEventTypeXml.Forgot)
             {
-                return Models.WordEventType.Forgotten;
+                return WordEventType.Forgotten;
             }
             throw new Exception(string.Format("Unrecognized eventType: {0}", eventType));
         }
