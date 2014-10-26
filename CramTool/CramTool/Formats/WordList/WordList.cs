@@ -142,6 +142,9 @@ namespace CramTool.Formats.WordList {
         Remembered,
         
         /// <remarks/>
+        Forgotten,
+        
+        /// <remarks/>
         Forgot,
     }
 }

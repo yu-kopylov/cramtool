@@ -155,7 +155,7 @@ namespace CramTool.Formats
             }
             if (eventType == WordEventType.Forgotten)
             {
-                return WordEventTypeXml.Forgot;
+                return WordEventTypeXml.Forgotten;
             }
             throw new Exception(string.Format("Unrecognized eventType: {0}", eventType));
         }
@@ -170,6 +170,11 @@ namespace CramTool.Formats
             {
                 return WordEventType.Remembered;
             }
+            if (eventType == WordEventTypeXml.Forgotten)
+            {
+                return WordEventType.Forgotten;
+            }
+            //todo: remove this value from format
             if (eventType == WordEventTypeXml.Forgot)
             {
                 return WordEventType.Forgotten;

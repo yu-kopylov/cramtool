@@ -34,7 +34,12 @@
     <xs:restriction base="xs:string">
       <xs:enumeration value="Added" />
       <xs:enumeration value="Remembered" />
-      <xs:enumeration value="Forgot" />
+      <xs:enumeration value="Forgotten" />
+      <xs:enumeration value="Forgot">
+        <xs:annotation>
+          <xs:documentation>This value is deprecated. Use 'Forgotten' instead.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
     </xs:restriction>
   </xs:simpleType>
 </xs:schema>
