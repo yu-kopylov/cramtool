@@ -65,6 +65,16 @@ namespace CramTool.Models
             return wordsByName.ContainsKey(name);
         }
 
+        public delegate void ContentsChangedEventHandler(object sender, EventArgs e);
+
+        public event ContentsChangedEventHandler ContentsChanged;
+
+        protected virtual void OnContentsChanged()
+        {
+            ContentsChangedEventHandler handler = ContentsChanged;
+            if (handler != null) handler(this, new EventArgs());
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -101,6 +111,8 @@ namespace CramTool.Models
 
             UpdateStats();
 
+            OnContentsChanged();
+
             return word;
         }
 
@@ -130,6 +142,8 @@ namespace CramTool.Models
             tagIndex.Update(oldName, oldTagList, newName, newTagList);
 
             UpdateStats();
+
+            OnContentsChanged();
         }
 
         public void Mark(string name, WordEventType eventType)
@@ -141,6 +155,8 @@ namespace CramTool.Models
             wordInfo.Mark(eventType);
 
             UpdateStats();
+
+            OnContentsChanged();
         }
 
         public void ResetWordHistory(string name)
@@ -152,6 +168,8 @@ namespace CramTool.Models
             wordInfo.ResetHistory();
 
             UpdateStats();
+
+            OnContentsChanged();
         }
 
         public void ResetHistory()
@@ -164,6 +182,8 @@ namespace CramTool.Models
             }
 
             UpdateStats();
+
+            OnContentsChanged();
         }
 
         public void ResetModified()
@@ -186,6 +206,8 @@ namespace CramTool.Models
             Modified = false;
 
             UpdateStats();
+
+            OnContentsChanged();
         }
 
         private void UpdateStats()

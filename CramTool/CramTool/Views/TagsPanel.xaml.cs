@@ -16,10 +16,10 @@ namespace CramTool.Views
     public partial class TagsPanel : UserControl
     {
         public static readonly DependencyProperty WordListProperty =
-            DependencyProperty.Register("WordList", typeof(WordList), typeof(TagsPanel), new PropertyMetadata(default(WordList), (obj, args) => ((TagsPanel)obj).OnWordListChanged()));
+            DependencyProperty.Register("WordList", typeof(WordList), typeof(TagsPanel), new PropertyMetadata(default(WordList), OnWordListChanged));
 
         public static readonly DependencyProperty SearchTextProperty =
-            DependencyProperty.Register("SearchText", typeof(string), typeof(TagsPanel), new PropertyMetadata(default(string), (obj, args) => ((TagsPanel)obj).MarkSearchPending()));
+            DependencyProperty.Register("SearchText", typeof(string), typeof(TagsPanel), new PropertyMetadata(default(string), (obj, args) => ((TagsPanel)obj).MarkSearchPending(true)));
 
         public static readonly DependencyProperty MatchingTagsProperty =
             DependencyProperty.Register("MatchingTags", typeof(ObservableCollection<string>), typeof(TagsPanel), new PropertyMetadata(default(ObservableCollection<string>)));
@@ -35,6 +35,7 @@ namespace CramTool.Views
 
         private readonly DispatcherTimer timer;
         private bool searchPending = true;
+        private bool filterChanged = true;
 
         public TagsPanel()
         {
@@ -81,18 +82,33 @@ namespace CramTool.Views
             set { SetValue(CurrentWordProperty, value); }
         }
 
-        private void OnWordListChanged()
+        private static void OnWordListChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
         {
-            CurrentTag = null;
-            CurrentWord = null;
-            MarkSearchPending();
+            TagsPanel panel = (TagsPanel) obj;
+
+            panel.CurrentTag = null;
+            panel.CurrentWord = null;
+
+            WeakEventHelper.UpdateListener<WordList, EventArgs>(args, "ContentsChanged", panel.OnWordListContentsChanged);
+
+            panel.MarkSearchPending(false);
+        }
+
+        private void OnWordListContentsChanged(object sender, EventArgs e)
+        {
+            MarkSearchPending(false);
         }
 
         private void OnCurrentTagChanged()
         {
             CurrentWord = null;
 
-            if (CurrentTag == null)
+            UpdateMatchingWords();
+        }
+
+        private void UpdateMatchingWords()
+        {
+            if (WordList == null || CurrentTag == null)
             {
                 MatchingWords = new ObservableCollection<WordInfo>();
             }
@@ -102,17 +118,18 @@ namespace CramTool.Views
             }
         }
 
-        private void MarkSearchPending()
+        private void MarkSearchPending(bool markFilterChanged)
         {
+            if (markFilterChanged)
+            {
+                filterChanged = true;
+            }
             searchPending = true;
         }
 
         private void Search(object sender, EventArgs eventArgs)
         {
             //todo: consider adding "clear" button for search string
-            //todo: change other panels to use WordIndex
-            //todo: update search when dictionary is upated
-            //todo: update articles when they are updated
             if (!searchPending)
             {
                 return;
@@ -123,8 +140,16 @@ namespace CramTool.Views
                 return;
             }
 
-            searchPending = false;
+            bool matchFilter = filterChanged;
 
+            searchPending = false;
+            filterChanged = false;
+
+            Search(matchFilter);
+        }
+
+        private void Search(bool matchFilter)
+        {
             string searchText = (SearchText ?? "").Trim();
 
             IEnumerable<string> tags = WordList.GetAllTags();
@@ -132,14 +157,12 @@ namespace CramTool.Views
 
             MatchingTags = new ObservableCollection<string>(filteredTags);
 
-            if (filteredTags.Contains(searchText))
+            if (matchFilter)
             {
-                CurrentTag = searchText;
+                CurrentTag = filteredTags.Contains(searchText) ? searchText : null;
             }
-            else
-            {
-                CurrentTag = null;
-            }
+
+            UpdateMatchingWords();
         }
     }
 }
