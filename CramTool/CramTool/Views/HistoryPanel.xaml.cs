@@ -33,7 +33,7 @@ namespace CramTool.Views
 
         private void CanMarkWordAdded(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = !IsReadOnly && WordInfo != null && !WordInfo.IsAdded;
+            e.CanExecute = !IsReadOnly && WordInfo != null && !WordInfo.IsStudied;
         }
 
         private void MarkWordAdded(object sender, ExecutedRoutedEventArgs e)
@@ -43,7 +43,7 @@ namespace CramTool.Views
 
         private void CanResetWordHistory(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = !IsReadOnly && WordInfo != null && WordInfo.IsAdded;
+            e.CanExecute = !IsReadOnly && WordInfo != null && WordInfo.IsStudied;
         }
 
         private void ResetWordHistory(object sender, ExecutedRoutedEventArgs e)
@@ -57,7 +57,7 @@ namespace CramTool.Views
 
         private void CanMarkWordRemembered(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = !IsReadOnly && WordInfo != null && WordInfo.IsAdded;
+            e.CanExecute = !IsReadOnly && WordInfo != null && WordInfo.IsStudied;
         }
 
         private void MarkWordRemembered(object sender, ExecutedRoutedEventArgs args)
@@ -67,7 +67,7 @@ namespace CramTool.Views
 
         private void CanMarkWordForgotten(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = !IsReadOnly && WordInfo != null && WordInfo.IsAdded;
+            e.CanExecute = !IsReadOnly && WordInfo != null && WordInfo.IsStudied;
         }
 
         private void MarkWordForgotten(object sender, ExecutedRoutedEventArgs args)

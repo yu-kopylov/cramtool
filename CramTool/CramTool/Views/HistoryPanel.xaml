@@ -72,6 +72,14 @@
                 </DataGridTemplateColumn>
                 <DataGridTextColumn Header="Date" Binding="{Binding WordEvent.LocalDate, StringFormat='dd.MM.yyyy HH:mm:ss'}" Width="120" CanUserSort="False" />
                 <DataGridTextColumn Header="Event" Binding="{Binding WordEvent.EventType}" Width="2*" CanUserSort="False" />
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image DataContext="{Binding WordState}" ToolTip="{Binding}" Style="{StaticResource WordStateImage}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Resulting State" Binding="{Binding WordState}" Width="2*" CanUserSort="False" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

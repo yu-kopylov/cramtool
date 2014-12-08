@@ -292,6 +292,7 @@
     <Resource Include="Images\Fugue\16\modified\tick-white-olive.png" />
     <Resource Include="Images\Fugue\16\modified\cross-white-red.png" />
     <Resource Include="Images\Fugue\16\modified\cross-small-blue.png" />
+    <Resource Include="Images\Fugue\16\tick-white.png" />
     <Content Include="Images\logo.svg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

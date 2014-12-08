@@ -7,6 +7,7 @@
 
     <BitmapImage x:Key="WordStateUnknownImage" UriSource="/Images/Fugue/16/modified/cross-white-red.png" DecodePixelHeight="16" />
     <BitmapImage x:Key="WordStateStudiedImage" UriSource="/Images/Fugue/16/question-white.png" DecodePixelHeight="16" />
+    <BitmapImage x:Key="WordStateRepeatedImage" UriSource="/Images/Fugue/16/tick-white.png" DecodePixelHeight="16" />
     <BitmapImage x:Key="WordStateLearnedImage" UriSource="/Images/Fugue/16/modified/tick-white-olive.png" DecodePixelHeight="16" />
     <BitmapImage x:Key="WordStateVerifiedImage" UriSource="/Images/Fugue/16/tick-circle.png" DecodePixelHeight="16" />
 
@@ -72,6 +73,9 @@
             </DataTrigger>
             <DataTrigger Binding="{Binding}" Value="Studied">
                 <Setter Property="Source" Value="{StaticResource WordStateStudiedImage}" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding}" Value="Repeated">
+                <Setter Property="Source" Value="{StaticResource WordStateRepeatedImage}" />
             </DataTrigger>
             <DataTrigger Binding="{Binding}" Value="Learned">
                 <Setter Property="Source" Value="{StaticResource WordStateLearnedImage}" />

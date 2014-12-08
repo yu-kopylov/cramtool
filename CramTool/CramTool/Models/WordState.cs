@@ -2,9 +2,10 @@
 {
     public enum WordState
     {
-        Unknown,
-        Studied,
-        Learned,
-        Verified
+        Unknown = 1,
+        Studied = 2,
+        Repeated = 3,
+        Learned = 4,
+        Verified = 5
     }
 }

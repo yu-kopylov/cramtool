@@ -16,7 +16,7 @@ namespace CramTool.Models
 
             WordsListStats stats = new WordsListStats();
             stats.WordCount = words.Count;
-            stats.StudiedWordCount = words.Count(w => w.IsAdded);
+            stats.StudiedWordCount = words.Count(w => w.IsStudied);
             stats.LearnedWordCount = words.Count(w => w.IsLearned);
             stats.VerifiedWordCount = words.Count(w => w.IsVerified);
             return stats;
