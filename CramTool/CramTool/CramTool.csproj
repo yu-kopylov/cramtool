@@ -60,6 +60,7 @@
     <Compile Include="Models\Quizzes\IQuizSettings.cs" />
     <Compile Include="Models\Quizzes\QuizStage.cs" />
     <Compile Include="Models\Quizzes\QuizWord.cs" />
+    <Compile Include="Models\VersionInfo.cs" />
     <Compile Include="Models\WordEventInfo.cs" />
     <Compile Include="Models\WordIndex.cs" />
     <Compile Include="Models\CramToolSettings.cs" />
