@@ -11,7 +11,7 @@ namespace CramTool.Models
     {
         private static readonly TimeSpan TimeToMarkRepeated = TimeSpan.FromMinutes(30);
         private static readonly TimeSpan TimeToMarkLearned = TimeSpan.FromHours(12);
-        public static readonly TimeSpan TimeToMarkVerified = TimeSpan.FromHours(24*5 + 12);
+        public static readonly TimeSpan TimeToMarkVerified = TimeSpan.FromHours(24*4 + 12);
 
         private WordList wordList;
         private Word word;
