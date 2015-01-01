@@ -71,6 +71,10 @@ namespace CramTool.Views
             foreach (Token token in tokens)
             {
                 string text = token.Value;
+                if (token.Type == TokenType.Translation)
+                {
+                    text = "\u2022 " + text;
+                }
                 if (token.Type == TokenType.Example)
                 {
                     text = "Example: " + text;
