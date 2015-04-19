@@ -1,0 +1,38 @@
+﻿@media print {
+    .word-article {
+        page-break-inside: avoid;
+        font-size: 12px;
+    	padding: 5px;
+    	margin-bottom: 5px;
+    }
+}
+
+@media screen {
+    .word-article {
+    	padding: 10px;
+    	margin-bottom: 15px;
+    }
+}
+
+.word-article {
+    background: #E1F5A9;
+    border: #3B240B 1px solid;
+}
+
+.word-form {
+    font-weight: bold;
+}
+
+.word-translation {
+    margin-left: 20px;
+}
+
+.word-example {
+	margin-left: 40px;
+    font-style: italic;
+}
+
+.word-ref {
+	margin-left: 20px;
+    font-weight: bold;
+}

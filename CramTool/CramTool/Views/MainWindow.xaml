@@ -11,6 +11,7 @@
         <CommandBinding Command="cramTool:Commands.OpenDictionary" CanExecute="CanOpenDictionary" Executed="OpenDictionary"/>
         <CommandBinding Command="cramTool:Commands.SaveDictionary" CanExecute="CanSaveDictionary" Executed="SaveDictionary"/>
         <CommandBinding Command="cramTool:Commands.SaveDictionaryAs" CanExecute="CanSaveDictionaryAs" Executed="SaveDictionaryAs"/>
+        <CommandBinding Command="cramTool:Commands.ExportDictionary" CanExecute="CanExportDictionary" Executed="ExportDictionary"/>
         <CommandBinding Command="cramTool:Commands.ResetHistory" CanExecute="CanResetHistory" Executed="ResetHistory"/>
         <CommandBinding Command="cramTool:Commands.HelpAbout" Executed="HelpAbout"/>
     </Window.CommandBindings>
@@ -42,6 +43,11 @@
                 <MenuItem Command="cramTool:Commands.SaveDictionaryAs">
                     <MenuItem.Icon>
                         <Image Source="{StaticResource SaveAsIcon}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Command="cramTool:Commands.ExportDictionary">
+                    <MenuItem.Icon>
+                        <Image Source="{StaticResource ExportIcon}" />
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>

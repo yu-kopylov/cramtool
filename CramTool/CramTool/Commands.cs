@@ -11,6 +11,7 @@ namespace CramTool
         public static readonly RoutedUICommand OpenDictionary = new RoutedUICommand {Text = "_Open Dictionary"};
         public static readonly RoutedUICommand SaveDictionary = new RoutedUICommand {Text = "_Save Dictionary"};
         public static readonly RoutedUICommand SaveDictionaryAs = new RoutedUICommand {Text = "Save Dictionary _As..."};
+        public static readonly RoutedUICommand ExportDictionary = new RoutedUICommand { Text = "Export Dictionary..." };
         public static readonly RoutedUICommand ResetHistory = new RoutedUICommand { Text = "_Reset history" };
 
         #endregion

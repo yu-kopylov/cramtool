@@ -40,6 +40,7 @@
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xaml">
@@ -54,6 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Formats\Html\HtmlGenerator.cs" />
     <Compile Include="Formats\Settings\Settings.cs" />
     <Compile Include="Formats\WordList\WordList.cs" />
     <Compile Include="Models\Quizzes\GeneralQuizSettings.cs" />
@@ -294,6 +296,8 @@
     <Resource Include="Images\Fugue\16\modified\cross-white-red.png" />
     <Resource Include="Images\Fugue\16\modified\cross-small-blue.png" />
     <Resource Include="Images\Fugue\16\tick-white.png" />
+    <EmbeddedResource Include="Formats\Html\style.css" />
+    <Resource Include="Images\Fugue\16\document--arrow.png" />
     <Content Include="Images\logo.svg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

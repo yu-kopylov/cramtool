@@ -23,6 +23,7 @@
     <BitmapImage x:Key="OpenIcon" UriSource="/Images/Fugue/16/folder-open-document-text.png" DecodePixelHeight="16" />
     <BitmapImage x:Key="SaveIcon" UriSource="/Images/Fugue/16/disk.png" DecodePixelHeight="16" />
     <BitmapImage x:Key="SaveAsIcon" UriSource="/Images/Fugue/16/disk-rename.png" DecodePixelHeight="16" />
+    <BitmapImage x:Key="ExportIcon" UriSource="/Images/Fugue/16/document--arrow.png" DecodePixelHeight="16" />
     <BitmapImage x:Key="FileIcon" UriSource="/Images/Fugue/16/document-text.png" DecodePixelHeight="16" />
     <BitmapImage x:Key="DeleteIcon" UriSource="/Images/Fugue/16/cross.png" DecodePixelHeight="16" />
     <BitmapImage x:Key="HelpAboutIcon" UriSource="/Images/Fugue/16/information.png" DecodePixelHeight="16" />

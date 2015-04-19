@@ -15,4 +15,3 @@
 *.svg text eol=crlf
 
 CramTool/packages/**/*.* -text !eol
-CramTool/packages/**/*.* -text !eol

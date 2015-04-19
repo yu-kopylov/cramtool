@@ -1,7 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
+using CramTool.Formats.Html;
 using CramTool.Models;
 using Microsoft.Win32;
 
@@ -88,7 +90,7 @@ namespace CramTool.Views
         {
             SaveFileDialog dlg = new SaveFileDialog();
             dlg.DefaultExt = ".dictz";
-            dlg.Filter = "Cram Tool Compressed Dictionaries (.dictz)|*.dictz";
+            dlg.Filter = "Cram Tool Compressed Dictionaries|*.dictz";
             dlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
             if (dlg.ShowDialog(this) == true)
@@ -97,6 +99,28 @@ namespace CramTool.Views
                 return true;
             }
             return false;
+        }
+
+        private void CanExportDictionary(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = CramToolModel.Instance.WordList != null;
+        }
+
+        private void ExportDictionary(object sender, ExecutedRoutedEventArgs e)
+        {
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.DefaultExt = ".html";
+            dlg.Filter = "HTML|*.htm;*.html;*.xhtml";
+            dlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+
+            if (dlg.ShowDialog(this) != true)
+            {
+                return;
+            }
+
+            HtmlGenerator htmlGenerator = new HtmlGenerator();
+
+            File.WriteAllBytes(dlg.FileName, htmlGenerator.Generate(CramToolModel.Instance.WordList));
         }
 
         private void CanResetHistory(object sender, CanExecuteRoutedEventArgs e)
