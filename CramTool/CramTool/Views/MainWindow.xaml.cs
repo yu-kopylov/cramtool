@@ -47,7 +47,7 @@ namespace CramTool.Views
 
             OpenFileDialog dlg = new OpenFileDialog();
             dlg.DefaultExt = ".dictz";
-            dlg.Filter = "All Supported Files|*.dictz;*.dictx|Cram Tool Compressed Dictionaries (.dictz)|*.dictz|Cram Tool Dictionaries (.dictx)|*.dictx";
+            dlg.Filter = "All Supported Files|*.dictz;*.dictx|Cram Tool Compressed Dictionaries|*.dictz|Cram Tool Dictionaries|*.dictx";
             dlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
             if (dlg.ShowDialog(this) == true)
