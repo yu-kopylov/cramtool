@@ -205,33 +205,19 @@ namespace CramTool.Models
             return new WordEventInfo(wordEvent, prevEventInfo.WordState, prevEventInfo.LastStateChange);
         }
 
-        //todo: move to parser
         private static void ParseWord(WordInfo info)
         {
-            ISet<string> forms = new HashSet<string>();
-            ISet<string> translations = new HashSet<string>();
-            forms.Add(info.Word.Name);
+            ArticleParser parser = new ArticleParser();
+            WordArticle article = parser.Parse(info.Word.Name, info.Word.Description);
 
-            ArticleLexer parser = new ArticleLexer();
-            var tokens = parser.Parse(info.Word.Description);
-            foreach (Token token in tokens)
-            {
-                if (token.Type == TokenType.WordForm && !string.IsNullOrWhiteSpace(token.Value))
-                {
-                    forms.Add(token.Value);
-                }
-                if (token.Type == TokenType.Translation && !string.IsNullOrWhiteSpace(token.Value))
-                {
-                    translations.Add(token.Value);
-                }
-            }
-
+            List<string> forms = article.FormGroups.SelectMany(g => g.Forms).Distinct().ToList();
             info.Forms.Clear();
             foreach (string form in forms)
             {
                 info.Forms.Add(new WordForm(info, form));
             }
 
+            List<string> translations = article.FormGroups.SelectMany(g => g.TranslationGroups).SelectMany(tg => tg.Translations).Distinct().ToList();
             info.Translations.Clear();
             foreach (string translation in translations)
             {
