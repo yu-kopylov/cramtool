@@ -2,14 +2,14 @@
 
 namespace CramTool.Models
 {
-    public class WordParser
+    public class ArticleLexer
     {
         private string sourceText;
         private int sourceLength;
 
         private int currentOffset;
         private Token currentToken;
-        
+
         private List<Token> result;
 
         public List<Token> Parse(string text)
@@ -112,7 +112,7 @@ namespace CramTool.Models
                 }
                 if (Type == TokenType.Example)
                 {
-                    return SourceText.Substring(Offset+2, Length-2);
+                    return SourceText.Substring(Offset + 2, Length - 2);
                 }
                 if (Type == TokenType.NewLine)
                 {

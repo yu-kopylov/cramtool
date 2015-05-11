@@ -212,7 +212,7 @@ namespace CramTool.Models
             ISet<string> translations = new HashSet<string>();
             forms.Add(info.Word.Name);
 
-            WordParser parser = new WordParser();
+            ArticleLexer parser = new ArticleLexer();
             var tokens = parser.Parse(info.Word.Description);
             foreach (Token token in tokens)
             {

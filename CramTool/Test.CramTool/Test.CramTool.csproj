@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TestArticleParser.cs" />
     <Compile Include="TestCramToolSettings.cs" />
     <Compile Include="TestTagParser.cs" />
     <Compile Include="TestWord.cs" />
@@ -50,7 +51,7 @@
     <Compile Include="TestWordInfo.cs" />
     <Compile Include="TestWordList.cs" />
     <Compile Include="TestWordListXmlConverter.cs" />
-    <Compile Include="TestWordParser.cs" />
+    <Compile Include="TestArticleLexer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

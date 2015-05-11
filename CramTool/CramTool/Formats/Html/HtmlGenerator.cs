@@ -80,7 +80,7 @@ namespace CramTool.Formats.Html
             }
             else
             {
-                WordParser parser = new WordParser();
+                ArticleLexer parser = new ArticleLexer();
                 List<Token> tokens = parser.Parse(wordForm.WordInfo.Word.Description);
                 bool afterNewLine = false;
                 foreach (Token token in tokens)

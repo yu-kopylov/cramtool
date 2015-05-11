@@ -6,12 +6,12 @@ using NUnit.Framework;
 namespace Test.CramTool
 {
     [TestFixture]
-    public class TestWordParser
+    public class TestArticleLexer
     {
         [Test]
         public void TestNewLines()
         {
-            WordParser parser = new WordParser();
+            ArticleLexer parser = new ArticleLexer();
             List<Token> tokens;
 
             tokens = parser.Parse("\r\n");
@@ -48,7 +48,7 @@ namespace Test.CramTool
         [Test]
         public void TestWordForms()
         {
-            WordParser parser = new WordParser();
+            ArticleLexer parser = new ArticleLexer();
             List<Token> tokens;
 
             tokens = parser.Parse("#abc");
@@ -71,7 +71,7 @@ namespace Test.CramTool
         [Test]
         public void TestTranslations()
         {
-            WordParser parser = new WordParser();
+            ArticleLexer parser = new ArticleLexer();
             List<Token> tokens;
 
             tokens = parser.Parse("abc");
@@ -86,7 +86,7 @@ namespace Test.CramTool
         [Test]
         public void TestExamples()
         {
-            WordParser parser = new WordParser();
+            ArticleLexer parser = new ArticleLexer();
             List<Token> tokens;
 
             tokens = parser.Parse("//abc");

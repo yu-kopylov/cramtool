@@ -65,7 +65,7 @@ namespace CramTool.Views
                 paragraph.Inlines.Add(new LineBreak());
             }
 
-            WordParser parser = new WordParser();
+            ArticleLexer parser = new ArticleLexer();
             List<Token> tokens = parser.Parse(word.Description);
 
             foreach (Token token in tokens)

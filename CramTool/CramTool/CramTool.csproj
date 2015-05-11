@@ -58,11 +58,13 @@
     <Compile Include="Formats\Html\HtmlGenerator.cs" />
     <Compile Include="Formats\Settings\Settings.cs" />
     <Compile Include="Formats\WordList\WordList.cs" />
+    <Compile Include="Models\ArticleParser.cs" />
     <Compile Include="Models\Quizzes\GeneralQuizSettings.cs" />
     <Compile Include="Models\Quizzes\IQuizSettings.cs" />
     <Compile Include="Models\Quizzes\QuizStage.cs" />
     <Compile Include="Models\Quizzes\QuizWord.cs" />
     <Compile Include="Models\VersionInfo.cs" />
+    <Compile Include="Models\WordArticle.cs" />
     <Compile Include="Models\WordEventInfo.cs" />
     <Compile Include="Models\WordIndex.cs" />
     <Compile Include="Models\CramToolSettings.cs" />
@@ -71,7 +73,7 @@
     <Compile Include="Models\WordForm.cs" />
     <Compile Include="Models\WordInfo.cs" />
     <Compile Include="Formats\WordListFileParser.cs" />
-    <Compile Include="Models\WordParser.cs" />
+    <Compile Include="Models\ArticleLexer.cs" />
     <Compile Include="Models\WordEvent.cs" />
     <Compile Include="Models\WordEventType.cs" />
     <Compile Include="Formats\WordListXmlConverter.cs" />
