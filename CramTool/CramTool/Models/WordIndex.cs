@@ -54,7 +54,12 @@ namespace CramTool.Models
 
         public List<string> GetWordNames(string attribute)
         {
-            return attributesIndex[attribute].ToList();
+            SortedSet<string> wordNames;
+            if (attributesIndex.TryGetValue(attribute, out wordNames))
+            {
+                return wordNames.ToList();
+            }
+            return new List<string>();
         }
 
         public void Update(string oldWordName, IEnumerable<string> oldAttributes, string newWordName, IEnumerable<string> newAttributes)
