@@ -9,16 +9,16 @@ namespace CramTool
             where TEventSource : class
             where TEventArgs : EventArgs
         {
-            TEventSource oldWord = (TEventSource) changedArgs.OldValue;
-            if (oldWord != null)
+            TEventSource oldSource = (TEventSource) changedArgs.OldValue;
+            if (oldSource != null)
             {
-                WeakEventManager<TEventSource, TEventArgs>.RemoveHandler(oldWord, "PropertyChanged", handler);
+                WeakEventManager<TEventSource, TEventArgs>.RemoveHandler(oldSource, eventName, handler);
             }
 
-            TEventSource newWord = (TEventSource) changedArgs.NewValue;
-            if (newWord != null)
+            TEventSource newSource = (TEventSource) changedArgs.NewValue;
+            if (newSource != null)
             {
-                WeakEventManager<TEventSource, TEventArgs>.AddHandler(newWord, "PropertyChanged", handler);
+                WeakEventManager<TEventSource, TEventArgs>.AddHandler(newSource, eventName, handler);
             }
         }
     }
