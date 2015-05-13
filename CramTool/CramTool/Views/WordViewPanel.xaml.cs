@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 using CramTool.Models;
+using CramTool.Views.FlowDocuments;
 
 namespace CramTool.Views
 {
@@ -54,14 +55,13 @@ namespace CramTool.Views
                 return document;
             }
 
-            Paragraph paragraph = new Paragraph();
+            Paragraph paragraph = FlowDocumentStyles.CreateParagraph();
             document.Blocks.Add(paragraph);
-            paragraph.Margin = new Thickness(0);
 
             {
                 Run run = new Run(word.Name);
                 paragraph.Inlines.Add(run);
-                run.FontWeight = FontWeights.Bold;
+                FlowDocumentStyles.FormatWord(run);
                 paragraph.Inlines.Add(new LineBreak());
             }
 
@@ -106,21 +106,15 @@ namespace CramTool.Views
         {
             if (tokenType == TokenType.WordForm)
             {
-                text.Foreground = Brushes.Black;
-                text.FontStyle = FontStyles.Oblique;
-                text.FontWeight = FontWeights.Bold;
+                FlowDocumentStyles.FormatWordForm(text);
             }
             else if (tokenType == TokenType.Example)
             {
-                text.Foreground = Brushes.Black;
-                text.FontStyle = FontStyles.Italic;
-                text.FontWeight = FontWeights.Normal;
+                FlowDocumentStyles.FormatExample(text);
             }
             else
             {
-                text.Foreground = Brushes.Black;
-                text.FontStyle = FontStyles.Normal;
-                text.FontWeight = FontWeights.Normal;
+                FlowDocumentStyles.FormatTranslation(text);
             }
         }
     }

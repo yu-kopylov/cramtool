@@ -120,5 +120,9 @@
         <Setter Property="TextOptions.TextRenderingMode" Value="ClearType"/>
         <Setter Property="FontSize" Value="14"/>
     </Style>
+    
+    <Style TargetType="FlowDocumentReader">
+        <Setter Property="ViewingMode" Value="Scroll"/>
+    </Style>
 
 </ResourceDictionary>

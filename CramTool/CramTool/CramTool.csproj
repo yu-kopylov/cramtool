@@ -86,6 +86,7 @@
     <Compile Include="Views\ConfirmationWindow.xaml.cs">
       <DependentUpon>ConfirmationWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\FlowDocuments\FlowDocumentStyles.cs" />
     <Compile Include="Views\InvLookupPanel.xaml.cs">
       <DependentUpon>InvLookupPanel.xaml</DependentUpon>
     </Compile>
@@ -119,6 +120,7 @@
     <Compile Include="Views\TagsPanel.xaml.cs">
       <DependentUpon>TagsPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\FlowDocuments\TranslationPresenter.cs" />
     <Compile Include="Views\UnsavedChangesWindow.xaml.cs">
       <DependentUpon>UnsavedChangesWindow.xaml</DependentUpon>
     </Compile>

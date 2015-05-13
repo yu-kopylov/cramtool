@@ -3,9 +3,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:views="clr-namespace:CramTool.Views"
+             xmlns:fd="clr-namespace:CramTool.Views.FlowDocuments"
              mc:Ignorable="d" 
              x:Name="This"
              d:DesignHeight="300" d:DesignWidth="600">
+    <UserControl.Resources>
+        <fd:TranslationPresenter
+            x:Key="UxTranslationPresenter"
+            WordList="{Binding ElementName=This, Path=WordList}"
+            Translation="{Binding ElementName=This, Path=CurrentTranslation}"
+        />
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -21,8 +29,6 @@
         </Grid>
         <Grid Grid.Row="1" Grid.Column="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="2*" />
@@ -41,38 +47,8 @@
                 </DataGrid.Columns>
             </DataGrid>
             <GridSplitter Grid.Column="1" Style="{StaticResource VerticalSplitter}"/>
-            <DataGrid Grid.Row="0" Grid.Column="2"
-                      AutoGenerateColumns="False"
-                      GridLinesVisibility="None"
-                      IsReadOnly="True"
-                      SelectionMode="Single"
-                      CanUserReorderColumns="False"
-                      CanUserResizeColumns="False"
-                      ItemsSource="{Binding ElementName=This, Path=MatchingWords}"
-                      SelectedItem="{Binding ElementName=This, Path=CurrentWord, Mode=TwoWay}">
-                <DataGrid.Columns>
-                    <DataGridTemplateColumn>
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Image DataContext="{Binding Path=State}" ToolTip="{Binding}" Style="{StaticResource WordStateImage}" />
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTextColumn Header="Name" Binding="{Binding Path=Word.Name}" Width="*" CanUserSort="False"/>
-                </DataGrid.Columns>
-            </DataGrid>
-            <GridSplitter Grid.Column="3" Style="{StaticResource VerticalSplitter}"/>
-            <Border BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" BorderThickness="1" Padding="2" Grid.Row="0" Grid.Column="4">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="2*"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <views:WordViewPanel Grid.Row="0" Grid.Column="0" Word="{Binding ElementName=This, Path=CurrentWord.Word}"/>
-                    <GridSplitter Grid.Row="1" Style="{StaticResource HorizontalSplitter}"/>
-                    <views:HistoryPanel Grid.Row="2" WordInfo="{Binding ElementName=This, Path=CurrentWord}"/>
-                </Grid>
+            <Border BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" BorderThickness="1" Padding="2" Grid.Row="0" Grid.Column="2">
+                <FlowDocumentReader x:Name="X" Document="{Binding Source={StaticResource UxTranslationPresenter}, Path=Document}"/>
             </Border>
         </Grid>
     </Grid>

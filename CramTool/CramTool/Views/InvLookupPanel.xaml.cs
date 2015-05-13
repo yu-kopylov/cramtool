@@ -24,14 +24,8 @@ namespace CramTool.Views
         public static readonly DependencyProperty MatchingTranslationsProperty =
             DependencyProperty.Register("MatchingTranslations", typeof(ObservableCollection<string>), typeof(InvLookupPanel), new PropertyMetadata(default(ObservableCollection<string>)));
 
-        public static readonly DependencyProperty CurrentTranslationProperty =
-            DependencyProperty.Register("CurrentTranslation", typeof(string), typeof(InvLookupPanel), new PropertyMetadata(default(string), (obj, args) => ((InvLookupPanel)obj).OnCurrentTranslationChanged()));
-
-        public static readonly DependencyProperty MatchingWordsProperty =
-            DependencyProperty.Register("MatchingWords", typeof(ObservableCollection<WordInfo>), typeof(InvLookupPanel), new PropertyMetadata(default(ObservableCollection<WordInfo>)));
-
-        public static readonly DependencyProperty CurrentWordProperty =
-            DependencyProperty.Register("CurrentWord", typeof(WordInfo), typeof(InvLookupPanel), new PropertyMetadata(default(WordInfo)));
+        public static readonly DependencyProperty CurrentTranslationProperty = 
+            DependencyProperty.Register("CurrentTranslation", typeof(string), typeof(InvLookupPanel), new PropertyMetadata(default(string)));
 
         private readonly DispatcherTimer timer;
         private bool searchPending = true;
@@ -70,24 +64,11 @@ namespace CramTool.Views
             set { SetValue(CurrentTranslationProperty, value); }
         }
 
-        public ObservableCollection<WordInfo> MatchingWords
-        {
-            get { return (ObservableCollection<WordInfo>)GetValue(MatchingWordsProperty); }
-            set { SetValue(MatchingWordsProperty, value); }
-        }
-
-        public WordInfo CurrentWord
-        {
-            get { return (WordInfo)GetValue(CurrentWordProperty); }
-            set { SetValue(CurrentWordProperty, value); }
-        }
-
         private static void OnWordListChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
         {
             InvLookupPanel panel = (InvLookupPanel)obj;
 
             panel.CurrentTranslation = null;
-            panel.CurrentWord = null;
 
             WeakEventHelper.UpdateListener<WordList, EventArgs>(args, "ContentsChanged", panel.OnWordListContentsChanged);
 
@@ -97,25 +78,6 @@ namespace CramTool.Views
         private void OnWordListContentsChanged(object sender, EventArgs e)
         {
             MarkSearchPending(false);
-        }
-
-        private void OnCurrentTranslationChanged()
-        {
-            CurrentWord = null;
-
-            UpdateMatchingWords();
-        }
-
-        private void UpdateMatchingWords()
-        {
-            if (WordList == null || CurrentTranslation == null)
-            {
-                MatchingWords = new ObservableCollection<WordInfo>();
-            }
-            else
-            {
-                MatchingWords = new ObservableCollection<WordInfo>(WordList.GetWordsWithTranslation(CurrentTranslation));
-            }
         }
 
         private void MarkSearchPending(bool markFilterChanged)
@@ -161,8 +123,6 @@ namespace CramTool.Views
             {
                 CurrentTranslation = filteredTranslations.Contains(searchText) ? searchText : null;
             }
-
-            UpdateMatchingWords();
         }
     }
 }
