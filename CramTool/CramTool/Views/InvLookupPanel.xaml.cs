@@ -22,10 +22,10 @@ namespace CramTool.Views
             DependencyProperty.Register("SearchText", typeof(string), typeof(InvLookupPanel), new PropertyMetadata(default(string), (obj, args) => ((InvLookupPanel)obj).MarkSearchPending(true)));
 
         public static readonly DependencyProperty MatchingTranslationsProperty =
-            DependencyProperty.Register("MatchingTranslations", typeof(ObservableCollection<string>), typeof(InvLookupPanel), new PropertyMetadata(default(ObservableCollection<string>)));
+            DependencyProperty.Register("MatchingTranslations", typeof(ObservableCollection<TranslationInfo>), typeof(InvLookupPanel), new PropertyMetadata(default(ObservableCollection<TranslationInfo>)));
 
-        public static readonly DependencyProperty CurrentTranslationProperty = 
-            DependencyProperty.Register("CurrentTranslation", typeof(string), typeof(InvLookupPanel), new PropertyMetadata(default(string)));
+        public static readonly DependencyProperty CurrentTranslationProperty =
+            DependencyProperty.Register("CurrentTranslation", typeof(TranslationInfo), typeof(InvLookupPanel), new PropertyMetadata(default(TranslationInfo)));
 
         private readonly DispatcherTimer timer;
         private bool searchPending = true;
@@ -52,15 +52,15 @@ namespace CramTool.Views
             set { SetValue(SearchTextProperty, value); }
         }
 
-        public ObservableCollection<string> MatchingTranslations
+        public ObservableCollection<TranslationInfo> MatchingTranslations
         {
-            get { return (ObservableCollection<string>)GetValue(MatchingTranslationsProperty); }
+            get { return (ObservableCollection<TranslationInfo>)GetValue(MatchingTranslationsProperty); }
             set { SetValue(MatchingTranslationsProperty, value); }
         }
 
-        public string CurrentTranslation
+        public TranslationInfo CurrentTranslation
         {
-            get { return (string)GetValue(CurrentTranslationProperty); }
+            get { return (TranslationInfo)GetValue(CurrentTranslationProperty); }
             set { SetValue(CurrentTranslationProperty, value); }
         }
 
@@ -91,7 +91,6 @@ namespace CramTool.Views
 
         private void Search(object sender, EventArgs eventArgs)
         {
-            //todo: consider adding "clear" button for search string
             if (!searchPending)
             {
                 return;
@@ -114,14 +113,23 @@ namespace CramTool.Views
         {
             string searchText = (SearchText ?? "").Trim();
 
-            IEnumerable<string> translations = WordList.GetAllTranslations();
-            IEnumerable<string> filteredTranslations = translations.Where(tr => tr.StartsWith(searchText, true, CultureInfo.InvariantCulture)).ToList();
+            IEnumerable<TranslationInfo> translations = WordList.GetAllTranslations();
+            IEnumerable<TranslationInfo> filteredTranslations = translations.Where(tr => tr.Translation.StartsWith(searchText, true, CultureInfo.InvariantCulture)).ToList();
 
-            MatchingTranslations = new ObservableCollection<string>(filteredTranslations);
+            MatchingTranslations = new ObservableCollection<TranslationInfo>(filteredTranslations);
 
             if (matchFilter)
             {
-                CurrentTranslation = filteredTranslations.Contains(searchText) ? searchText : null;
+                TranslationInfo matchingTranslation = null;
+                foreach (TranslationInfo translationInfo in filteredTranslations)
+                {
+                    if (translationInfo.Translation.Equals(searchText, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        matchingTranslation = translationInfo;
+                        break;
+                    }
+                }
+                CurrentTranslation = matchingTranslation;
             }
         }
     }

@@ -10,6 +10,7 @@ namespace CramTool.Models
     public class WordList : INotifyPropertyChanged
     {
         private readonly Dictionary<string, WordInfo> wordsByName = new Dictionary<string, WordInfo>();
+        private readonly Dictionary<string, TranslationInfo> translationsByName = new Dictionary<string, TranslationInfo>();
         private readonly WordIndex tagIndex = new WordIndex();
         private readonly WordIndex translationIndex = new WordIndex();
 
@@ -46,9 +47,9 @@ namespace CramTool.Models
             return wordsByName.Values.SelectMany(w => w.Forms);
         }
 
-        public IEnumerable<string> GetAllTranslations()
+        public IEnumerable<TranslationInfo> GetAllTranslations()
         {
-            return translationIndex.GetAttributes();
+            return translationsByName.Values;
         }
 
         public IEnumerable<WordInfo> GetWordsWithTranslation(string translation)
@@ -111,6 +112,8 @@ namespace CramTool.Models
             tagIndex.Add(name, wordInfo.Tags);
             translationIndex.Add(name, wordInfo.Translations);
 
+            UpdateTranslations(wordInfo.Translations);
+
             UpdateStats();
 
             OnContentsChanged();
@@ -143,6 +146,8 @@ namespace CramTool.Models
 
             tagIndex.Update(oldName, oldTags, newName, wordInfo.Tags);
             translationIndex.Update(oldName, oldTranslations, newName, wordInfo.Translations);
+
+            UpdateTranslations(oldTranslations.Union(wordInfo.Translations).ToList());
 
             UpdateStats();
 
@@ -205,6 +210,9 @@ namespace CramTool.Models
                 tagIndex.Add(word.Name, wordInfo.Tags);
                 translationIndex.Add(word.Name, wordInfo.Translations);
             }
+
+            UpdateTranslations(translationIndex.GetAttributes());
+
             Modified = false;
 
             UpdateStats();
@@ -212,6 +220,37 @@ namespace CramTool.Models
             OnContentsChanged();
         }
 
+        private void UpdateTranslations(IList<string> translations)
+        {
+            foreach (string translation in translations)
+            {
+                UpdateTranslation(translation);
+            }
+        }
+
+        private void UpdateTranslation(string translation)
+        {
+            if (!translationIndex.GetWordNames(translation).Any())
+            {
+                if (translationsByName.ContainsKey(translation))
+                {
+                    translationsByName.Remove(translation);
+                }
+                return;
+            }
+
+            TranslationInfo translationInfo;
+            if (!translationsByName.TryGetValue(translation, out translationInfo))
+            {
+                translationInfo = TranslationInfo.Create(this, translation);
+                translationsByName.Add(translation, translationInfo);
+            }
+            else
+            {
+                translationInfo.Update();
+            }
+        }
+        
         private void UpdateStats()
         {
             Stats = WordsListStats.BuildFrom(this);

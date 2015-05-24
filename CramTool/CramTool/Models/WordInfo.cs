@@ -9,8 +9,8 @@ namespace CramTool.Models
 {
     public class WordInfo : INotifyPropertyChanged
     {
-        private static readonly TimeSpan TimeToMarkRepeated = TimeSpan.FromMinutes(30);
-        private static readonly TimeSpan TimeToMarkLearned = TimeSpan.FromHours(12);
+        public static readonly TimeSpan TimeToMarkRepeated = TimeSpan.FromMinutes(30);
+        public static readonly TimeSpan TimeToMarkLearned = TimeSpan.FromHours(12);
         public static readonly TimeSpan TimeToMarkVerified = TimeSpan.FromHours(24*4 + 12);
 
         private WordList wordList;

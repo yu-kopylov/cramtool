@@ -11,7 +11,7 @@
         <fd:TranslationPresenter
             x:Key="UxTranslationPresenter"
             WordList="{Binding ElementName=This, Path=WordList}"
-            Translation="{Binding ElementName=This, Path=CurrentTranslation}"
+            Translation="{Binding ElementName=This, Path=CurrentTranslation.Translation}"
         />
     </UserControl.Resources>
     <Grid>
@@ -43,7 +43,14 @@
                       ItemsSource="{Binding ElementName=This, Path=MatchingTranslations}"
                       SelectedItem="{Binding ElementName=This, Path=CurrentTranslation, Mode=TwoWay}">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Name" Binding="{Binding}" Width="*" CanUserSort="False"/>
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image DataContext="{Binding Path=State}" ToolTip="{Binding}" Style="{StaticResource WordStateImage}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="Name" Binding="{Binding Path=Translation}" Width="*" CanUserSort="False"/>
                 </DataGrid.Columns>
             </DataGrid>
             <GridSplitter Grid.Column="1" Style="{StaticResource VerticalSplitter}"/>

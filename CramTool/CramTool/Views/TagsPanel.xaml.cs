@@ -129,7 +129,6 @@ namespace CramTool.Views
 
         private void Search(object sender, EventArgs eventArgs)
         {
-            //todo: consider adding "clear" button for search string
             if (!searchPending)
             {
                 return;
