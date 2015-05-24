@@ -28,6 +28,11 @@ namespace Test.CramTool
             Assert.That(wordList.GetAllTags(), Is.EquivalentTo(new[] {"fruit"}));
             Assert.That(wordList.GetWordsWithTag("fruit").Select(w => w.Word.Name), Is.EquivalentTo(new[] { "apple", "orange" }));
 
+            wordList.MarkTranslation(WordEventType.Remembered, "a round fruit");
+            WordEvent translationRemenberedEvent = wordList.GetAllTranslations().Single(t => t.Translation == "a round fruit").Events.First().WordEvent;
+            Assert.That(translationRemenberedEvent.EventType, Is.EqualTo(WordEventType.Remembered));
+            Assert.That(translationRemenberedEvent.Translation, Is.EqualTo("a round fruit"));
+
             MemoryStream mem = new MemoryStream();
             WordListFileParser fileParser = new WordListFileParser();
             fileParser.GenerateZip(wordList, mem);
@@ -36,6 +41,10 @@ namespace Test.CramTool
             Assert.That(wordList2.GetAllWords().Select(w => w.Word.Name), Is.EquivalentTo(new[] { "apple", "orange" }));
             Assert.That(wordList2.GetAllTags(), Is.EquivalentTo(new[] { "fruit" }));
             Assert.That(wordList2.GetWordsWithTag("fruit").Select(w => w.Word.Name), Is.EquivalentTo(new[] { "apple", "orange" }));
+
+            translationRemenberedEvent = wordList2.GetAllTranslations().Single(t => t.Translation == "a round fruit").Events.First().WordEvent;
+            Assert.That(translationRemenberedEvent.EventType, Is.EqualTo(WordEventType.Remembered));
+            Assert.That(translationRemenberedEvent.Translation, Is.EqualTo("a round fruit"));
         }
     }
 }

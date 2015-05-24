@@ -71,7 +71,7 @@
                     </Grid.RowDefinitions>
                     <views:WordViewPanel Grid.Row="0" Grid.Column="0" Word="{Binding ElementName=This, Path=CurrentWord.Word}"/>
                     <GridSplitter Grid.Row="1" Style="{StaticResource HorizontalSplitter}"/>
-                    <views:HistoryPanel Grid.Row="2" WordInfo="{Binding ElementName=This, Path=CurrentWord}"/>
+                    <views:WordHistoryPanel Grid.Row="2" WordInfo="{Binding ElementName=This, Path=CurrentWord}"/>
                 </Grid>
             </Border>
         </Grid>

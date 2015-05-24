@@ -11,11 +11,13 @@ namespace CramTool.Models
     {
         private WordList wordList;
         private string translation;
+        private List<WordInfo> words;
+
+        private bool isStudied;
 
         private WordState state = WordState.Unknown;
+        private DateTime lastStateChange = DateTime.MinValue;
 
-        private WordEventInfo lastEvent = null; 
-        
         private readonly ObservableCollection<WordEventInfo> events = new ObservableCollection<WordEventInfo>();
 
         public WordList WordList
@@ -38,6 +40,16 @@ namespace CramTool.Models
             }
         }
 
+        public bool IsStudied
+        {
+            get { return isStudied; }
+            private set
+            {
+                isStudied = value;
+                OnPropertyChanged();
+            }
+        }
+        
         public WordState State
         {
             get { return state; }
@@ -48,12 +60,12 @@ namespace CramTool.Models
             }
         }
 
-        public WordEventInfo LastEvent
+        public DateTime LastStateChange
         {
-            get { return lastEvent; }
+            get { return lastStateChange; }
             set
             {
-                lastEvent = value;
+                lastStateChange = value;
                 OnPropertyChanged();
             }
         }
@@ -85,33 +97,44 @@ namespace CramTool.Models
 
         public void Update()
         {
-            List<WordInfo> words = WordList.GetWordsWithTranslation(Translation).ToList();
+            words = WordList.GetWordsWithTranslation(Translation).ToList();
 
-            UpdateEvents(words);
+            UpdateEvents();
 
-            State = LastEvent == null ? WordState.Unknown : LastEvent.WordState;
-            
-            //            IsStudied = State >= WordState.Studied;
-            //            IsLearned = State >= WordState.Learned;
-            //            IsVerified = State >= WordState.Verified;
-            
-            //            ParseWord(this);
+            IsStudied = State >= WordState.Studied;
         }
 
-        private void UpdateEvents(List<WordInfo> words)
+        private void UpdateEvents()
         {
-            WordEventInfo lastEventInfo = null;
+            WordState lastState = WordState.Unknown;
+            DateTime lastStateChange = DateTime.MinValue;
+
             List<WordEventInfo> eventInfos = new List<WordEventInfo>();
-            List<WordEvent> rawEvents = words.SelectMany(w => w.Word.Events).OrderBy(e => e.EventDate).ToList();
-            foreach (WordEvent wordEvent in rawEvents)
+            foreach (WordInfo wordInfo in words)
             {
-                lastEventInfo = CreateEventInfo(lastEventInfo, wordEvent);
-                eventInfos.Add(lastEventInfo);
+                WordEventInfo lastEventInfo = null;
+                foreach (WordEvent wordEvent in wordInfo.Word.Events)
+                {
+                    if (wordEvent.EventType == WordEventType.Added || wordEvent.Translation == Translation)
+                    {
+                        lastEventInfo = CreateEventInfo(wordInfo.Word, lastEventInfo, wordEvent);
+                        eventInfos.Add(lastEventInfo);
+                    }
+                }
+
+                if (lastEventInfo != null && (lastState == WordState.Unknown || lastEventInfo.WordState < lastState))
+                {
+                    lastState = lastEventInfo.WordState;
+                    LastStateChange = lastEventInfo.LastStateChange;
+                }
             }
 
-            eventInfos.Reverse();
+            State = lastState;
+            LastStateChange = lastStateChange;
 
-            LastEvent = eventInfos.FirstOrDefault();
+            eventInfos.Reverse();
+            eventInfos = eventInfos.OrderByDescending(e => e.WordEvent.EventDate).ToList();
+
             Events.Clear();
             foreach (WordEventInfo eventInfo in eventInfos)
             {
@@ -119,31 +142,44 @@ namespace CramTool.Models
             }
         }
 
-        private static WordEventInfo CreateEventInfo(WordEventInfo prevEventInfo, WordEvent wordEvent)
+        private static WordEventInfo CreateEventInfo(Word word, WordEventInfo prevEventInfo, WordEvent wordEvent)
         {
             if (prevEventInfo == null || wordEvent.EventType != WordEventType.Remembered)
             {
-                return new WordEventInfo(wordEvent, WordState.Studied, wordEvent.EventDate);
+                return new WordEventInfo(word, wordEvent, WordState.Studied, wordEvent.EventDate);
             }
 
             TimeSpan timeSinceLastStateChange = wordEvent.EventDate - prevEventInfo.LastStateChange;
 
             if (prevEventInfo.WordState == WordState.Studied && timeSinceLastStateChange >= WordInfo.TimeToMarkRepeated)
             {
-                return new WordEventInfo(wordEvent, WordState.Repeated, wordEvent.EventDate);
+                return new WordEventInfo(word, wordEvent, WordState.Repeated, wordEvent.EventDate);
             }
 
             if (prevEventInfo.WordState == WordState.Repeated && timeSinceLastStateChange >= WordInfo.TimeToMarkLearned)
             {
-                return new WordEventInfo(wordEvent, WordState.Learned, wordEvent.EventDate);
+                return new WordEventInfo(word, wordEvent, WordState.Learned, wordEvent.EventDate);
             }
 
             if (prevEventInfo.WordState == WordState.Learned && timeSinceLastStateChange >= WordInfo.TimeToMarkVerified)
             {
-                return new WordEventInfo(wordEvent, WordState.Verified, wordEvent.EventDate);
+                return new WordEventInfo(word, wordEvent, WordState.Verified, wordEvent.EventDate);
             }
 
-            return new WordEventInfo(wordEvent, prevEventInfo.WordState, prevEventInfo.LastStateChange);
+            return new WordEventInfo(word, wordEvent, prevEventInfo.WordState, prevEventInfo.LastStateChange);
+        }
+
+        //todo: is this wrapper required?
+        public void Mark(WordEventType eventType)
+        {
+            foreach (WordInfo word in words)
+            {
+                if (word.IsStudied)
+                {
+                    word.MarkTranslation(eventType, Translation);
+                }
+            }
+            Update();
         }
     }
 }

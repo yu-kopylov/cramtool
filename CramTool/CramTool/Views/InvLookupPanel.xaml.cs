@@ -114,7 +114,7 @@ namespace CramTool.Views
             string searchText = (SearchText ?? "").Trim();
 
             IEnumerable<TranslationInfo> translations = WordList.GetAllTranslations();
-            IEnumerable<TranslationInfo> filteredTranslations = translations.Where(tr => tr.Translation.StartsWith(searchText, true, CultureInfo.InvariantCulture)).ToList();
+            List<TranslationInfo> filteredTranslations = translations.Where(tr => tr.Translation.StartsWith(searchText, true, CultureInfo.InvariantCulture)).OrderBy(w => w.Translation).ToList();
 
             MatchingTranslations = new ObservableCollection<TranslationInfo>(filteredTranslations);
 

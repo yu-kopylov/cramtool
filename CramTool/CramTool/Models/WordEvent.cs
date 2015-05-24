@@ -7,12 +7,22 @@ namespace CramTool.Models
     {
         public DateTime EventDate { get; private set; }
         public WordEventType EventType { get; private set; }
+        public string Translation { get; private set; }
 
         public WordEvent(DateTime eventDate, WordEventType eventType)
         {
             Contract.Assert(eventDate.Kind == DateTimeKind.Utc);
             EventDate = eventDate;
             EventType = eventType;
+            Translation = null;
+        }
+
+        public WordEvent(DateTime eventDate, WordEventType eventType, string translation)
+        {
+            Contract.Assert(eventDate.Kind == DateTimeKind.Utc);
+            EventDate = eventDate;
+            EventType = eventType;
+            Translation = translation;
         }
 
         public DateTime LocalDate

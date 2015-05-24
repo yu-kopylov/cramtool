@@ -8,13 +8,13 @@ namespace CramTool.Views
     /// <summary>
     /// Interaction logic for HistoryPanel.xaml
     /// </summary>
-    public partial class HistoryPanel : UserControl
+    public partial class WordHistoryPanel : UserControl
     {
-        public static readonly DependencyProperty WordInfoProperty = DependencyProperty.Register("WordInfo", typeof(WordInfo), typeof(HistoryPanel), new PropertyMetadata(default(WordInfo)));
+        public static readonly DependencyProperty WordInfoProperty = DependencyProperty.Register("WordInfo", typeof(WordInfo), typeof(WordHistoryPanel), new PropertyMetadata(default(WordInfo)));
 
-        public static readonly DependencyProperty IsReadOnlyProperty = DependencyProperty.Register("IsReadOnly", typeof(bool), typeof(HistoryPanel), new PropertyMetadata(false));
+        public static readonly DependencyProperty IsReadOnlyProperty = DependencyProperty.Register("IsReadOnly", typeof(bool), typeof(WordHistoryPanel), new PropertyMetadata(false));
 
-        public HistoryPanel()
+        public WordHistoryPanel()
         {
             InitializeComponent();
         }

@@ -136,6 +136,8 @@ namespace CramTool.Models
             wordInfo.Word.Name = newName;
             wordInfo.Word.Description = description;
             wordInfo.Word.Tags = TagParser.ReformatTags(tags);
+            wordInfo.Word.FilterTranslationEvents();
+
             wordInfo.Update();
 
             if (newName != oldName)
@@ -162,6 +164,21 @@ namespace CramTool.Models
             WordInfo wordInfo = wordsByName[name];
             wordInfo.Mark(eventType);
 
+            UpdateTranslations(wordInfo.Translations);
+
+            UpdateStats();
+
+            OnContentsChanged();
+        }
+
+        public void MarkTranslation(WordEventType eventType, string translation)
+        {
+            Contract.Assert(translationsByName.ContainsKey(translation));
+            Modified = true;
+
+            TranslationInfo translationInfo = translationsByName[translation];
+            translationInfo.Mark(eventType);
+
             UpdateStats();
 
             OnContentsChanged();
@@ -175,6 +192,8 @@ namespace CramTool.Models
             WordInfo wordInfo = wordsByName[name];
             wordInfo.ResetHistory();
 
+            UpdateTranslations(wordInfo.Translations);
+
             UpdateStats();
 
             OnContentsChanged();
@@ -187,6 +206,11 @@ namespace CramTool.Models
             foreach (WordInfo wordInfo in wordsByName.Values)
             {
                 wordInfo.ResetHistory();
+            }
+
+            foreach (TranslationInfo translationInfo in translationsByName.Values)
+            {
+                translationInfo.Update();
             }
 
             UpdateStats();

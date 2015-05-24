@@ -87,6 +87,9 @@
     <Compile Include="Views\ConfirmationWindow.xaml.cs">
       <DependentUpon>ConfirmationWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\TranslationHistoryPanel.xaml.cs">
+      <DependentUpon>TranslationHistoryPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\FlowDocuments\FlowDocumentStyles.cs" />
     <Compile Include="Views\InvLookupPanel.xaml.cs">
       <DependentUpon>InvLookupPanel.xaml</DependentUpon>
@@ -97,8 +100,8 @@
     <Compile Include="Views\ExceptionWindow.xaml.cs">
       <DependentUpon>ExceptionWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\HistoryPanel.xaml.cs">
-      <DependentUpon>HistoryPanel.xaml</DependentUpon>
+    <Compile Include="Views\WordHistoryPanel.xaml.cs">
+      <DependentUpon>WordHistoryPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainTabSet.xaml.cs">
       <DependentUpon>MainTabSet.xaml</DependentUpon>
@@ -147,6 +150,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\TranslationHistoryPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\InvLookupPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -159,7 +166,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\HistoryPanel.xaml">
+    <Page Include="Views\WordHistoryPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

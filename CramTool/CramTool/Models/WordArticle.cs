@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace CramTool.Models
@@ -52,6 +53,11 @@ namespace CramTool.Models
                 }
             }
             return sb.ToString();
+        }
+
+        public List<string> GetAllTranslations()
+        {
+            return FormGroups.SelectMany(fg => fg.TranslationGroups).SelectMany(tg => tg.Translations).Distinct().ToList();
         }
     }
 

@@ -67,15 +67,25 @@ namespace CramTool.Models
             Contract.Assert(eventType == WordEventType.Added || Events.Count > 0);
             
             WordEvent wordEvent = new WordEvent(DateTime.UtcNow, eventType);
+            AddEvent(wordEvent);
+        }
 
-            var lastEvent = Events.LastOrDefault();
-            while (lastEvent != null && EventsOverllap(lastEvent, wordEvent))
-            {
-                Events.RemoveAt(Events.Count - 1);
-                lastEvent = Events.LastOrDefault();
-            }
+        public void MarkTranslation(WordEventType eventType, string translation)
+        {
+            Contract.Assert(eventType != WordEventType.Added);
+            Contract.Assert(Events.Count > 0);
 
-            if (eventType != WordEventType.Added && Events.Count == 0)
+            WordEvent wordEvent = new WordEvent(DateTime.UtcNow, eventType, translation);
+            AddEvent(wordEvent);
+        }
+
+        private void AddEvent(WordEvent wordEvent)
+        {
+            List<WordEvent> cleanEvents = Events.Where(e => !EventsOverllap(e, wordEvent)).ToList();
+            events.Clear();
+            events.AddRange(cleanEvents);
+            
+            if (wordEvent.EventType != WordEventType.Added && Events.Count == 0)
             {
                 Events.Add(new WordEvent(wordEvent.EventDate, WordEventType.Added));
             }
@@ -89,12 +99,35 @@ namespace CramTool.Models
             {
                 return newEvent.EventDate < oldEvent.EventDate;
             }
+            if (oldEvent.Translation != newEvent.Translation)
+            {
+                return false;
+            }
             return newEvent.EventDate.AddMinutes(-5) < oldEvent.EventDate;
         }
 
         public void ResetHistory()
         {
             Events.Clear();
+        }
+
+        public void FilterTranslationEvents()
+        {
+            ArticleParser parser = new ArticleParser();
+            WordArticle article = parser.Parse(name, description);
+            HashSet<string> translations = new HashSet<string>(article.GetAllTranslations());
+            for (int i = 0; i < Events.Count;)
+            {
+                WordEvent wordEvent = events[i];
+                if (wordEvent.Translation == null || translations.Contains(wordEvent.Translation))
+                {
+                    i++;
+                }
+                else
+                {
+                    events.RemoveAt(i);
+                }
+            }
         }
     }
 }

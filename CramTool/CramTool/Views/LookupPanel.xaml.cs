@@ -199,7 +199,7 @@ namespace CramTool.Views
             string searchText = (SearchText ?? "").Trim();
 
             IEnumerable<WordForm> forms = WordList.GetAllForms();
-            IEnumerable<WordForm> filteredForms = forms.Where(w => w.Name.StartsWith(searchText, true, CultureInfo.InvariantCulture)).OrderBy(w => w.Name);
+            List<WordForm> filteredForms = forms.Where(w => w.Name.StartsWith(searchText, true, CultureInfo.InvariantCulture)).OrderBy(w => w.Name).ToList();
             WordForm matchingWordForm = null;
             foreach (WordForm wordForm in filteredForms)
             {

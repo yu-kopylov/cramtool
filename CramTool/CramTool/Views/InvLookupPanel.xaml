@@ -55,7 +55,15 @@
             </DataGrid>
             <GridSplitter Grid.Column="1" Style="{StaticResource VerticalSplitter}"/>
             <Border BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" BorderThickness="1" Padding="2" Grid.Row="0" Grid.Column="2">
-                <FlowDocumentReader x:Name="X" Document="{Binding Source={StaticResource UxTranslationPresenter}, Path=Document}"/>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <FlowDocumentReader Grid.Row="0" x:Name="X" Document="{Binding Source={StaticResource UxTranslationPresenter}, Path=Document}"/>
+                    <GridSplitter Grid.Row="1" Style="{StaticResource HorizontalSplitter}"/>
+                    <views:TranslationHistoryPanel Grid.Row="2" Grid.ColumnSpan="3" TranslationInfo="{Binding ElementName=This, Path=CurrentTranslation}"/>
+                </Grid>
             </Border>
         </Grid>
     </Grid>

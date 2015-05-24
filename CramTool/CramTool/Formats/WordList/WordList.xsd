@@ -28,6 +28,7 @@
     <xs:sequence>
       <xs:element minOccurs="1" maxOccurs="1" name="EventDate" type="xs:dateTime" />
       <xs:element minOccurs="1" maxOccurs="1" name="EventType" type="WordEventTypeXml" />
+      <xs:element minOccurs="0" maxOccurs="1" name="Translation" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:simpleType name="WordEventTypeXml">

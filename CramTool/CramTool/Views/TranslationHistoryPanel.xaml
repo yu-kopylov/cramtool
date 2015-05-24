@@ -1,0 +1,71 @@
+﻿<UserControl x:Class="CramTool.Views.TranslationHistoryPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:cramTool="clr-namespace:CramTool"
+             mc:Ignorable="d"
+             x:Name="This"
+             d:DesignHeight="300" d:DesignWidth="600">
+    <UserControl.CommandBindings>
+        <CommandBinding Command="cramTool:Commands.MarkWordRemembered" CanExecute="CanMarkWordRemembered" Executed="MarkWordRemembered" />
+        <CommandBinding Command="cramTool:Commands.MarkWordForgotten" CanExecute="CanMarkWordForgotten" Executed="MarkWordForgotten" />
+    </UserControl.CommandBindings>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Stretch">
+                <TextBlock VerticalAlignment="Center" Margin="2 2 2 2">History</TextBlock>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" Visibility="{Binding ElementName=This, Path=IsReadOnly, Converter={x:Static cramTool:VisibleIfConverter.Instance}, ConverterParameter=False}">
+                <Rectangle Width="2" Margin="3" Fill="LightGray" />
+                <Button Command="cramTool:Commands.MarkWordRemembered" Style="{StaticResource ActiveButton}" Focusable="False" Width="100" Margin="3">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="{StaticResource WordEventRememberedImage}" />
+                        <TextBlock>Remembered</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button Command="cramTool:Commands.MarkWordForgotten" Style="{StaticResource ActiveButton}" Focusable="False" Width="100" Margin="3">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="{StaticResource WordEventForgottenImage}" />
+                        <TextBlock>Forgotten</TextBlock>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Grid>
+        <DataGrid Grid.Row="1" AutoGenerateColumns="False"
+                  GridLinesVisibility="None"
+                  IsReadOnly="True"
+                  CanUserReorderColumns="False"
+                  CanUserResizeColumns="False"
+                  SelectionMode="Single"
+                  ItemsSource="{Binding ElementName=This, Path=TranslationInfo.Events}">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image DataContext="{Binding WordEvent.EventType}" ToolTip="{Binding}" Style="{StaticResource WordEventImage}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Date" Binding="{Binding WordEvent.LocalDate, StringFormat='dd.MM.yyyy HH:mm:ss'}" Width="140" CanUserSort="False" />
+                <DataGridTextColumn Header="Event" Binding="{Binding WordEvent.EventType}" Width="2*" CanUserSort="False" />
+                <DataGridTextColumn Header="Word" Binding="{Binding Word.Name}" Width="2*" CanUserSort="False" />
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image DataContext="{Binding WordState}" ToolTip="{Binding}" Style="{StaticResource WordStateImage}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Resulting State" Binding="{Binding WordState}" Width="2*" CanUserSort="False" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

@@ -164,8 +164,11 @@ namespace CramTool.Models
             List<WordEventInfo> eventInfos = new List<WordEventInfo>();
             foreach (WordEvent wordEvent in word.Events)
             {
-                lastEventInfo = CreateEventInfo(lastEventInfo, wordEvent);
-                eventInfos.Add(lastEventInfo);
+                if (wordEvent.Translation == null)
+                {
+                    lastEventInfo = CreateEventInfo(word, lastEventInfo, wordEvent);
+                    eventInfos.Add(lastEventInfo);
+                }
             }
 
             eventInfos.Reverse();
@@ -178,31 +181,31 @@ namespace CramTool.Models
             }
         }
 
-        private static WordEventInfo CreateEventInfo(WordEventInfo prevEventInfo, WordEvent wordEvent)
+        private static WordEventInfo CreateEventInfo(Word word, WordEventInfo prevEventInfo, WordEvent wordEvent)
         {
             if (prevEventInfo == null || wordEvent.EventType != WordEventType.Remembered)
             {
-                return new WordEventInfo(wordEvent, WordState.Studied, wordEvent.EventDate);
+                return new WordEventInfo(word, wordEvent, WordState.Studied, wordEvent.EventDate);
             }
 
             TimeSpan timeSinceLastStateChange = wordEvent.EventDate - prevEventInfo.LastStateChange;
 
             if (prevEventInfo.WordState == WordState.Studied && timeSinceLastStateChange >= TimeToMarkRepeated)
             {
-                return new WordEventInfo(wordEvent, WordState.Repeated, wordEvent.EventDate);
+                return new WordEventInfo(word, wordEvent, WordState.Repeated, wordEvent.EventDate);
             }
 
             if (prevEventInfo.WordState == WordState.Repeated && timeSinceLastStateChange >= TimeToMarkLearned)
             {
-                return new WordEventInfo(wordEvent, WordState.Learned, wordEvent.EventDate);
+                return new WordEventInfo(word, wordEvent, WordState.Learned, wordEvent.EventDate);
             }
 
             if (prevEventInfo.WordState == WordState.Learned && timeSinceLastStateChange >= TimeToMarkVerified)
             {
-                return new WordEventInfo(wordEvent, WordState.Verified, wordEvent.EventDate);
+                return new WordEventInfo(word, wordEvent, WordState.Verified, wordEvent.EventDate);
             }
 
-            return new WordEventInfo(wordEvent, prevEventInfo.WordState, prevEventInfo.LastStateChange);
+            return new WordEventInfo(word, wordEvent, prevEventInfo.WordState, prevEventInfo.LastStateChange);
         }
 
         private static void ParseWord(WordInfo info)
@@ -229,6 +232,13 @@ namespace CramTool.Models
         public void Mark(WordEventType eventType)
         {
             Word.Mark(eventType);
+            Update();
+        }
+
+        //todo: is this wrapper required?
+        public void MarkTranslation(WordEventType eventType, string translation)
+        {
+            Word.MarkTranslation(eventType, translation);
             Update();
         }
 

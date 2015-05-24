@@ -46,6 +46,7 @@ namespace CramTool.Formats
 
             wordEventXml.EventDate = wordEvent.EventDate;
             wordEventXml.EventType = ConvertToXml(wordEvent.EventType);
+            wordEventXml.Translation = wordEvent.Translation;
 
             return wordEventXml;
         }
@@ -140,7 +141,7 @@ namespace CramTool.Formats
         {
             DateTime eventDate = wordEventXml.EventDate;
             WordEventType eventType = ConvertToObject(wordEventXml.EventType);
-            return new WordEvent(eventDate, eventType);
+            return new WordEvent(eventDate, eventType, wordEventXml.Translation);
         }
 
         private static WordEventTypeXml ConvertToXml(WordEventType eventType)
