@@ -47,7 +47,7 @@ namespace CramTool.Views
 
         private void CanMarkWordRemembered(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = Quiz != null && Quiz.CurrentWord != null && Quiz.CurrentWord.IsShown && Quiz.CurrentWord.WordInfo.IsStudied;
+            e.CanExecute = Quiz != null && Quiz.CurrentWord != null && Quiz.CurrentWord.IsShown && Quiz.CurrentWord.State != WordState.Unknown;
         }
 
         private void MarkWordRemembered(object sender, ExecutedRoutedEventArgs args)
@@ -57,7 +57,7 @@ namespace CramTool.Views
 
         private void CanMarkWordForgotten(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = Quiz != null && Quiz.CurrentWord != null && Quiz.CurrentWord.IsShown && Quiz.CurrentWord.WordInfo.IsStudied;
+            e.CanExecute = Quiz != null && Quiz.CurrentWord != null && Quiz.CurrentWord.IsShown && Quiz.CurrentWord.State != WordState.Unknown;
         }
 
         private void MarkWordForgotten(object sender, ExecutedRoutedEventArgs args)

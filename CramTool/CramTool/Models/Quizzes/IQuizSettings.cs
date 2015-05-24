@@ -4,6 +4,6 @@ namespace CramTool.Models.Quizzes
 {
     public interface IQuizSettings
     {
-        List<WordInfo> GetWords(WordList wordList);
+        List<QuizWord> GetWords(WordList wordList);
     }
 }

@@ -24,6 +24,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -51,6 +52,36 @@
                     </TextBlock>
                     <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource QuizDescription}">
                         - Words that you learned and should verify
+                    </TextBlock>
+                </StackPanel>
+                <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Right" Width="80" Style="{StaticResource ActiveButton}" Command="cramTool:Commands.StartQuiz" CommandParameter="{Binding}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="{StaticResource QuizStartIcon}"/>
+                        <TextBlock>Start Quiz</TextBlock>
+                    </StackPanel>
+                </Button>
+            </Grid>
+        </Border>
+        <Border Grid.Row="2" Grid.Column="1" Style="{StaticResource QuizTypeBorder}" DataContext="{Binding ElementName=This, Path=Quiz.InverseSettings}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Image Grid.Row="0" Grid.Column="0" Source="{StaticResource WordStateStudiedImage}" Margin="0 0 5 0" VerticalAlignment="Top" Height="16"/>
+                <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical">
+                    <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource QuizDescription}">
+                        Translations Quiz
+                    </TextBlock>
+                    <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource QuizDescription}">
+                        - Translations of words that you are learning
+                    </TextBlock>
+                    <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource QuizDescription}">
+                        - Translations of words that you learned and should verify
                     </TextBlock>
                 </StackPanel>
                 <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Right" Width="80" Style="{StaticResource ActiveButton}" Command="cramTool:Commands.StartQuiz" CommandParameter="{Binding}">

@@ -6,7 +6,7 @@ using CramTool.Models;
 namespace CramTool.Views
 {
     /// <summary>
-    /// Interaction logic for HistoryPanel.xaml
+    /// Interaction logic for WordHistoryPanel.xaml
     /// </summary>
     public partial class WordHistoryPanel : UserControl
     {

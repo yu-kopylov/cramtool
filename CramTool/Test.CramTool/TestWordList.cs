@@ -28,7 +28,7 @@ namespace Test.CramTool
             Assert.That(wordList.GetAllTags(), Is.EquivalentTo(new[] {"fruit"}));
             Assert.That(wordList.GetWordsWithTag("fruit").Select(w => w.Word.Name), Is.EquivalentTo(new[] { "apple", "orange" }));
 
-            wordList.MarkTranslation(WordEventType.Remembered, "a round fruit");
+            wordList.MarkTranslation("a round fruit", WordEventType.Remembered);
             WordEvent translationRemenberedEvent = wordList.GetAllTranslations().Single(t => t.Translation == "a round fruit").Events.First().WordEvent;
             Assert.That(translationRemenberedEvent.EventType, Is.EqualTo(WordEventType.Remembered));
             Assert.That(translationRemenberedEvent.Translation, Is.EqualTo("a round fruit"));

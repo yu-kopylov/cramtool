@@ -28,8 +28,16 @@ namespace CramTool.Views.FlowDocuments
             set { SetValue(TranslationProperty, value); }
         }
 
+        public static readonly DependencyProperty IncludeUnknownWordsProperty = DependencyProperty.Register("IncludeUnknownWords", typeof(bool), typeof(TranslationPresenter), new PropertyMetadata(true));
+
         public static readonly DependencyProperty DocumentProperty = DependencyProperty.Register(
             "Document", typeof(FlowDocument), typeof(TranslationPresenter), new PropertyMetadata(default(FlowDocument)));
+
+        public bool IncludeUnknownWords
+        {
+            get { return (bool)GetValue(IncludeUnknownWordsProperty); }
+            set { SetValue(IncludeUnknownWordsProperty, value); }
+        }
 
         public FlowDocument Document
         {
@@ -71,10 +79,15 @@ namespace CramTool.Views.FlowDocuments
         {
             FlowDocument document = new FlowDocument();
 
+            bool includeUnknownWords = IncludeUnknownWords;
+
             IEnumerable<WordInfo> words = WordList.GetWordsWithTranslation(Translation);
             foreach (WordInfo word in words)
             {
-                AppendWord(document, word);
+                if (includeUnknownWords || word.IsStudied)
+                {
+                    AppendWord(document, word);
+                }
             }
 
             return document;

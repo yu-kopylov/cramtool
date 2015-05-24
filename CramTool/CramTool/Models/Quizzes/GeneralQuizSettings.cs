@@ -6,7 +6,7 @@ namespace CramTool.Models.Quizzes
 {
     public class GeneralQuizSettings : IQuizSettings
     {
-        public List<WordInfo> GetWords(WordList wordList)
+        public List<QuizWord> GetWords(WordList wordList)
         {
             List<WordInfo> wordsToLearn = wordList.GetAllWords().Where(w => w.IsStudied && !w.IsLearned).OrderBy(w => w.Word.Name).ToList();
 
@@ -15,7 +15,7 @@ namespace CramTool.Models.Quizzes
 
             List<WordInfo> words = wordsToLearn.Concat(wordsToVerify).ToList();
             
-            return words;
+            return words.Select(w => new QuizWord(w)).ToList();
         }
     }
 }

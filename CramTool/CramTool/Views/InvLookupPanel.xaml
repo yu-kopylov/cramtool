@@ -12,6 +12,7 @@
             x:Key="UxTranslationPresenter"
             WordList="{Binding ElementName=This, Path=WordList}"
             Translation="{Binding ElementName=This, Path=CurrentTranslation.Translation}"
+            IncludeUnknownWords="True"
         />
     </UserControl.Resources>
     <Grid>
@@ -57,10 +58,11 @@
             <Border BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" BorderThickness="1" Padding="2" Grid.Row="0" Grid.Column="2">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <FlowDocumentReader Grid.Row="0" x:Name="X" Document="{Binding Source={StaticResource UxTranslationPresenter}, Path=Document}"/>
+                    <FlowDocumentReader Grid.Row="0" Document="{Binding Source={StaticResource UxTranslationPresenter}, Path=Document}"/>
                     <GridSplitter Grid.Row="1" Style="{StaticResource HorizontalSplitter}"/>
                     <views:TranslationHistoryPanel Grid.Row="2" Grid.ColumnSpan="3" TranslationInfo="{Binding ElementName=This, Path=CurrentTranslation}"/>
                 </Grid>

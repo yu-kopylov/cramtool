@@ -6,7 +6,7 @@ using CramTool.Models;
 namespace CramTool.Views
 {
     /// <summary>
-    /// Interaction logic for HistoryPanel.xaml
+    /// Interaction logic for TranslationHistoryPanel.xaml
     /// </summary>
     public partial class TranslationHistoryPanel : UserControl
     {
@@ -38,7 +38,7 @@ namespace CramTool.Views
 
         private void MarkWordRemembered(object sender, ExecutedRoutedEventArgs args)
         {
-            TranslationInfo.WordList.MarkTranslation(WordEventType.Remembered, TranslationInfo.Translation);
+            TranslationInfo.WordList.MarkTranslation(TranslationInfo.Translation, WordEventType.Remembered);
         }
 
         private void CanMarkWordForgotten(object sender, CanExecuteRoutedEventArgs e)
@@ -48,7 +48,7 @@ namespace CramTool.Views
 
         private void MarkWordForgotten(object sender, ExecutedRoutedEventArgs args)
         {
-            TranslationInfo.WordList.MarkTranslation(WordEventType.Forgotten, TranslationInfo.Translation);
+            TranslationInfo.WordList.MarkTranslation(TranslationInfo.Translation, WordEventType.Forgotten);
         }
     }
 }

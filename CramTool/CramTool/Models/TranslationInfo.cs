@@ -14,6 +14,8 @@ namespace CramTool.Models
         private List<WordInfo> words;
 
         private bool isStudied;
+        private bool isLearned;
+        private bool isVerified;
 
         private WordState state = WordState.Unknown;
         private DateTime lastStateChange = DateTime.MinValue;
@@ -49,6 +51,27 @@ namespace CramTool.Models
                 OnPropertyChanged();
             }
         }
+
+        public bool IsLearned
+        {
+            get { return isLearned; }
+            set
+            {
+                isLearned = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsVerified
+        {
+            get { return isVerified; }
+            set
+            {
+                isVerified = value;
+                OnPropertyChanged();
+            }
+        }
+
         
         public WordState State
         {
@@ -102,6 +125,8 @@ namespace CramTool.Models
             UpdateEvents();
 
             IsStudied = State >= WordState.Studied;
+            IsLearned = State >= WordState.Learned;
+            IsVerified = State >= WordState.Verified;
         }
 
         private void UpdateEvents()

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -14,12 +15,14 @@ namespace CramTool.Models.Quizzes
         private QuizWord currentWord;
 
         private readonly GeneralQuizSettings generalSettings = new GeneralQuizSettings();
+        private readonly InverseQuizSettings inverseSettings = new InverseQuizSettings();
 
         public WordList WordList
         {
             get { return wordList; }
             set
             {
+                WeakEventHelper.UpdateListener<WordList, EventArgs>(wordList, value, "ContentsChanged", OnWordListContentsChanged);
                 wordList = value;
                 OnPropertyChanged();
                 ResetQuiz();
@@ -61,6 +64,11 @@ namespace CramTool.Models.Quizzes
             get { return generalSettings; }
         }
 
+        public InverseQuizSettings InverseSettings
+        {
+            get { return inverseSettings; }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -69,10 +77,20 @@ namespace CramTool.Models.Quizzes
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        private void OnWordListContentsChanged(object sender, EventArgs e)
+        {
+            if (words != null)
+            {
+                foreach (QuizWord word in Words)
+                {
+                    word.UpdateState();
+                }
+            }
+        }
+
         public void StartQuiz(IQuizSettings settings)
         {
-            List<WordInfo> selectedWords = settings.GetWords(wordList);
-            List<QuizWord> quizWords = selectedWords.Select(w => new QuizWord(w)).ToList();
+            List<QuizWord> quizWords = settings.GetWords(wordList);
             Words = new ObservableCollection<QuizWord>(quizWords);
             CurrentWord = quizWords.FirstOrDefault();
             QuizStage = QuizStage.Started;
@@ -87,8 +105,7 @@ namespace CramTool.Models.Quizzes
 
         public void MarkCurrentWord(WordEventType eventType)
         {
-            WordList.Mark(CurrentWord.WordInfo.Word.Name, eventType);
-            CurrentWord.Result = eventType;
+            CurrentWord.Mark(WordList, eventType);
         }
     }
 }

@@ -6,7 +6,7 @@
              xmlns:cramTool="clr-namespace:CramTool"
              mc:Ignorable="d"
              x:Name="This"
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="450" d:DesignWidth="600">
     <UserControl.CommandBindings>
         <CommandBinding Command="cramTool:Commands.StartQuiz" CanExecute="CanStartQuiz" Executed="StartQuiz"/>
         <CommandBinding Command="cramTool:Commands.EndQuiz" CanExecute="CanEndQuiz" Executed="EndQuiz"/>

@@ -72,6 +72,20 @@ namespace CramTool.Models
             return wordsByName.ContainsKey(name);
         }
 
+        public WordInfo GetWord(string name)
+        {
+            WordInfo res;
+            wordsByName.TryGetValue(name, out res);
+            return res;
+        }
+
+        public TranslationInfo GetTranslation(string name)
+        {
+            TranslationInfo res;
+            translationsByName.TryGetValue(name, out res);
+            return res;
+        }
+
         public delegate void ContentsChangedEventHandler(object sender, EventArgs e);
 
         public event ContentsChangedEventHandler ContentsChanged;
@@ -171,9 +185,10 @@ namespace CramTool.Models
             OnContentsChanged();
         }
 
-        public void MarkTranslation(WordEventType eventType, string translation)
+        public void MarkTranslation(string translation, WordEventType eventType)
         {
             Contract.Assert(translationsByName.ContainsKey(translation));
+
             Modified = true;
 
             TranslationInfo translationInfo = translationsByName[translation];
