@@ -33,6 +33,7 @@ namespace CramTool
         public static readonly RoutedCommand MoveToNextWord = new RoutedCommand();
         public static readonly RoutedCommand StartQuiz = new RoutedCommand();
         public static readonly RoutedCommand EndQuiz = new RoutedCommand();
+        public static readonly RoutedCommand NavigateTo = new RoutedCommand();
 
         static Commands()
         {

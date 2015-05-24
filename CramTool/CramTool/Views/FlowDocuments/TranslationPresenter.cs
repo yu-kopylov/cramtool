@@ -107,8 +107,13 @@ namespace CramTool.Views.FlowDocuments
                 bool firstForm = true;
                 foreach (string form in formGroup.Forms)
                 {
+                    Hyperlink link = new Hyperlink();
+                    link.Command = Commands.NavigateTo;
+                    link.CommandParameter = NavigationTarget.ToWord(word.Word.Name);
+                    paragraph.Inlines.Add(link);
+
                     Run run = new Run(form);
-                    paragraph.Inlines.Add(run);
+                    link.Inlines.Add(run);
                     if (firstForm)
                     {
                         FlowDocumentStyles.FormatWord(run);

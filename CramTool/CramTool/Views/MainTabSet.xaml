@@ -4,17 +4,21 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:models="clr-namespace:CramTool.Models"
              xmlns:views="clr-namespace:CramTool.Views"
+             xmlns:cramTool="clr-namespace:CramTool"
              mc:Ignorable="d"
              d:DesignHeight="500" d:DesignWidth="800">
-    <TabControl>
-        <TabItem>
+    <UserControl.CommandBindings>
+        <CommandBinding Command="cramTool:Commands.NavigateTo" Executed="NavigateTo" />
+    </UserControl.CommandBindings>
+    <TabControl x:Name="UxTabSet">
+        <TabItem x:Name="UxLookupTab">
             <TabItem.Header>
                 <StackPanel Orientation="Horizontal">
                     <Image Source="{StaticResource FindIcon}" />
                     <Label Content="Lookup / Edit" VerticalAlignment="Center" />
                 </StackPanel>
             </TabItem.Header>
-            <views:LookupPanel WordList="{Binding Source={x:Static models:CramToolModel.Instance}, Path=WordList}" />
+            <views:LookupPanel x:Name="UxLookupPanel" WordList="{Binding Source={x:Static models:CramToolModel.Instance}, Path=WordList}" />
         </TabItem>
         <TabItem>
             <TabItem.Header>

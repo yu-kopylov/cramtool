@@ -217,5 +217,40 @@ namespace CramTool.Views
                 CurrentWordForm = matchingWordForm;
             }
         }
+
+        public void NavigateTo(string wordName)
+        {
+            if (!CheckSaved())
+            {
+                return;
+            }
+
+            WordInfo word = WordList.GetWord(wordName);
+            if (word == null)
+            {
+                return;
+            }
+
+            SearchText = word.Word.Name;
+        }
+
+        private bool CheckSaved()
+        {
+            if (EditableWord == null)
+            {
+                return true;
+            }
+            string name = EditableWord.Name;
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                name = "<unnamed>";
+            }
+            if (!ConfirmationWindow.Confirm(Window.GetWindow(this), string.Format("Unsaved changes to word '{0}' will be lost.\nAre you sure you want to continue?", name )))
+            {
+                return false;
+            }
+            EditableWord = null;
+            return true;
+        }
     }
 }

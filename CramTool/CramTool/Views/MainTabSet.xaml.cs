@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace CramTool.Views
 {
@@ -10,6 +11,17 @@ namespace CramTool.Views
         public MainTabSet()
         {
             InitializeComponent();
+        }
+
+        private void NavigateTo(object sender, ExecutedRoutedEventArgs e)
+        {
+            NavigationTarget target = e.Parameter as NavigationTarget;
+            if (target == null)
+            {
+                return;
+            }
+            UxTabSet.SelectedItem = UxLookupTab;
+            UxLookupPanel.NavigateTo(target.WordName);
         }
     }
 }
