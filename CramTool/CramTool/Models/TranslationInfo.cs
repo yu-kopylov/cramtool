@@ -14,6 +14,7 @@ namespace CramTool.Models
         private List<WordInfo> words;
 
         private bool isStudied;
+        private bool isRepeated;
         private bool isLearned;
         private bool isVerified;
 
@@ -48,6 +49,16 @@ namespace CramTool.Models
             private set
             {
                 isStudied = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsRepeated
+        {
+            get { return isRepeated; }
+            set
+            {
+                isRepeated = value;
                 OnPropertyChanged();
             }
         }
@@ -125,6 +136,7 @@ namespace CramTool.Models
             UpdateEvents();
 
             IsStudied = State >= WordState.Studied;
+            IsRepeated = State >= WordState.Repeated;
             IsLearned = State >= WordState.Learned;
             IsVerified = State >= WordState.Verified;
         }
