@@ -162,7 +162,7 @@ namespace CramTool.Models
                 if (lastEventInfo != null && (lastState == WordState.Unknown || lastEventInfo.WordState < lastState))
                 {
                     lastState = lastEventInfo.WordState;
-                    LastStateChange = lastEventInfo.LastStateChange;
+                    lastStateChange = lastEventInfo.LastStateChange;
                 }
             }
 
