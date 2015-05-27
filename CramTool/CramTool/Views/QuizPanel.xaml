@@ -22,11 +22,42 @@
             <views:QuizStartedPanel Quiz="{Binding ElementName=This, Path=Quiz}"
                                 Visibility="{Binding ElementName=This, Path=Quiz.QuizStage, Converter={x:Static cramTool:VisibleIfConverter.Instance}, ConverterParameter=Started}" />
         </Grid>
-        <Button Grid.Row="1" HorizontalAlignment="Right" Width="80" Margin="3" Style="{StaticResource ActiveButton}" Command="cramTool:Commands.EndQuiz">
-            <StackPanel Orientation="Horizontal">
-                <Image Source="{StaticResource QuizStopIcon}"/>
-                <TextBlock>End Quiz</TextBlock>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0"
+                        Orientation="Horizontal" VerticalAlignment="Center"
+                        Visibility="{Binding ElementName=This, Path=Quiz.QuizStage, Converter={x:Static cramTool:VisibleIfConverter.Instance}, ConverterParameter=Started}">
+                <StackPanel.Resources>
+                    <Style TargetType="Image">
+                        <Setter Property="Margin" Value="10 0 0 0"/>
+                    </Style>
+                </StackPanel.Resources>
+
+                <Image Source="{StaticResource WordStateStudiedImage}" ToolTip="Words"/>
+                <TextBlock Text=": "/>
+                <TextBlock Text="{Binding ElementName=This, Path=Quiz.Words.Count}"/>
+
+                <Image Source="{StaticResource WordStateRepeatedImage}" ToolTip="Checked Words"/>
+                <TextBlock Text=": "/>
+                <TextBlock Text="{Binding ElementName=This, Path=Quiz.CheckedCount}"/>
+
+                <Image Source="{StaticResource WordEventRememberedImage}" ToolTip="Remembered Words"/>
+                <TextBlock Text=": "/>
+                <TextBlock Text="{Binding ElementName=This, Path=Quiz.RememberedCount}"/>
+
+                <Image Source="{StaticResource WordEventForgottenImage}" ToolTip="Forgotten Words"/>
+                <TextBlock Text=": "/>
+                <TextBlock Text="{Binding ElementName=This, Path=Quiz.ForgottenCount}"/>
             </StackPanel>
-        </Button>
+            <Button Grid.Column="1" HorizontalAlignment="Right" Width="80" Margin="3" Style="{StaticResource ActiveButton}" Command="cramTool:Commands.EndQuiz">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="{StaticResource QuizStopIcon}"/>
+                    <TextBlock>End Quiz</TextBlock>
+                </StackPanel>
+            </Button>
+        </Grid>
     </Grid>
 </UserControl>

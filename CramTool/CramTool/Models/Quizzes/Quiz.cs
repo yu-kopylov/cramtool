@@ -14,6 +14,10 @@ namespace CramTool.Models.Quizzes
         private ObservableCollection<QuizWord> words;
         private QuizWord currentWord;
 
+        private int checkedCount;
+        private int rememberedCount;
+        private int forgottenCount;
+
         private readonly GeneralQuizSettings generalSettings = new GeneralQuizSettings();
         private readonly InverseQuizSettings inverseSettings = new InverseQuizSettings();
 
@@ -59,6 +63,36 @@ namespace CramTool.Models.Quizzes
             }
         }
 
+        public int CheckedCount
+        {
+            get { return checkedCount; }
+            set
+            {
+                checkedCount = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public int RememberedCount
+        {
+            get { return rememberedCount; }
+            set
+            {
+                rememberedCount = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public int ForgottenCount
+        {
+            get { return forgottenCount; }
+            set
+            {
+                forgottenCount = value;
+                OnPropertyChanged();
+            }
+        }
+
         public GeneralQuizSettings GeneralSettings
         {
             get { return generalSettings; }
@@ -94,6 +128,7 @@ namespace CramTool.Models.Quizzes
             Words = new ObservableCollection<QuizWord>(quizWords);
             CurrentWord = quizWords.FirstOrDefault();
             QuizStage = QuizStage.Started;
+            UpdateCounts();
         }
 
         public void ResetQuiz()
@@ -101,11 +136,28 @@ namespace CramTool.Models.Quizzes
             Words = null;
             CurrentWord = null;
             QuizStage = QuizStage.Prepare;
+            UpdateCounts();
         }
 
         public void MarkCurrentWord(WordEventType eventType)
         {
             CurrentWord.Mark(WordList, eventType);
+            UpdateCounts();
+        }
+
+        private void UpdateCounts()
+        {
+            if (Words == null)
+            {
+                CheckedCount = 0;
+                RememberedCount = 0;
+                ForgottenCount = 0;
+                return;
+            }
+
+            CheckedCount = Words.Count(w => w.Result != null);
+            RememberedCount = Words.Count(w => w.Result == WordEventType.Remembered);
+            ForgottenCount = Words.Count(w => w.Result == WordEventType.Forgotten);
         }
     }
 }
