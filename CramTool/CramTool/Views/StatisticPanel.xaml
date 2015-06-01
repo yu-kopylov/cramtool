@@ -5,11 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:cramTool="clr-namespace:CramTool"
              xmlns:models="clr-namespace:CramTool.Models"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="600">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
@@ -24,31 +26,43 @@
         </Grid.RowDefinitions>
         
         <Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Content="Path:" />
-        <Label Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Content="{Binding Source={x:Static models:CramToolModel.Instance}, Path=DictPath}" />
+        <Label Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="5" Content="{Binding Source={x:Static models:CramToolModel.Instance}, Path=DictPath}" />
         
         <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Content="Words Count:" />
-        <Label Grid.Row="1" Grid.Column="1" Content="{Binding Source={x:Static models:CramToolModel.Instance}, Path=WordList.Stats.WordCount}" />
+        <Label Grid.Row="1" Grid.Column="2" Content="{Binding Source={x:Static models:CramToolModel.Instance}, Path=WordList.Stats.WordCount}" />
         <Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" Content="Studied Words Count:" />
-        <Label Grid.Row="2" Grid.Column="1" Content="{Binding Source={x:Static models:CramToolModel.Instance}, Path=WordList.Stats.StudiedWordCount}" />
+        <Label Grid.Row="2" Grid.Column="2" Content="{Binding Source={x:Static models:CramToolModel.Instance}, Path=WordList.Stats.StudiedWordCount}" />
         <Label Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Content="Repeated Words Count:" />
-        <Label Grid.Row="3" Grid.Column="1" Content="{Binding Source={x:Static models:CramToolModel.Instance}, Path=WordList.Stats.RepeatedWordCount}" />
+        <Label Grid.Row="3" Grid.Column="2" Content="{Binding Source={x:Static models:CramToolModel.Instance}, Path=WordList.Stats.RepeatedWordCount}" />
         <Label Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right" Content="Learned Words Count:" />
-        <Label Grid.Row="4" Grid.Column="1" Content="{Binding Source={x:Static models:CramToolModel.Instance}, Path=WordList.Stats.LearnedWordCount}" />
+        <Label Grid.Row="4" Grid.Column="2" Content="{Binding Source={x:Static models:CramToolModel.Instance}, Path=WordList.Stats.LearnedWordCount}" />
         <Label Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right" Content="Verified Words Count:" />
-        <Label Grid.Row="5" Grid.Column="1" Content="{Binding Source={x:Static models:CramToolModel.Instance}, Path=WordList.Stats.VerifiedWordCount}" />
+        <Label Grid.Row="5" Grid.Column="2" Content="{Binding Source={x:Static models:CramToolModel.Instance}, Path=WordList.Stats.VerifiedWordCount}" />
         
-        <Label Grid.Row="1" Grid.Column="2" HorizontalAlignment="Right" Content="Translations Count:" />
-        <Label Grid.Row="1" Grid.Column="3" Content="{Binding Source={x:Static models:CramToolModel.Instance}, Path=WordList.Stats.TranslationCount}" />
-        <Label Grid.Row="2" Grid.Column="2" HorizontalAlignment="Right" Content="Studied Translations Count:" />
-        <Label Grid.Row="2" Grid.Column="3" Content="{Binding Source={x:Static models:CramToolModel.Instance}, Path=WordList.Stats.StudiedTranslationCount}" />
-        <Label Grid.Row="3" Grid.Column="2" HorizontalAlignment="Right" Content="Repeated Translations Count:" />
-        <Label Grid.Row="3" Grid.Column="3" Content="{Binding Source={x:Static models:CramToolModel.Instance}, Path=WordList.Stats.RepeatedTranslationCount}" />
-        <Label Grid.Row="4" Grid.Column="2" HorizontalAlignment="Right" Content="Learned Translations Count:" />
-        <Label Grid.Row="4" Grid.Column="3" Content="{Binding Source={x:Static models:CramToolModel.Instance}, Path=WordList.Stats.LearnedTranslationCount}" />
-        <Label Grid.Row="5" Grid.Column="2" HorizontalAlignment="Right" Content="Verified Translations Count:" />
-        <Label Grid.Row="5" Grid.Column="3" Content="{Binding Source={x:Static models:CramToolModel.Instance}, Path=WordList.Stats.VerifiedTranslationCount}" />
-        
-        <StackPanel Grid.Row="6" Grid.ColumnSpan="4" Orientation="Horizontal">
+        <Label Grid.Row="1" Grid.Column="3" HorizontalAlignment="Right" Content="Translations Count:" />
+        <Label Grid.Row="1" Grid.Column="5" Content="{Binding Source={x:Static models:CramToolModel.Instance}, Path=WordList.Stats.TranslationCount}" />
+        <Label Grid.Row="2" Grid.Column="3" HorizontalAlignment="Right" Content="Studied Translations Count:" />
+        <Label Grid.Row="2" Grid.Column="5" Content="{Binding Source={x:Static models:CramToolModel.Instance}, Path=WordList.Stats.StudiedTranslationCount}" />
+        <Label Grid.Row="3" Grid.Column="5" Content="{Binding Source={x:Static models:CramToolModel.Instance}, Path=WordList.Stats.RepeatedTranslationCount}" />
+        <Label Grid.Row="4" Grid.Column="3" HorizontalAlignment="Right" Content="Learned Translations Count:" />
+        <Label Grid.Row="3" Grid.Column="3" HorizontalAlignment="Right" Content="Repeated Translations Count:" />
+        <Label Grid.Row="4" Grid.Column="5" Content="{Binding Source={x:Static models:CramToolModel.Instance}, Path=WordList.Stats.LearnedTranslationCount}" />
+        <Label Grid.Row="5" Grid.Column="3" HorizontalAlignment="Right" Content="Verified Translations Count:" />
+        <Label Grid.Row="5" Grid.Column="5" Content="{Binding Source={x:Static models:CramToolModel.Instance}, Path=WordList.Stats.VerifiedTranslationCount}" />
+
+        <Image Grid.Row="1" Grid.Column="1" Source="{StaticResource WordStateUnknownImage}"/>
+        <Image Grid.Row="2" Grid.Column="1" Source="{StaticResource WordStateStudiedImage}"/>
+        <Image Grid.Row="3" Grid.Column="1" Source="{StaticResource WordStateRepeatedImage}"/>
+        <Image Grid.Row="4" Grid.Column="1" Source="{StaticResource WordStateLearnedImage}"/>
+        <Image Grid.Row="5" Grid.Column="1" Source="{StaticResource WordStateVerifiedImage}"/>
+
+        <Image Grid.Row="1" Grid.Column="4" Source="{StaticResource WordStateUnknownImage}"/>
+        <Image Grid.Row="2" Grid.Column="4" Source="{StaticResource WordStateStudiedImage}"/>
+        <Image Grid.Row="3" Grid.Column="4" Source="{StaticResource WordStateRepeatedImage}"/>
+        <Image Grid.Row="4" Grid.Column="4" Source="{StaticResource WordStateLearnedImage}"/>
+        <Image Grid.Row="5" Grid.Column="4" Source="{StaticResource WordStateVerifiedImage}"/>
+
+        <StackPanel Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="6" Orientation="Horizontal">
             <Button Style="{StaticResource ActiveButton}" Margin="3" Command="{x:Static cramTool:Commands.ResetHistory}">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="{StaticResource WordStateUnknownImage}"/>
