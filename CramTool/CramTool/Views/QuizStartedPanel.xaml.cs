@@ -43,6 +43,7 @@ namespace CramTool.Views
         private void MoveToNextWord(object sender, ExecutedRoutedEventArgs e)
         {
             UxWords.SelectedIndex = UxWords.SelectedIndex + 1;
+            UxWords.ScrollIntoView(UxWords.SelectedItem);
         }
 
         private void CanMarkWordRemembered(object sender, CanExecuteRoutedEventArgs e)
