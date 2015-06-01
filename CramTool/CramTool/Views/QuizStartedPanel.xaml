@@ -68,6 +68,7 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -76,7 +77,8 @@
                 <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="3" Text="Word:" />
                 <TextBlock Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="3"
                            Text="{Binding ElementName=This, Path=Quiz.CurrentWord.Title}" />
-                <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal">
+                <Image Grid.Row="0" Grid.Column="2" DataContext="{Binding ElementName=This, Path=Quiz.CurrentWord.Result}" ToolTip="{Binding}" Style="{StaticResource WordEventImage}" />
+                <StackPanel Grid.Row="0" Grid.Column="3" Orientation="Horizontal">
                     <Rectangle Width="2" Margin="3" Fill="LightGray" />
                     <Button Width="80" Margin="3" Command="cramTool:Commands.ShowAnswer" Style="{StaticResource ActiveButton}">
                         <StackPanel Orientation="Horizontal">
@@ -105,7 +107,7 @@
                         </StackPanel>
                     </Button>
                 </StackPanel>
-                <Grid Grid.Row="1" Grid.ColumnSpan="3"
+                <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4"
                       Visibility="{Binding ElementName=This, Path=Quiz.CurrentWord.IsShown, Converter={x:Static cramTool:VisibleIfConverter.Instance}, ConverterParameter=True}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="2*" />
