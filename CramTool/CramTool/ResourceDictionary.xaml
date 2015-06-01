@@ -68,6 +68,8 @@
     </Style>
 
     <Style x:Key="WordStateImage" TargetType="Image" BasedOn="{StaticResource ActiveImage}">
+        <Setter Property="Height" Value="16"/>
+        <Setter Property="Width" Value="16"/>
         <Style.Triggers>
             <DataTrigger Binding="{Binding}" Value="Unknown">
                 <Setter Property="Source" Value="{StaticResource WordStateUnknownImage}" />
@@ -88,6 +90,8 @@
     </Style>
 
     <Style x:Key="WordEventImage" TargetType="Image" BasedOn="{StaticResource ActiveImage}">
+        <Setter Property="Height" Value="16"/>
+        <Setter Property="Width" Value="16"/>
         <Style.Triggers>
             <DataTrigger Binding="{Binding}" Value="Added">
                 <Setter Property="Source" Value="{StaticResource WordEventAddedImage}" />
