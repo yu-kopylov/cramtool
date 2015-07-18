@@ -2,7 +2,7 @@ This tool is intended for learning words every day.
 It allows to create dictionary in a simple way and then to use it for quizzes.
 
 Tool keeps track of which words are learned and which are not yet.
-Only words that are not learned and words that should be repeated are included in quiz (see [WordStates](https://github.com/yu-kopylov/cramtool/wiki/WordStates)).
+Only words that are not learned and words that should be repeated are included in a quiz (see [WordStates](https://github.com/yu-kopylov/cramtool/wiki/WordStates)).
 
 Simple MarkupLanguage allows to define translations, word forms and examples.
 
