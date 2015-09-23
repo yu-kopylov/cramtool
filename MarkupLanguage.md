@@ -23,14 +23,11 @@ The article for this word would look like:
 
 <table border='1'>
 <tr><td>
-<b>meagre</b>
-<br/>
-<b><i>meager</i></b>
-<br/>
-скудный
-<br/>
-<br/>
-<i>Example: a meagre diet of bread and water</i>
-<br/>
-<i>Example: She supplements her meagre income by cleaning at night.</i>
-</td></tr></table>
+  <b>meagre</b><br/>
+  <b><i>meager</i></b><br/>
+  скудный<br/>
+  <br/>
+  <i>Example: a meagre diet of bread and water</i><br/>
+  <i>Example: She supplements her meagre income by cleaning at night.</i>
+</td></tr>
+</table>
