@@ -1,6 +1,6 @@
 # Markup Language #
 
-Tool treats each line of word description as either word form, example or translation depending on its first caracter.
+Tool treats each line of a word description as either a word form, an example or a translation depending on its first character.
 
 | First Character | Line |
 |:----------------|:-----|
@@ -10,7 +10,7 @@ Tool treats each line of word description as either word form, example or transl
 
 # Example #
 
-Description for word **meagre** in english-russian dictionary.
+The description for the word **meagre** in the english-russian dictionary.
 
 ```
 #meager
@@ -19,16 +19,18 @@ Description for word **meagre** in english-russian dictionary.
 //She supplements her meagre income by cleaning at night.
 ```
 
-Article for this word would look like:
+The article for this word would look like:
 
-<table border='1'><tr><td>
+<table border='1'>
+<tr><td>
 <b>meagre</b>
-
+<br/>
 <b><i>meager</i></b>
-
-скудный<br>
-<br>
+<br/>
+скудный
+<br/>
+<br/>
 <i>Example: a meagre diet of bread and water</i>
-
+<br/>
 <i>Example: She supplements her meagre income by cleaning at night.</i>
 </td></tr></table>
