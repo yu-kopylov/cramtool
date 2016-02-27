@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Test.CramTool")]
-[assembly: AssemblyCopyright("Copyright © 2013-2014 Kopylov Yuriy")]
+[assembly: AssemblyCopyright("Copyright © 2014-2016 Yuriy Kopylov")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
