@@ -92,5 +92,29 @@ namespace CramTool.Models
                 RecentFiles.RemoveAt(oldIndex);
             }
         }
+
+        public string GetDefaultDictionariesFolder()
+        {
+            // Try to use the directory of the last opened dictionary.
+            if (RecentFiles.Any())
+            {
+                string folder = Path.GetDirectoryName(RecentFiles[0]);
+                if (folder != null && Directory.Exists(folder))
+                {
+                    return folder;
+                }
+            }
+
+            // Try to use the directory from the release package.
+            {
+                string folder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Dictionaries");
+                if (Directory.Exists(folder))
+                {
+                    return folder;
+                }
+            }
+
+            return Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+        }
     }
 }
