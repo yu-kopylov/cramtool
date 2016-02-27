@@ -27,6 +27,7 @@ namespace CramTool.Formats.Html
             {
                 using (HtmlTextWriter writer = new HtmlTextWriter(streamWriter))
                 {
+                    writer.WriteLine("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
                     writer.WriteLine("<!DOCTYPE html>");
                     writer.WriteLine("<html xmlns=\"http://www.w3.org/1999/xhtml\">");
                     writer.WriteLine("<head>");
