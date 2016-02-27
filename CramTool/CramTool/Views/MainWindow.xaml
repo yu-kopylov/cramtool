@@ -4,6 +4,7 @@
         xmlns:cramTool="clr-namespace:CramTool" xmlns:views="clr-namespace:CramTool.Views"
         Title="{Binding Source={x:Static models:CramToolModel.Instance}, Path=MainWindowTitle}"
         Height="800" Width="1024"
+        WindowStartupLocation="CenterScreen"
         Icon="/Images/logo.png"
         Closing="OnClosing">
     <Window.CommandBindings>
